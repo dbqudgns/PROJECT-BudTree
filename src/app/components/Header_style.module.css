@@ -1,0 +1,39 @@
+/* .header {
+  display: flex;
+  align-items: center;
+  background-color: pink;
+  padding: 20px 0px;
+}
+.header > div {
+  display: flex;
+}
+
+.header .center {
+  width: 50%;
+  font-size: 19px;
+  justify-content: center;
+} */
+
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  border-bottom: 1px solid #7f5f3c;
+  background-color: transparent;
+}
+
+/* 왼쪽: 뒤로가기 아이콘 */
+.left {
+  position: absolute;
+  left: 16px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* 가운데: 타이틀 */
+.center {
+  margin: 0 auto;
+  font-size: 18px;
+  text-align: center;
+}

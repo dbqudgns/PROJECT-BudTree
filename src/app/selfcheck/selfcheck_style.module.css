@@ -1,0 +1,127 @@
+.container {
+  background-color: #f9f5ec;
+  min-height: 100vh;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.progressSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.progressText {
+  font-size: 14px;
+  color: #444;
+}
+
+.progressBarWrapper {
+  flex: 1;
+  height: 8px;
+  margin: 0 12px;
+  background-color: #e5dcc5;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  width: 11%;
+  height: 100%;
+  background-color: #7f5f3c;
+  border-radius: 4px;
+}
+
+.questionBox {
+  background-color: white;
+  margin: 0 16px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.questionText {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  padding: 10px 0;
+}
+
+.options {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.options li {
+  margin-bottom: 10px;
+  font-size: 14px;
+  padding: 8px 0;
+}
+
+/* .options input[type="radio"] {
+  margin-right: 8px;
+} */
+
+.options input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #aaa;
+  border-radius: 50%;
+  margin-right: 8px;
+  position: relative;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  vertical-align: middle;
+}
+
+.options input[type="radio"]:checked {
+  border-color: #7f5f3c;
+  background-color: white;
+}
+
+.options input[type="radio"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background-color: #7f5f3c;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.options input[type="radio"]:checked::after {
+  opacity: 1;
+}
+
+.buttonSection {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 16px;
+}
+
+.prevButton {
+  background-color: white;
+  color: #444;
+  border: 1px solid #ccc;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.nextButton {
+  background-color: #7f5f3c;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
