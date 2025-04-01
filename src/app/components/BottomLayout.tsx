@@ -1,0 +1,17 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+import BottomTab from "./BottomTab";
+
+export default function BottomLayout() {
+  const pathname = usePathname();
+
+  // 하단바를 숨기고 싶은 경로 설정
+  const hiddenPaths = ["/", "/chatbot", "/selfcheck/result", "/LoginPage"];
+
+  const shouldHide = hiddenPaths.includes(pathname);
+
+  if (shouldHide) return null;
+
+  return <BottomTab />;
+}

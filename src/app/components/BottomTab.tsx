@@ -1,14 +1,9 @@
-// "use client";
+"use client";
 
 import styles from "./BottomTab.module.css";
 import Link from "next/link";
-// import { usePathname } from "next/navigation";
 
 export default function BottomTab() {
-  // const pathname = usePathname();
-  // const hideOn = ["/chat"]; // 숨기고 싶은 경로들
-  // if (hideOn.includes(pathname)) return null;
-
   return (
     <nav className={styles.bottomTab}>
       <Link href="/">

@@ -1,26 +1,27 @@
 .container {
   background-color: #f9f5ec;
-  min-height: 100vh;
-  padding: 0;
+  min-height: 100%;
+  /* padding: 56px 0; */
   font-family: sans-serif;
+  padding-top: 75px;
 }
 
 .progressSection {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px;
 }
 
 .progressText {
   font-size: 14px;
   color: #444;
+  padding: 0 20px;
 }
 
 .progressBarWrapper {
   flex: 1;
   height: 8px;
-  margin: 0 12px;
+  /* margin: 0 12px; */
   background-color: #e5dcc5;
   border-radius: 4px;
   overflow: hidden;
@@ -35,7 +36,7 @@
 
 .questionBox {
   background-color: white;
-  margin: 0 16px;
+  margin: 15px 16px 0;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
@@ -44,10 +45,13 @@
 .questionText {
   font-size: 16px;
   font-weight: 500;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
   padding: 10px 0;
 }
-
+.optionsBox {
+  margin-top: 20px;
+  padding: 0 28px;
+}
 .options {
   list-style: none;
   padding: 0;
@@ -75,7 +79,7 @@
   position: relative;
   background-color: #fff;
   cursor: pointer;
-  transition: all 0.2s;
+  /* transition: all 0.2s; */
   vertical-align: middle;
 }
 
@@ -112,16 +116,32 @@
   background-color: white;
   color: #444;
   border: 1px solid #ccc;
-  padding: 10px 16px;
-  border-radius: 8px;
+  /* padding: 10px 16px; */
+  border-radius: 12px;
   cursor: pointer;
+  width: 70px;
+  height: 40px;
+  font-size: 14px;
 }
 
 .nextButton {
   background-color: #7f5f3c;
   color: white;
   border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
+  width: 70px;
+  height: 40px;
+  font-size: 14px;
+  border-radius: 12px;
   cursor: pointer;
+}
+
+.submitButton {
+  background-color: #3c2b10;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 70px;
+  height: 40px;
+  font-size: 14px;
 }

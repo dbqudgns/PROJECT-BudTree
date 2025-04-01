@@ -14,13 +14,19 @@
   z-index: 100;
 } */
 .bottomTab {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
   height: 70px;
-  margin-top: auto;
   background-color: #f6f2e6;
   border-top: 1px solid #7f5f3c;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  z-index: 100;
 }
 .bottomTab > a {
   margin-top: 10px;

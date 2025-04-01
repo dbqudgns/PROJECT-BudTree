@@ -3,7 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import RecoilProvider from "./config/RecoilProvider";
 import ReactQueryProvider from "./config/ReactQueryProvider";
-import BottomTab from "./components/BottomTab";
+import BottomLayout from "./components/BottomLayout";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -38,9 +39,10 @@ export default function RootLayout({
             />
           </head>
           <body className="frame">
-            <p></p>
-            {children}
-            <BottomTab />
+            <div className="layout-wrapper">
+              <main className="content-scroll">{children}</main>
+              <BottomLayout />
+            </div>
           </body>
         </html>
       </RecoilProvider>

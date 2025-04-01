@@ -1,0 +1,79 @@
+.container {
+  background-color: #f9f5ec;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  max-width: 430px;
+  margin: 0 auto;
+  font-family: "iceHimchan-Rg", sans-serif;
+}
+
+.chatWindow {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 12px;
+}
+
+.botMessage {
+  align-self: flex-start;
+  background-color: #fff6e8;
+  color: #333;
+  padding: 12px 16px;
+  border-radius: 16px 16px 16px 4px; /* 오른쪽 위가 뾰족한 느낌 */
+  max-width: 75%;
+  font-size: 15px;
+  line-height: 1.5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  word-break: break-word;
+}
+
+.userMessage {
+  align-self: flex-end;
+  background-color: #7f5f3c;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 16px 16px 4px 16px; /* 말풍선 꼬리가 왼쪽 위 */
+  max-width: 75%;
+  font-size: 15px;
+  line-height: 1.5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  word-break: break-word;
+}
+
+.inputSection {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f9f5ec;
+  border-top: 1px solid #d8cbb5;
+  gap: 10px;
+}
+
+.profileBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #f9f5ec;
+  border: 1px solid #333;
+}
+
+.input {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+.sendBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #d8cbb5;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}

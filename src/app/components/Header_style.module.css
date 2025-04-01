@@ -15,12 +15,18 @@
 } */
 
 .header {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  height: 56px;
+  background-color: #f6f2e6;
+  border-bottom: 1px solid #7f5f3c;
+  z-index: 100;
   display: flex;
   align-items: center;
-  height: 56px;
-  border-bottom: 1px solid #7f5f3c;
-  background-color: transparent;
 }
 
 /* 왼쪽: 뒤로가기 아이콘 */
