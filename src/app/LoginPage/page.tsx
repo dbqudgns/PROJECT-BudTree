@@ -11,17 +11,17 @@ export default function LoginPage() {
   return (
     <div className={styles.container}>
       <Header title="로그인" />
-      {/* <div className={styles.StartImage}>
-        <Image
-          className={styles.LogoImage}
-          src="/favicon.png"
-          alt="logo"
-          width={247}
-          height={202}
-        />
-      </div> */}
       {/* favicon을 src로 사용 */}
       <div className={styles.InputArea}>
+        <div className={styles.StartImage}>
+          <Image
+            className={styles.LogoImage}
+            src="/favicon.png"
+            alt="logo"
+            width={247}
+            height={202}
+          />
+        </div>
         <input
           type="email"
           placeholder="아이디를 입력해주세요."
@@ -41,7 +41,7 @@ export default function LoginPage() {
         />
       </div>
       <div className={styles.ButtonWrapper}>
-        <button className={styles.btn}>완료</button>
+        <button className={styles.btn}>로그인</button>
       </div>
     </div>
   );

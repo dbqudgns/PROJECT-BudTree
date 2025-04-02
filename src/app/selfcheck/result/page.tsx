@@ -1,12 +1,16 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Header from "../../components/Header";
 import styles from "./result.module.css";
+import { useState } from "react";
 
 export default function ResultPage() {
   const searchParams = useSearchParams();
   const score = Number(searchParams.get("score") || "0");
+  const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
 
   return (
     <main className={styles.container}>
@@ -166,6 +170,41 @@ export default function ResultPage() {
           </p>
         </div>
       </section>
+
+      <div className={styles.fixedFooter}>
+        <button
+          className={styles.nextButton}
+          onClick={() => setShowModal(true)}
+        >
+          다음
+        </button>
+      </div>
+
+      {showModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalBox}>
+            <p className={styles.modalTitle}>버디에게 상담 받으시겠습니까?</p>
+            <p className={styles.modalText}>
+              자가진단 결과를 바탕으로 <br />
+              버디에게 상담을 받을 수 있습니다.
+            </p>
+            <div className={styles.modalButtons}>
+              <button
+                className={styles.cancelButton}
+                onClick={() => setShowModal(false)}
+              >
+                취소
+              </button>
+              <button
+                className={styles.confirmButton}
+                onClick={() => router.push("/chatbot")}
+              >
+                확인
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

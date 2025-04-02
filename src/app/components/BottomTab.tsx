@@ -12,10 +12,10 @@ export default function BottomTab() {
       <Link href="/tree">
         <span className={`material-icons ${styles.icon}`}>park</span>
       </Link>
-      <Link href="/chat">
+      <Link href="/chatbot">
         <span className={`material-icons ${styles.icon}`}>chat</span>
       </Link>
-      <Link href="/profile">
+      <Link href="/mypage">
         <span className={`material-icons ${styles.icon}`}>account_circle</span>
       </Link>
     </nav>

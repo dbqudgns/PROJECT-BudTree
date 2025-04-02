@@ -73,14 +73,14 @@ export default function Signup() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
+        <div className={styles.footer}>
+          <button className={styles.btn} onClick={buttonClick}>
+            완료
+          </button>
+        </div>
       </div>
 
       {/* footer */}
-      <div className={styles.footer}>
-        <button className={styles.btn} onClick={buttonClick}>
-          완료
-        </button>
-      </div>
     </div>
   );
 }

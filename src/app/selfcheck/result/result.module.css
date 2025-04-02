@@ -3,7 +3,7 @@
   min-height: 100vh;
   padding: 0;
   font-family: sans-serif;
-  padding-top: 70px;
+  padding-top: 60px;
   padding-bottom: 70px;
 }
 
@@ -56,7 +56,7 @@
 }
 
 .level-mild {
-  color: #81d4fa;
+  color: #e986fd;
   font-weight: bold;
 }
 
@@ -73,4 +73,92 @@
 .level-severe {
   color: #e57373;
   font-weight: bold;
+}
+
+.nextButton {
+  width: 90%;
+  max-width: 300px; /* Restrict button width */
+  margin: 5px auto; /* Center the button */
+  height: 50px;
+  border-radius: 25px;
+  background-color: #d8cebd;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  display: block;
+  cursor: pointer;
+}
+
+.fixedFooter {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 430px;
+  max-width: 430px;
+  background-color: #f9f5ec;
+  padding: 10px 16px;
+  box-sizing: border-box;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalBox {
+  background-color: #fff;
+  width: 360px;
+  padding: 30px 24px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modalTitle {
+  font-weight: 900;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.modalText {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 16px;
+}
+
+.cancelButton,
+.confirmButton {
+  /* flex: 1; */
+  height: 40px;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100px;
+}
+
+.cancelButton {
+  background-color: #f2f0ea;
+  color: #5c5c5c;
+}
+
+.confirmButton {
+  background-color: #d8cebd;
+  color: #fff;
 }
