@@ -13,7 +13,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,9 +27,8 @@ public class SurveyController {
     public ResponseEntity<?> save(
             @Valid @RequestBody SurveyRegisterRQ surveyRegisterRQ,
             @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
-
-        SurveyRegisterRP result = surveyService.save(surveyRegisterRQ, customMemberDetails);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(ApiResponse.success(surveyService.save(surveyRegisterRQ, customMemberDetails))
+        );
 
     }
 

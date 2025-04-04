@@ -22,23 +22,22 @@ public class SurveyService {
 
     @Transactional
     public SurveyRegisterRP save(SurveyRegisterRQ surveyRegisterRQ, CustomMemberDetails customMemberDetails) {
-      validateSurveyRegisterRQ(surveyRegisterRQ);
         Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
         
-        //이거 아마 메서드로 추출 예정
+
         int score = surveyRegisterRQ.part1() + surveyRegisterRQ.part2() + surveyRegisterRQ.part3() + surveyRegisterRQ.part4()
                 + surveyRegisterRQ.part5() + surveyRegisterRQ.part6() + surveyRegisterRQ.part7() + surveyRegisterRQ.part8() + surveyRegisterRQ.part9();
 
         Level level = null;
         if (score >= 0 && score <= 4) {
             level = Level.NORMAL;
-        } else if (score >= 5 && score <= 9) {
+        } else if (score <= 9) {
             level = Level.MINOR;
-        } else if (score >= 10 && score <= 14) {
+        } else if (score <= 14) {
             level = Level.MIDDLE;
-        } else if (score >= 15 && score <= 19) {
+        } else if (score <= 19) {
             level = Level.HEAVY;
-        } else if (score >= 20 && score <= 27) {
+        } else if (score <= 27) {
             level = Level.VIOLENT;
         }
 
@@ -63,24 +62,6 @@ public class SurveyService {
                 .build();
     }
 
-    //자가진단 검증 로직인데 추후 리팩토링 예정
-    private void validateSurveyRegisterRQ(SurveyRegisterRQ surveyRegisterRQ) {
-        if (!isValid(surveyRegisterRQ.part1()) ||
-                !isValid(surveyRegisterRQ.part2()) ||
-                !isValid(surveyRegisterRQ.part3()) ||
-                !isValid(surveyRegisterRQ.part4()) ||
-                !isValid(surveyRegisterRQ.part5()) ||
-                !isValid(surveyRegisterRQ.part6()) ||
-                !isValid(surveyRegisterRQ.part7()) ||
-                !isValid(surveyRegisterRQ.part8()) ||
-                !isValid(surveyRegisterRQ.part9())) {
-            throw new IllegalArgumentException("유효하지 않은 설문 값입니다.");
-        }
-    }
-
-    private boolean isValid(int part) {
-        return part >= 0 && part <= 3;
-    }
 
     @Transactional
     public List<SurveyAllRP> findAllSurveys(SurveyAllRQ surveyAllRQ, CustomMemberDetails customMemberDetails) {

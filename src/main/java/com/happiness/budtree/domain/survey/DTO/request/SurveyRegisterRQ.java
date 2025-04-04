@@ -1,15 +1,36 @@
 package com.happiness.budtree.domain.survey.DTO.request;
 
-//각 항목별 점수를 입력 받자
+
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Range;
+
 public record SurveyRegisterRQ(
-         int part1,
-         int part2,
-         int part3,
-         int part4,
-         int part5,
-         int part6,
-         int part7,
-         int part8,
-         int part9
+         @Range(min = 0, max = 3)
+         @NotNull(message = "필수 입력 사항입니다.")
+         Integer part1,
+         @Range(min = 0, max = 3)
+         @NotNull(message = "필수 입력 사항입니다.")
+         Integer part2,
+         @Range(min = 0, max = 3)
+         @NotNull(message = "필수 입력 사항입니다.")
+         Integer part3,
+         @Range(min = 0, max = 3)
+         @NotNull(message = "필수 입력 사항입니다.")
+         Integer part4,
+         @Range(min = 0, max = 3)
+         @NotNull(message = "필수 입력 사항입니다.")
+         Integer part5,
+         @Range(min = 0, max = 3)
+         @NotNull(message = "필수 입력 사항입니다.")
+         Integer part6,
+         @Range(min = 0, max = 3)
+         @NotNull(message = "필수 입력 사항입니다.")
+         Integer part7,
+         @Range(min = 0, max = 3)
+         @NotNull(message = "필수 입력 사항입니다.")
+         Integer part8,
+         @Range(min = 0, max = 3)
+         @NotNull(message = "필수 입력 사항입니다.")
+         Integer part9
 ) {
 }
