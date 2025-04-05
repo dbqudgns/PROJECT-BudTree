@@ -6,21 +6,28 @@ import styles from "./Header_style.module.css";
 export default function Header({
   title,
   showBack = false,
+  onBack,
 }: {
   title: string;
   showBack?: boolean;
+  onBack?: () => void;
 }) {
   const router = useRouter();
   const handleBack = () => {
-    router.back();
+    if (onBack) {
+      onBack();
+    } else {
+      router.back();
+    }
   };
 
   return (
     <header className={styles.header}>
-      <div onClick={handleBack} className={styles.left}>
-        &lt;
-      </div>
-      {/* {showBack && <div className={styles.left}>&lt;</div>} */}
+      {showBack && (
+        <div onClick={handleBack} className={styles.left}>
+          &lt;
+        </div>
+      )}
       <div className={styles.center}>{title}</div>
     </header>
   );

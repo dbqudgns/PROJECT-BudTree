@@ -29,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ReactQueryProvider>
-      <RecoilProvider>
+    <RecoilProvider>
+      <ReactQueryProvider>
         <html lang="en">
           <head>
             <link
@@ -45,7 +45,7 @@ export default function RootLayout({
             </div>
           </body>
         </html>
-      </RecoilProvider>
-    </ReactQueryProvider>
+      </ReactQueryProvider>
+    </RecoilProvider>
   );
 }
