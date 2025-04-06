@@ -6,8 +6,6 @@ spring:
     username: root
     password: ${DB_PASSWORD}
 
-
-
   jpa:
     hibernate:
       ddl-auto: none
