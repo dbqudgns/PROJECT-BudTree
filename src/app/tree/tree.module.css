@@ -1,0 +1,105 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #f0f4ec;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  overflow: hidden;
+}
+
+.treeImage {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.emotionIcon {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+}
+
+.emotion1 {
+  top: 10%;
+  left: 20%;
+}
+.emotion2 {
+  top: 15%;
+  left: 60%;
+}
+.emotion3 {
+  top: 40%;
+  left: 30%;
+}
+.emotion4 {
+  top: 45%;
+  left: 65%;
+}
+.emotion5 {
+  top: 70%;
+  left: 20%;
+}
+.emotion6 {
+  top: 75%;
+  left: 60%;
+}
+
+.buddyContainer {
+  position: absolute;
+  bottom: 90px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  z-index: 10;
+  margin-left: 42px;
+}
+.buddyImageWrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: white;
+  border: 1.5px solid #866023;
+}
+
+.buddyImage {
+  width: 90px;
+  /* height: 100px; */
+  margin: 0 auto;
+  /* height: 60px; */
+  border-radius: 50%;
+  transform: translateY(-10px) scale(1.2);
+  /* background-color: white; */
+  padding: 4px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
+
+.buddySpeechBubble {
+  background-color: white;
+  border-radius: 20px;
+  padding: 13px 30px;
+  max-width: 220px;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.6;
+  position: relative;
+  text-align: center;
+}
+
+.buddySpeechBubble::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 16px;
+  width: 0;
+  height: 0;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-right: 32px solid white;
+}

@@ -29,23 +29,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <RecoilProvider>
-      <ReactQueryProvider>
-        <html lang="en">
-          <head>
-            <link
-              href="https://fonts.googleapis.com/icon?family=Material+Icons"
-              rel="stylesheet"
-            />
-          </head>
-          <body className="frame">
-            <div className="layout-wrapper">
+    <ReactQueryProvider>
+      <html lang="en">
+        <head>
+          <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+          />
+        </head>
+        <body className="frame">
+          <div className="layout-wrapper">
+            <RecoilProvider>
               <main className="content-scroll">{children}</main>
               <BottomLayout />
-            </div>
-          </body>
-        </html>
-      </ReactQueryProvider>
-    </RecoilProvider>
+            </RecoilProvider>
+          </div>
+        </body>
+      </html>
+    </ReactQueryProvider>
   );
 }

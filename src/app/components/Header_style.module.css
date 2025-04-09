@@ -43,3 +43,18 @@
   font-size: 18px;
   text-align: center;
 }
+
+.exitBtn {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #e6f6e6;
+  color: #1a8f1a;
+  border: 1px solid #7ed67e;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}

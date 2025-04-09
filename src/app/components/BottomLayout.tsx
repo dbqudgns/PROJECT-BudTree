@@ -13,6 +13,9 @@ export default function BottomLayout() {
     "/selfcheck/result",
     "/LoginPage",
     "/signup",
+    "/chatbot/endModal",
+    "/diary",
+    "/emotion-select",
   ];
 
   const shouldHide = hiddenPaths.includes(pathname);

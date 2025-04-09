@@ -7,10 +7,14 @@ export default function Header({
   title,
   showBack = false,
   onBack,
+  showExitButton = false,
+  onExit,
 }: {
   title: string;
   showBack?: boolean;
   onBack?: () => void;
+  showExitButton?: boolean;
+  onExit?: () => void;
 }) {
   const router = useRouter();
   const handleBack = () => {
@@ -18,6 +22,14 @@ export default function Header({
       onBack();
     } else {
       router.back();
+    }
+  };
+
+  const handleExit = () => {
+    if (onExit) {
+      onExit();
+    } else {
+      router.push("/");
     }
   };
 
@@ -29,6 +41,11 @@ export default function Header({
         </div>
       )}
       <div className={styles.center}>{title}</div>
+      {showExitButton && (
+        <button className={styles.exitBtn} onClick={handleExit}>
+          대화종료
+        </button>
+      )}
     </header>
   );
 }

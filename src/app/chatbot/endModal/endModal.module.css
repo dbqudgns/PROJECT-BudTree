@@ -1,0 +1,81 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fdfbf6;
+  padding: 0 24px;
+}
+
+.title {
+  font-size: 19px;
+  font-weight: bold;
+  margin-top: 130px;
+  text-align: center;
+  line-height: 40px;
+}
+.title > span {
+  font-size: 16px;
+}
+
+/* .subtitle {
+  font-size: 16px;
+  margin-bottom: 12px;
+  text-align: center;
+  line-height: 1.5;
+} */
+
+.image {
+  width: 180px;
+  height: auto;
+  margin: 24px 0;
+}
+.imagePen {
+  /* width: 80px; */
+  height: auto;
+  margin: 24px 0;
+  transform: translateX(-10px) translateY(45px);
+}
+.imageWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: -60px;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: space-around;
+  gap: 68px;
+  margin-top: 24px;
+}
+
+.cancelButton {
+  background-color: #d9cebb;
+  width: 120px;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  /* transition: background-color 0.2s ease; */
+}
+.writeButton {
+  background-color: #d9cebb;
+  width: 120px;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  /* transition: background-color 0.2s ease; */
+}
+
+.cancelButton:hover,
+.writeButton:hover {
+  background-color: #c7b9a6;
+}

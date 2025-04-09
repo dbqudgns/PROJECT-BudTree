@@ -1,0 +1,152 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 130px 16px 0px 16px;
+  min-height: 100vh;
+  background-color: #fefcf8;
+  position: relative;
+}
+
+.title {
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 32px;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 40px;
+  color: #4b3b28;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px 16px;
+  justify-items: center;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 32px;
+}
+
+.emotionItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 12px;
+  transition: all 0.2s ease-in-out;
+}
+
+.emotionItem span {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #333;
+}
+
+.selected {
+  /* background-color: #dddacf; */
+  /* box-shadow: 0 0 0 2px #c9c9c9; */
+}
+
+.completeButton {
+  background-color: #ddd2c3;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 14px 0;
+  border-radius: 24px;
+  border: none;
+  width: 90%;
+  max-width: 320px;
+}
+
+.completeButton:disabled {
+  background-color: #f1e9e1;
+  color: #c0b8b1;
+}
+
+.emoji {
+  margin: 2px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px 16px;
+  justify-items: center;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 32px;
+}
+
+.gridTop {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px 16px;
+  justify-items: center;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 16px;
+}
+
+.gridBottom {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px 16px;
+  justify-content: center;
+  width: 100%;
+  max-width: 200px;
+  margin-bottom: 32px;
+}
+
+.emotionItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  width: 80px;
+  transition: all 0.2s ease-in-out;
+}
+
+.emotionItem span {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #333;
+}
+
+.selected {
+  background-color: #f3efe9;
+  /* box-shadow: 0 0 0 1px #65481a; */
+  border-radius: 17px;
+  /* padding: 5px; */
+}
+
+.completeButton {
+  background-color: #ddd2c3;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 14px 0;
+  border-radius: 24px;
+  border: none;
+  width: 90%;
+  max-width: 320px;
+  position: absolute;
+  bottom: 20px;
+}
+
+.completeButton:disabled {
+  background-color: #f1e9e1;
+  color: #c0b8b1;
+}
+.emotionItemWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: 3px;
+  font-size: 14px;
+}

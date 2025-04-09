@@ -102,6 +102,21 @@ export default function Page() {
             <button
               className={styles.submitButton}
               onClick={() => {
+                const results = questions.map((question, index) => ({
+                  question,
+                  score: answers[index],
+                }));
+                const totalScore = results.reduce((sum, r) => sum + r.score, 0);
+
+                sessionStorage.setItem(
+                  "selfcheckResults",
+                  JSON.stringify(results)
+                );
+                sessionStorage.setItem(
+                  "selfcheckTotalScore",
+                  totalScore.toString()
+                );
+
                 router.push(`/selfcheck/result?score=${totalScore}`);
               }}
               disabled={answers[current] === -1}
