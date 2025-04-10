@@ -55,12 +55,12 @@ export default function MainPage() {
           </div>
           <div className={styles.firstExplanation}>
             <span>우울증 기반 자가진단을</span>
-            <span> 원하시거나, 검사 결과를</span>
+            <span>원하시거나, 검사 결과를</span>
             <span>바탕으로 이야기하고 싶다면</span>
             <span>자가진단 버튼을 눌러주세요</span>
           </div>
         </div>
-
+        {/* 두 번째 섹션 (설명 왼쪽, 버튼 오른쪽으로 위치 변경) */}
         <div className={styles.secondSelfCheck}>
           <div className={styles.secondExplanation}>
             <span>버디에게 편하게</span>
@@ -83,13 +83,15 @@ export default function MainPage() {
         </div>
 
         <div className={styles.bottomImage}>
-          <Image
-            className={styles.realImage}
-            src="/selfcheck.png"
-            alt="selfcheck"
-            width={100}
-            height={100}
-          />
+          <div className={styles.imageWrapper}>
+            <Image
+              className={styles.realImage}
+              src="/selfcheck.png"
+              alt="selfcheck"
+              width={270}
+              height={270}
+            />
+          </div>
         </div>
       </div>
     </div>
