@@ -3,8 +3,30 @@
 import styles from "./style.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/navigation"; // ✅ 올바른 import
 
 export default function MyPage() {
+  const router = useRouter();
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "https://api.budtree.store/member/logout",
+        {},
+        {
+          withCredentials: true, // 쿠키(리프레시 토큰) 포함
+        }
+      );
+    } catch (e) {
+      console.error("백엔드 로그아웃 실패:", e);
+    } finally {
+      localStorage.removeItem("token");
+      delete axios.defaults.headers.common["Authorization"];
+      alert("로그아웃 되었습니다.");
+      router.push("/LoginPage");
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -143,7 +165,9 @@ export default function MyPage() {
 
       {/* 회원 탈퇴 및 로그아웃 */}
       <div className={styles.footer}>
-        <button className={styles.textButton}>로그아웃</button>
+        <button className={styles.textButton} onClick={handleLogout}>
+          로그아웃
+        </button>
         <span className={styles.separator}>|</span>
         <button className={styles.textButton}>회원탈퇴</button>
       </div>

@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.png",
   },
+  viewport: "width=device-width, initial-scale=1.0",
 };
 
 export default function RootLayout({
@@ -30,22 +31,22 @@ export default function RootLayout({
 }>) {
   return (
     <ReactQueryProvider>
-      <html lang="en">
-        <head>
-          <link
-            href="https://fonts.googleapis.com/icon?family=Material+Icons"
-            rel="stylesheet"
-          />
-        </head>
-        <body className="frame">
-          <div className="layout-wrapper">
-            <RecoilProvider>
+      <RecoilProvider>
+        <html lang="en">
+          <head>
+            <link
+              href="https://fonts.googleapis.com/icon?family=Material+Icons"
+              rel="stylesheet"
+            />
+          </head>
+          <body className="frame">
+            <div className="layout-wrapper">
               <main className="content-scroll">{children}</main>
               <BottomLayout />
-            </RecoilProvider>
-          </div>
-        </body>
-      </html>
+            </div>
+          </body>
+        </html>
+      </RecoilProvider>
     </ReactQueryProvider>
   );
 }

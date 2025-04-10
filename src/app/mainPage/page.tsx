@@ -7,6 +7,18 @@ import { useSearchParams } from "next/navigation";
 export default function MainPage() {
   const searchParams = useSearchParams();
   const name = searchParams.get("name"); // 여기서 name 받아오기
+  const [userName, setUserName] = useState("");
+
+  // 쿼리 파라미터에서 name 가져오고 localStorage에도 저장
+  useEffect(() => {
+    const name = searchParams.get("name");
+    if (name) {
+      setUserName(name);
+      localStorage.setItem("userName", name);
+    }
+  }, [searchParams]);
+
+  console.log(name);
 
   return (
     <div className={styles.container}>
@@ -20,7 +32,9 @@ export default function MainPage() {
           height={58}
         />
         <div className={styles.headerContent}>
-          <span className={styles.name}>{name}님, 반가워요</span>
+          <span className={styles.name}>
+            {userName ? `${userName}님, 반가워요` : "반가워요"}
+          </span>
           <span className={styles.daily}>오늘 어떤 하루를 보내셨나요?</span>
         </div>
       </div>

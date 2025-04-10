@@ -23,44 +23,49 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
 
-    console.log(id);
-    console.log(password);
     try {
       const response = await axios.post(
         "https://api.budtree.store/member/login",
         {
-          username: id,
+          name: id,
           password: password,
+        },
+        {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json", // ✅ 꼭 명시
           },
+          withCredentials: true, // ✅ 쿠키 받을 때 필요
         }
       );
 
-      console.log(response); // 응답이 정상적으로 오는지 확인
+      console.log("로그인 응답:", response);
 
-      if (response.status === 200) {
-        localStorage.setItem("token", response.data.token); // JWT 저장
-        alert("로그인 성공!");
-        router.push(`/main?name=${encodeURIComponent(name)}`);
+      // ✅ 헤더에서 Access Token 추출
+      const authHeader = response.headers["authorization"];
+      const token = authHeader?.split(" ")[1];
+
+      if (token) {
+        localStorage.setItem("token", token);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      }
+
+      console.log("Access Token:", token);
+
+      const data = response.data as { name?: string; user?: { name?: string } };
+      const nameFromResponse = data.name || data.user?.name;
+      console.log("name response : ", nameFromResponse);
+
+      if (nameFromResponse) {
+        router.push(`/mainPage?name=${encodeURIComponent(nameFromResponse)}`);
       } else {
-        alert("로그인 실패: " + response.data.message);
+        alert("회원정보가 없으니 회원가입을 해주세요.");
       }
     } catch (error: any) {
       console.error("로그인 중 오류 발생:", error);
-
-      setError(
-        error.response?.data?.message || "로그인 중 오류가 발생했습니다."
-      );
+      alert("로그인 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    alert("로그아웃 되었습니다.");
-    router.push("/login");
   };
 
   return (
