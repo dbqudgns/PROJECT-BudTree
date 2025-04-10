@@ -14,6 +14,8 @@ export default function nickChange() {
         <div className={styles.inputnick}>새로운 닉네임을 입력하세요.</div>
         <input className={styles.nickSetting} placeholder="닉네임" />
       </div>
+
+      <button className={styles.completeButton}>완료</button>
     </div>
   );
 }
