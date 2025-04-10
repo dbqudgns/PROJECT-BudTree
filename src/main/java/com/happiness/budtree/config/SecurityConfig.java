@@ -101,7 +101,8 @@ public class SecurityConfig {
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
 
                        CorsConfiguration config = new CorsConfiguration();
-                       config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://api.budtree.store", "https://www.budtree.store"));config.setAllowedMethods(Collections.singletonList("*"));
+                       config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://api.budtree.store", "https://www.budtree.store"));
+                       config.setAllowedMethods(Collections.singletonList("*"));
                        config.setAllowCredentials(true);
                        config.setAllowedHeaders(Collections.singletonList("*"));
                        config.setMaxAge(3600L);
