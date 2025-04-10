@@ -1,11 +1,13 @@
 package com.happiness.budtree.domain.member.service;
 
 import com.happiness.budtree.domain.member.DTO.request.MemberLoginRQ;
+import com.happiness.budtree.domain.member.DTO.response.MemberNameRP;
+import com.happiness.budtree.domain.member.Member;
 import com.happiness.budtree.jwt.CookieUtil;
 import com.happiness.budtree.jwt.JWTUtil;
 import com.happiness.budtree.util.ApiResponse;
 import com.happiness.budtree.util.RedisUtil;
-import jakarta.servlet.http.HttpServletRequest;
+import com.happiness.budtree.util.ReturnMember;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 @Service
 @RequiredArgsConstructor
 public class LoginService {
@@ -24,6 +24,7 @@ public class LoginService {
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
     private final RedisUtil redisUtil;
+    private final ReturnMember returnMember;
 
     public ResponseEntity<?> login(MemberLoginRQ memberLoginRequest, HttpServletResponse response) {
 
@@ -46,7 +47,12 @@ public class LoginService {
             response.setHeader("Authorization", "Bearer " + access); //AT는 헤더로 전송
             response.addCookie(CookieUtil.createCookie("refresh", refresh, 24 * 60 * 60)); //RT는 쿠키로 전송
 
-            return ResponseEntity.ok(ApiResponse.success("로그인 성공"));
+            Member member = returnMember.findMemberByUsernameOrTrow(username);
+
+            return ResponseEntity.ok(ApiResponse.success(MemberNameRP.builder()
+                    .name(member.getName())
+                    .msg("로그인 성공")
+                    .build()));
 
         } catch (AuthenticationException e) {
 

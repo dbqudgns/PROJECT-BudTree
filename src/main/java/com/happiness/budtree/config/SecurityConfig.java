@@ -79,7 +79,7 @@ public class SecurityConfig {
                             String customMessage = (String) request.getAttribute("exceptionMessage");
 
                             // 기본 메시지 설정
-                            String message = (customMessage != null) ? customMessage : "로그인 후 JWT를 발급 받으세요";
+                            String message = (customMessage != null) ? customMessage : "로그인 후 JWT를 발급 받으세요 또는 에러 로그를 확인하세요.";
 
                             response.getWriter().write("{\"status\": " + status + ", \"message\": \"" + message + "\"}");
 
