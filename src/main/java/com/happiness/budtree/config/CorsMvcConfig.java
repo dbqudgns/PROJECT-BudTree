@@ -11,7 +11,7 @@ public class CorsMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
 
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "https://api.budtree.store");
+                .allowedOrigins("http://localhost:3000", "https://api.budtree.store", "https://www.budtree.store");
 
     }
 }
