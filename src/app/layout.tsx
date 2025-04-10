@@ -18,10 +18,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "버드 나무",
   description: "당신 곁에 있는 버드 나무",
+  viewport: "width=device-width, initial-scale=1.0",
   icons: {
     icon: "/favicon.png",
   },
-  viewport: "width=device-width, initial-scale=1.0",
 };
 
 export default function RootLayout({
