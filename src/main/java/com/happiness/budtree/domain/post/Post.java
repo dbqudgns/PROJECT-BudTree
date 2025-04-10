@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name = "post")
 public class Post {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long postId;
@@ -30,6 +31,7 @@ public class Post {
     private Emotion emotion;
 
     @Lob
+    @Column(nullable = false)
     private String content;
 
     @Builder

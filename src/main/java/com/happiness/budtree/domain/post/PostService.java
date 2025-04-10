@@ -38,7 +38,7 @@ public class PostService {
     }
 
     @Transactional
-    public void updatePost(Long postId, PostChangeRQ changeRQ,CustomMemberDetails customMemberDetails) {
+    public void updatePost(Long postId, PostChangeRQ changeRQ, CustomMemberDetails customMemberDetails) {
 
         Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
 

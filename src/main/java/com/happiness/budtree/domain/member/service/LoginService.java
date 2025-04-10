@@ -8,7 +8,6 @@ import com.happiness.budtree.jwt.JWTUtil;
 import com.happiness.budtree.util.ApiResponse;
 import com.happiness.budtree.util.RedisUtil;
 import com.happiness.budtree.util.ReturnMember;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor

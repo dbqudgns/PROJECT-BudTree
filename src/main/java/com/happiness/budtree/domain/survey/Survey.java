@@ -3,9 +3,7 @@ package com.happiness.budtree.domain.survey;
 import com.happiness.budtree.domain.member.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
