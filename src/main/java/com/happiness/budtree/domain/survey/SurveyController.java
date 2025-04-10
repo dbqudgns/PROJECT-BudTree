@@ -1,10 +1,7 @@
 package com.happiness.budtree.domain.survey;
 
-
-import com.happiness.budtree.domain.post.PostService;
 import com.happiness.budtree.domain.survey.DTO.request.SurveyAllRQ;
 import com.happiness.budtree.domain.survey.DTO.request.SurveyRegisterRQ;
-import com.happiness.budtree.domain.survey.DTO.response.SurveyRegisterRP;
 import com.happiness.budtree.jwt.Custom.CustomMemberDetails;
 import com.happiness.budtree.util.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;

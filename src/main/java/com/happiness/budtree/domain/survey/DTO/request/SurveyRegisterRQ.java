@@ -1,6 +1,5 @@
 package com.happiness.budtree.domain.survey.DTO.request;
 
-
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Range;
 
