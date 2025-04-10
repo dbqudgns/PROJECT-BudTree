@@ -7,7 +7,7 @@ import styles from "./chatbot_style.module.css";
 
 export default function ChatPage() {
   const router = useRouter();
-  const handleBackToHome = () => router.push("/");
+  const handleBackToHome = () => router.push("/mainPage");
 
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -16,6 +16,7 @@ export default function ChatPage() {
   const [results, setResults] = useState<{ question: string; score: number }[]>(
     []
   );
+  const [showAllQuestions, setShowAllQuestions] = useState(false);
   const [nickname, setNickname] = useState("친구");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -227,6 +228,38 @@ export default function ChatPage() {
         </div>
       )}
 
+      {showAllQuestions && (
+        <div
+          className={styles.overlay}
+          onClick={() => setShowAllQuestions(false)}
+        >
+          <div
+            className={styles.questionList}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {results.map((q, i) => (
+              <p
+                key={i}
+                className={styles.questionItem}
+                onClick={() => {
+                  setSelectedQuestion(q.question);
+                  setMessages((prev) => [
+                    ...prev,
+                    {
+                      role: "user",
+                      content: `저는 "${q.question}"에 대해 이야기하고 싶어요.`,
+                    },
+                  ]);
+                  setShowAllQuestions(false);
+                }}
+              >
+                Q{i + 1}. {q.question}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
+
       <section className={styles.chatWindow}>
         {messages.map((msg, i) =>
           msg.role === "user" ? (
@@ -252,7 +285,7 @@ export default function ChatPage() {
             </div>
             <div className={styles.botMessageText}>
               <p className={styles.botMessageName}>buddy</p>
-              <p className={styles.botMessage}>...</p>
+              <p className={styles.botLoading}>...</p>
             </div>
           </div>
         )}
@@ -260,7 +293,14 @@ export default function ChatPage() {
       </section>
 
       <section className={styles.inputSection}>
-        <button className={styles.profileBtn}></button>
+        <button
+          className={`${styles.profileBtn} ${
+            showAllQuestions ? styles.rotated : ""
+          }`}
+          onClick={() => setShowAllQuestions((prev) => !prev)}
+        >
+          <span>+</span>
+        </button>
         <input
           type="text"
           className={styles.input}

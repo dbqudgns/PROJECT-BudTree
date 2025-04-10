@@ -9,12 +9,16 @@ export default function Header({
   onBack,
   showExitButton = false,
   onExit,
+  showDeleteButton = false,
+  onDelete,
 }: {
   title: string;
   showBack?: boolean;
   onBack?: () => void;
   showExitButton?: boolean;
   onExit?: () => void;
+  showDeleteButton?: boolean;
+  onDelete?: () => void;
 }) {
   const router = useRouter();
   const handleBack = () => {
@@ -44,6 +48,11 @@ export default function Header({
       {showExitButton && (
         <button className={styles.exitBtn} onClick={handleExit}>
           대화종료
+        </button>
+      )}
+      {showDeleteButton && (
+        <button className={styles.deleteBtn} onClick={onDelete}>
+          일기삭제
         </button>
       )}
     </header>

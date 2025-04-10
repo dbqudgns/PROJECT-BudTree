@@ -57,7 +57,7 @@
   align-items: center;
   gap: 40px;
   z-index: 10;
-  margin-left: 42px;
+  margin-left: 38px;
 }
 .buddyImageWrapper {
   width: 80px;
@@ -66,6 +66,7 @@
   overflow: hidden;
   background-color: white;
   border: 1.5px solid #866023;
+  animation: float 2.5s ease-in-out infinite;
 }
 
 .buddyImage {
@@ -74,16 +75,14 @@
   margin: 0 auto;
   /* height: 60px; */
   border-radius: 50%;
-  transform: translateY(-10px) scale(1.2);
-  /* background-color: white; */
+  transform: translateY(-10px) scale(1.19);
   padding: 4px;
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
 .buddySpeechBubble {
   background-color: white;
   border-radius: 20px;
-  padding: 13px 30px;
+  padding: 13px 35px;
   max-width: 220px;
   font-size: 13px;
   color: #333;
@@ -102,4 +101,16 @@
   border-top: 30px solid transparent;
   border-bottom: 30px solid transparent;
   border-right: 32px solid white;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }

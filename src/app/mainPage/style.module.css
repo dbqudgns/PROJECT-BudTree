@@ -1,0 +1,177 @@
+.container {
+  width: 100%;
+  max-width: 430px;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  position: relative;
+}
+
+.buddyCloud {
+  width: 180px;
+  height: 80px;
+  background-color: #e8c4b0;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.buddyText {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.headerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  margin-top: -60px;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 500;
+  color: #5e4b3c;
+  margin-bottom: 5px;
+}
+
+.daily {
+  font-size: 16px;
+  color: #5e4b3c;
+}
+
+.selfCheckDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 20px;
+  margin-top: 20px;
+  position: relative; /* 추가 */
+}
+
+.firstSelfCheck {
+  border: 1px solid #866023;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+}
+
+.secondSelfCheck {
+  border: 1px solid #866023;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  position: relative; /* 추가 */
+  z-index: 2; /* 추가: 이미지보다 위에 표시되도록 */
+}
+
+.btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f6f2e6;
+  cursor: pointer;
+  color: #5e4b3c;
+  font-size: 14px;
+  width: 100px;
+  border: 1px solid #866023;
+  border-radius: 20px;
+  width: 135px;
+  height: 143px;
+  padding: 10px;
+}
+
+.btn2 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.SelfImage {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 5px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.firstExplanation,
+.secondExplanation {
+  display: flex;
+  flex-direction: column;
+  color: #575757;
+  font-size: 14px;
+  line-height: 1.8;
+  flex: 1;
+  padding-left: 20px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.firstExplanation div {
+  /* firstExplanation 내부의 div에 대한 스타일 */
+  margin: 0; /* div의 기본 margin 제거 */
+}
+
+.firstExplanation br {
+  /* br 태그에 대한 스타일 (선택 사항) */
+  display: block; /* br 태그가 block 요소처럼 동작하도록 설정 */
+  margin-bottom: 4px; /* 줄 간 간격 추가 */
+}
+
+.font {
+  color: #866023;
+  white-space: nowrap;
+}
+
+.bottomImage {
+  margin-top: clamp(-120px, -15vh, -60px);
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+}
+
+@media (min-height: 800px) {
+  .bottomImage {
+    margin-top: -100px;
+  }
+}
+
+@media (min-height: 900px) {
+  .bottomImage {
+    margin-top: -130px;
+  }
+}
+
+.realImage {
+  width: 270px;
+  height: auto;
+}

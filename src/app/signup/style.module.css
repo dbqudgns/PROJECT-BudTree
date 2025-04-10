@@ -8,19 +8,14 @@
   flex-direction: column;
   justify-content: center;
   position: relative;
-  padding-top: 50px;
+  padding-top: 60px; /* Reduced from 50px to give more space for content */
 }
 
 .inputId {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* width: 90%; */
   gap: 10px;
-  /* margin: 0 auto; */
-  align-items: center;
-  /* width: 100%; */
-  /* gap: 10px; */
 }
 
 .idInputContainer {
@@ -50,13 +45,19 @@
 .inputArea {
   display: flex;
   flex-direction: column;
-  /* gap: 20px; */
-  /* width: 100%; */
+  gap: 10px;
+  width: 100%;
   padding: 0 10px;
   flex: 1;
-  justify-content: space-around;
-  /* height: 330px; */
-  margin-top: 30px;
+  justify-content: flex-start; /* Changed from space-around to better control spacing */
+  margin-top: 20px; /* Added margin to push content down from header */
+  gap: 15px; /* Increased gap for better spacing between elements */
+}
+
+.inputArea2 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .newId {
@@ -71,6 +72,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 5px; /* Added small margin for spacing */
 }
 
 .newpwd {
@@ -105,7 +107,7 @@
 .footer {
   width: 100%;
   padding: 20px;
-  margin-top: 20px;
+  margin-top: auto; /* Changed to auto to push to bottom */
 }
 
 .btn {
@@ -114,13 +116,12 @@
   height: 50px;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.5);
-  color: #000;
+  color: #575757;
   font-size: 16px;
   cursor: pointer;
-  color: #575757;
-  /* padding-bottom: 5px; */
 }
 
 .btn:hover {
   background-color: #b9b6ad;
+  color: white;
 }

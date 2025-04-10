@@ -22,10 +22,10 @@
 
 .progressBarWrapper {
   flex: 1;
-  height: 8px;
+  height: 12px;
   /* margin: 0 12px; */
   background-color: #e5dcc5;
-  border-radius: 4px;
+  border-radius: 6px;
   overflow: hidden;
 }
 

@@ -9,11 +9,11 @@ export default function EndModalPage() {
   const router = useRouter();
 
   const handleCancel = () => {
-    router.push("/");
+    router.push("/mainPage");
   };
 
   const handleWriteDiary = () => {
-    router.push("/diary/write");
+    router.push("/diary");
   };
 
   return (

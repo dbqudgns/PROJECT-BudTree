@@ -50,7 +50,7 @@ export default function Page() {
             오늘의 이야기를 작성하여 <br />
             나무를 꾸며보아요! <br />
             일기를 작성하고 싶다면 <br />
-            저를 눌러주세요.
+            저를 눌러주세요 (•ᴗ•)
           </p>
         </div>
       </div>

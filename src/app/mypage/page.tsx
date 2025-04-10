@@ -32,7 +32,7 @@ export default function MyPage() {
         <div className={styles.profileCard}>
           <div className={styles.profileInfo}>
             <Image
-              src="/profile.png"
+              src="/buddy.png"
               alt="프로필 이미지"
               width={60}
               height={60}
@@ -143,9 +143,9 @@ export default function MyPage() {
 
       {/* 회원 탈퇴 및 로그아웃 */}
       <div className={styles.footer}>
-        <button className={styles.textButton}>회원 탈퇴</button>
-        <span className={styles.separator}>|</span>
         <button className={styles.textButton}>로그아웃</button>
+        <span className={styles.separator}>|</span>
+        <button className={styles.textButton}>회원탈퇴</button>
       </div>
     </div>
   );

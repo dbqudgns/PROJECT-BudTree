@@ -18,7 +18,8 @@ export default function BottomLayout() {
     "/emotion-select",
   ];
 
-  const shouldHide = hiddenPaths.includes(pathname);
+  const shouldHide =
+    hiddenPaths.includes(pathname) || pathname.startsWith("/diary/edit/");
 
   if (shouldHide) return null;
 

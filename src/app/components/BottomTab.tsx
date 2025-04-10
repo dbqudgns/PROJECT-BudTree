@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function BottomTab() {
   return (
     <nav className={styles.bottomTab}>
-      <Link href="/">
+      <Link href="/mainPage">
         <span className={`material-icons ${styles.icon}`}>home</span>
       </Link>
       <Link href="/tree">

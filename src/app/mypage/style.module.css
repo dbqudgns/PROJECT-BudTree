@@ -59,7 +59,7 @@
 .profileImage {
   width: 95px;
   height: 90px;
-  border-radius: 50%;
+  border-radius: 60%;
   object-fit: cover;
 }
 

@@ -1,24 +1,26 @@
 "use client";
-{
-  /* 클라이언트 측에서 실행되도록 함*/
-}
 
 import Header from "../components/Header";
 import styles from "./style.module.css";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [id, setId] = useState("");
+  const [nickname, setNickname] = useState("");
+  const router = useRouter();
 
   const handleDuplicateCheck = () => {
     // Here you would implement the actual duplicate check logic
-    // For example, making an API call to check if the ID exists
     alert(`'${id}' 아이디 중복 확인 중`);
   };
 
-  const buttonClick = () => {};
+  const buttonClick = () => {
+    // Validation could be added here
+    router.push("./tree");
+  };
 
   return (
     <div className={styles.container}>
@@ -49,6 +51,8 @@ export default function Signup() {
             type="text"
             placeholder="닉네임을 입력해주세요."
             className={styles.inputpwd}
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
           />
         </div>
 
@@ -73,14 +77,13 @@ export default function Signup() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
-        <div className={styles.footer}>
-          <button className={styles.btn} onClick={buttonClick}>
-            완료
-          </button>
-        </div>
       </div>
 
-      {/* footer */}
+      <div className={styles.footer}>
+        <button className={styles.btn} onClick={buttonClick}>
+          완료
+        </button>
+      </div>
     </div>
   );
 }

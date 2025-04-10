@@ -118,7 +118,7 @@
 
 .selected {
   background-color: #f3efe9;
-  /* box-shadow: 0 0 0 1px #65481a; */
+  box-shadow: 0 0 0 3px #f3efe9;
   border-radius: 17px;
   /* padding: 5px; */
 }
@@ -147,6 +147,6 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  gap: 3px;
+  gap: 7px;
   font-size: 14px;
 }
