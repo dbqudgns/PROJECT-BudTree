@@ -27,7 +27,7 @@ export default function LoginPage() {
       const response = await axios.post(
         "https://api.budtree.store/member/login",
         {
-          name: id,
+          username: id,
           password: password,
         },
         {
