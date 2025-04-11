@@ -106,7 +106,7 @@ export default function MyPage() {
           </svg>
         </Link>
         <div className={styles.divider}></div>
-        <Link href="/diagnosis" className={styles.menuItem}>
+        <Link href="/selfcheck-history" className={styles.menuItem}>
           <span>자가진단 내역</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
