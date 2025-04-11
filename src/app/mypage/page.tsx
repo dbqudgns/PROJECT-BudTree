@@ -5,9 +5,32 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation"; // ✅ 올바른 import
+import Header from "../components/Header";
+import { useState, useEffect } from "react";
 
 export default function MyPage() {
   const router = useRouter();
+  const [name, setName] = useState("");
+
+  // useEffect(() => {
+  //   const fetchUserInfo = async () => {
+  //     try {
+  //       const res = await axios.get(
+  //         "https://api.budtree.store/member/profile",
+  //         {
+  //           withCredentials: true,
+  //         }
+  //       );
+  //       console.log("닉네임 응답 결과:", res.data);
+  //       setName(res.data.name); // 🔥 여기를 정확히 이렇게!
+  //     } catch (error) {
+  //       console.error("닉네임 불러오기 실패:", error);
+  //     }
+  //   };
+
+  //   fetchUserInfo();
+  // }, []);
+
   const handleLogout = async () => {
     try {
       await axios.post(
@@ -27,27 +50,11 @@ export default function MyPage() {
     }
   };
 
+  const deleteAccount = (e) => {};
+
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <Link href="/" className={styles.backButton}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </Link>
-        <h1 className={styles.title}>MY 페이지</h1>
-      </div>
-      <br></br>
+      <Header title="마이페이지" showBack />
 
       <div className={styles.content}>
         {/* 프로필 섹션 */}
@@ -62,7 +69,7 @@ export default function MyPage() {
             />
           </div>
           <div className={styles.userInfo}>
-            <h2 className={styles.nickname}>닉네임</h2>
+            <h2 className={styles.nickname}>{name}</h2>
             <p className={styles.userId}>아이디</p>
           </div>
         </div>
@@ -169,7 +176,9 @@ export default function MyPage() {
           로그아웃
         </button>
         <span className={styles.separator}>|</span>
-        <button className={styles.textButton}>회원탈퇴</button>
+        <button className={styles.textButton} onClick={deleteAccount}>
+          회원탈퇴
+        </button>
       </div>
     </div>
   );
