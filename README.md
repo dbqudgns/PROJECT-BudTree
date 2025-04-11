@@ -7,7 +7,7 @@
 ```
 **Git workflow**
 
-master(최종 배포용)
+main (최종 배포용)
    │
    ├── develop   (개발 진행용 : CI/CD 확인용)
          ├── ex) feature/survey (각자 개발용)
