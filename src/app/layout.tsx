@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -41,7 +42,9 @@ export default function RootLayout({
           </head>
           <body className="frame">
             <div className="layout-wrapper">
-              <main className="content-scroll">{children}</main>
+              <Suspense fallback={<div>로딩 중...</div>}>
+                <main className="content-scroll">{children}</main>
+              </Suspense>
               <BottomLayout />
             </div>
           </body>
