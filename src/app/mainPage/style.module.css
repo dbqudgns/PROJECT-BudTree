@@ -87,6 +87,7 @@
   background-color: white;
   flex-direction: row-reverse;
   gap: 10px;
+  z-index: 2; /* Make sure it’s above the character */
 }
 
 .btn {
@@ -164,8 +165,8 @@
   justify-content: center;
   align-items: flex-end;
   position: absolute;
-  bottom: -375px;
-  left: 30%;
+  bottom: -300px;
+  left: 35%;
   transform: translateX(-49%);
   z-index: 1;
 }

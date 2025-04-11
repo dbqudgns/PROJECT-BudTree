@@ -24,7 +24,7 @@ export default function Signup() {
 
   return (
     <div className={styles.container}>
-      <Header title="회원가입" />
+      <Header title="회원가입" showBack />
       <div className={styles.inputArea}>
         <div className={styles.inputId}>
           <div className={styles.newId}>아이디</div>
