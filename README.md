@@ -22,8 +22,9 @@ master(최종 배포용)
 - refactor : 코드 리팩토링 (더 효율적인 코드로 변경 등)
 - comment : 주석 추가/수정
 - docs : 내부 문서 추가/수정
-- Rename : 파일 및 폴더명 수정
-- Remove : 파일 및 폴더 삭제
+- rename : 파일 및 폴더명 수정
+- remove : 파일 및 폴더 삭제
 
 ex) env : 프로젝트 초기 환경 세팅
+ex) feat : 자가진단 레이아웃
 ```
