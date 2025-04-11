@@ -72,7 +72,7 @@ export default function MyPage() {
 
       {/* 활동 내역 섹션 */}
       <div className={styles.menuCard}>
-        <Link href="/diary" className={styles.menuItem}>
+        <Link href="/diary-history" className={styles.menuItem}>
           <span>일기장 내역</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
