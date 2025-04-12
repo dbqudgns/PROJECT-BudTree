@@ -2,10 +2,9 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import "./DiaryHistory.css";
 import { useRouter } from "next/navigation";
 import Header from "../components/Header";
-import styles from "./style.module.css";
+import styles from "./diaryhistory.module.css";
 
 export default function DiaryHistory() {
   const router = useRouter();
@@ -14,6 +13,9 @@ export default function DiaryHistory() {
   const [showMonthDropdown, setShowMonthDropdown] = useState(false);
   const [selectedYear, setSelectedYear] = useState("연도");
   const [selectedMonth, setSelectedMonth] = useState("월");
+
+  const [isAtBottom, setIsAtBottom] = useState(false); // ✅ 맨 아래 여부
+  const [isScrolled, setIsScrolled] = useState(false); // ✅ 스크롤 여부
 
   const currentYear = new Date().getFullYear();
   const years = Array.from(
@@ -27,22 +29,6 @@ export default function DiaryHistory() {
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const diaryListRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setShowYearDropdown(false);
-        setShowMonthDropdown(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   const handleYearSelect = (year: string) => {
     setSelectedYear(year);
@@ -63,17 +49,38 @@ export default function DiaryHistory() {
     }
   };
 
+  // ✅ 스크롤 이벤트 추가
+  useEffect(() => {
+    const container = diaryListRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container;
+
+      const isBottom = scrollTop + clientHeight >= scrollHeight - 10;
+      setIsAtBottom(isBottom);
+
+      const scrolled = scrollTop > 0;
+      setIsScrolled(scrolled);
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="diary-container" ref={dropdownRef}>
+    <div className={styles["diary-container"]} ref={dropdownRef}>
       {/* Header */}
       <Header title="일기내역" showBack />
 
       {/* Year & Month Selector */}
-      <div className="selector-container">
+      <div className={styles["selector-container"]}>
         {/* Year Selector */}
-        <div className="dropdown-wrapper">
+        <div className={styles["dropdown-wrapper"]}>
           <button
-            className={`selector-button ${showYearDropdown ? "active" : ""}`}
+            className={`${styles["selector-button"]} ${
+              showYearDropdown ? styles.active : ""
+            }`}
             onClick={() => {
               setShowYearDropdown(!showYearDropdown);
               setShowMonthDropdown(false);
@@ -81,15 +88,17 @@ export default function DiaryHistory() {
           >
             {selectedYear}
             {showYearDropdown ? (
-              <ChevronUp className="selector-icon" />
+              <ChevronUp className={styles["selector-icon"]} />
             ) : (
-              <ChevronDown className="selector-icon" />
+              <ChevronDown className={styles["selector-icon"]} />
             )}
           </button>
           {showYearDropdown && (
-            <div className="dropdown">
+            <div className={styles.dropdown}>
               <div
-                className={`dropdown-item ${selectedYear === "연도" ? "selected" : ""}`}
+                className={`${styles["dropdown-item"]} ${
+                  selectedYear === "연도" ? styles.selected : ""
+                }`}
                 onClick={() => handleYearSelect("연도")}
               >
                 선택안함
@@ -97,7 +106,9 @@ export default function DiaryHistory() {
               {years.map((year) => (
                 <div
                   key={year}
-                  className={`dropdown-item ${selectedYear === year ? "selected" : ""}`}
+                  className={`${styles["dropdown-item"]} ${
+                    selectedYear === year ? styles.selected : ""
+                  }`}
                   onClick={() => handleYearSelect(year)}
                 >
                   {year}
@@ -108,9 +119,11 @@ export default function DiaryHistory() {
         </div>
 
         {/* Month Selector */}
-        <div className="dropdown-wrapper">
+        <div className={styles["dropdown-wrapper"]}>
           <button
-            className={`selector-button ${showMonthDropdown ? "active" : ""}`}
+            className={`${styles["selector-button"]} ${
+              showMonthDropdown ? styles.active : ""
+            }`}
             onClick={() => {
               setShowMonthDropdown(!showMonthDropdown);
               setShowYearDropdown(false);
@@ -118,15 +131,17 @@ export default function DiaryHistory() {
           >
             {selectedMonth}
             {showMonthDropdown ? (
-              <ChevronUp className="selector-icon" />
+              <ChevronUp className={styles["selector-icon"]} />
             ) : (
-              <ChevronDown className="selector-icon" />
+              <ChevronDown className={styles["selector-icon"]} />
             )}
           </button>
           {showMonthDropdown && (
-            <div className="dropdown">
+            <div className={styles.dropdown}>
               <div
-                className={`dropdown-item ${selectedMonth === "월" ? "selected" : ""}`}
+                className={`${styles["dropdown-item"]} ${
+                  selectedMonth === "월" ? styles.selected : ""
+                }`}
                 onClick={() => handleMonthSelect("월")}
               >
                 선택안함
@@ -134,7 +149,9 @@ export default function DiaryHistory() {
               {months.map((month) => (
                 <div
                   key={month}
-                  className={`dropdown-item ${selectedMonth === month ? "selected" : ""}`}
+                  className={`${styles["dropdown-item"]} ${
+                    selectedMonth === month ? styles.selected : ""
+                  }`}
                   onClick={() => handleMonthSelect(month)}
                 >
                   {month}
@@ -146,26 +163,42 @@ export default function DiaryHistory() {
       </div>
 
       {/* Diary List */}
-      <div className="diary-list-container" ref={diaryListRef}>
-        <h2 className="diary-list-title">2025년 3월</h2>
+      <div className={styles["diary-list-container"]} ref={diaryListRef}>
+        <h2 className={styles["diary-list-title"]}>2025년 3월</h2>
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-          <div key={item} className="diary-item">
-            <div className="diary-item-left">
-              <img src="/1.png" alt="peach" className="diary-item-image" />
-              <div className="diary-item-text">
-                <p className="diary-item-date">2025/03/20</p>
-                <p className="diary-item-status">완전 좋음</p>
+          <div key={item} className={styles["diary-item"]}>
+            <div className={styles["diary-item-left"]}>
+              <img
+                src="/1.png"
+                alt="peach"
+                className={styles["diary-item-image"]}
+              />
+              <div className={styles["diary-item-text"]}>
+                <p className={styles["diary-item-date"]}>2025/03/20</p>
+                <p className={styles["diary-item-status"]}>완전 좋음</p>
               </div>
             </div>
-            <button className="diary-change-button">변경</button>
+            <button
+              className={styles["diary-change-button"]}
+              onClick={() => router.push(`/diary/edit/${item}`)}
+            >
+              변경
+            </button>
           </div>
         ))}
-      </div>
 
-      {/* Scroll to top button */}
-      <button className="scroll-to-top-button" onClick={scrollToTop}>
-        <ChevronUp className="scroll-top-icon" />
-      </button>
+        {/* ✅ 스크롤 시에만 버튼 보이도록 */}
+        {isScrolled && (
+          <button
+            className={`${styles["scroll-to-top-button"]} ${
+              isAtBottom ? styles["at-bottom"] : ""
+            }`}
+            onClick={scrollToTop}
+          >
+            <ChevronUp className={styles["scroll-top-icon"]} />
+          </button>
+        )}
+      </div>
     </div>
   );
 }
