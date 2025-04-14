@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/survey")
 @RequiredArgsConstructor
-@Tag(name = "자가진단 기능", description = "자가진단관련 api")
+@Tag(name = "자가진단 api", description = "자가진단 관련 기능")
 public class SurveyController {
     private final SurveyService surveyService;
 
