@@ -7,10 +7,17 @@ import axios from "axios";
 import { useRouter } from "next/navigation"; // ✅ 올바른 import
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
+import DeleteModal from "../components/DeleteModal"; // 위치에 맞게 경로 조정
+
+// 1. 로그인 아이디 정보 불러오기
+// 2. 닉네임 변경
+// 3. 비밀번호 변경
+// 4. 회원탈퇴 모달
 
 export default function MyPage() {
   const router = useRouter();
   const [name, setName] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   // useEffect(() => {
   //   const fetchUserInfo = async () => {
@@ -31,6 +38,26 @@ export default function MyPage() {
   //   fetchUserInfo();
   // }, []);
 
+  const handleDeleteProfile = (e) => {
+    e.preventDefault();
+    if (window.confirm("확인을 누르면 회원 정보가 삭제됩니다.")) {
+      axios
+        .delete(`${process.env.REACT_APP_PROXY_URL}/member/edit`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("ACCESS_TOKEN"),
+          },
+        })
+        .then(() => {
+          localStorage.clear();
+          alert("그동안 이용해주셔서 감사합니다.");
+          router.push("/");
+        })
+        .catch((err) => alert(err.response.data.message));
+    } else {
+      return;
+    }
+  };
+
   const handleLogout = async () => {
     try {
       await axios.post(
@@ -50,12 +77,16 @@ export default function MyPage() {
     }
   };
 
-  const deleteAccount = (e) => {};
-
   return (
     <div className={styles.container}>
       <Header title="마이페이지" showBack />
-
+      {showModal && (
+        <DeleteModal
+          onClose={() => setShowModal(false)}
+          onConfirm={handleDeleteProfile}
+        />
+      )}
+      ;
       <div className={styles.content}>
         {/* 프로필 섹션 */}
         <div className={styles.profileCard}>
@@ -74,9 +105,7 @@ export default function MyPage() {
           </div>
         </div>
       </div>
-
       <br></br>
-
       {/* 활동 내역 섹션 */}
       <div className={styles.menuCard}>
         <Link href="/diary-history" className={styles.menuItem}>
@@ -130,9 +159,7 @@ export default function MyPage() {
           </svg>
         </Link>
       </div>
-
       <br></br>
-
       {/* 계정 설정 섹션 */}
       <div className={styles.menuCard}>
         <Link href="/nickname-change" className={styles.menuItem}>
@@ -169,14 +196,16 @@ export default function MyPage() {
           </svg>
         </Link>
       </div>
-
       {/* 회원 탈퇴 및 로그아웃 */}
       <div className={styles.footer}>
         <button className={styles.textButton} onClick={handleLogout}>
           로그아웃
         </button>
         <span className={styles.separator}>|</span>
-        <button className={styles.textButton} onClick={deleteAccount}>
+        <button
+          className={styles.textButton}
+          onClick={() => setShowModal(true)}
+        >
           회원탈퇴
         </button>
       </div>
