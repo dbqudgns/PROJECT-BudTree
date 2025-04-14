@@ -140,7 +140,7 @@
 .scroll-to-top-button {
   position: sticky;
   right: 0%;
-  bottom: 4px;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 0px);
   background-color: #201e1b30;
   border: none;
   padding: 12px;
@@ -152,6 +152,31 @@
   box-sizing: border-box;
   float : right;
 }
+
+@media (max-height: 700px) {
+  .scroll-to-top-button {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 28px);
+  }
+}
+
+@media (max-height: 600px) {
+  .scroll-to-top-button {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 51px);
+  }
+}
+
+@media (max-height: 500px) {
+  .scroll-to-top-button {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 80px);
+  }
+}
+
+@media (max-height: 421px) {
+  .scroll-to-top-button {
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 110px);
+  }
+}
+
 
 .scroll-to-top-button:hover {
   background-color: #4a3212;
