@@ -16,7 +16,7 @@
 
 ## 반영 브랜치
 
-ex) feat/login -> develop
+ex) feature/login -> develop
 
 ## 작업내용 및 변경사항
 
