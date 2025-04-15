@@ -51,7 +51,10 @@ export default function LoginPage() {
 
       console.log("Access Token:", token);
 
-      const data = response.data as { status: number; message: { name: string; msg: string } };
+      const data = response.data as {
+        status: number;
+        message: { name: string; msg: string };
+      };
       const nameFromResponse = data.message?.name;
       console.log("name response : ", nameFromResponse);
 
@@ -110,6 +113,7 @@ export default function LoginPage() {
     </div>
   );
 }
+
 // "use client";
 // import styles from "./style.module.css";
 // import { useState } from "react";
@@ -130,24 +134,24 @@ export default function LoginPage() {
 //     // 에러 상태 초기화
 //     setIdError("");
 //     setPwdError("");
-    
+
 //     let hasError = false;
-    
+
 //     // 아이디가 비어있다면 에러 메시지 설정
 //     if (id.trim() === "") {
 //       setIdError("아이디를 입력해주세요.");
 //       hasError = true;
 //     }
-    
+
 //     // 비밀번호가 비어있다면 에러 메시지 설정
 //     if (password.trim() === "") {
 //       setPwdError("비밀번호를 입력해주세요.");
 //       hasError = true;
 //     }
-    
+
 //     // 하나라도 비어있으면 로그인 요청 진행 X
 //     if (hasError) return;
-    
+
 //     setLoading(true);
 //     try {
 //       const response = await axios.post(
@@ -172,7 +176,7 @@ export default function LoginPage() {
 //       }
 
 //       const data = response.data as { status: number; message: { name: string; msg: string } };
-      
+
 //       // 서버에서 받은 응답 데이터에 이름이 있으면 로그인 성공으로 간주
 //       if (data.message?.name) {
 //         router.push(`/mainPage?name=${encodeURIComponent(data.message.name)}`);
@@ -182,7 +186,7 @@ export default function LoginPage() {
 //       }
 //     } catch (error: any) {
 //       console.error("로그인 중 오류 발생:", error);
-      
+
 //       // 서버 응답에 따른 더 구체적인 에러 메시지 표시
 //       if (error.response) {
 //         if (error.response.status === 401) {
@@ -208,7 +212,7 @@ export default function LoginPage() {
 //     } else {
 //       setIdError("");
 //     }
-    
+
 //     // 비밀번호 입력 필드 검증
 //     if (password.trim() === "") {
 //       setPwdError("비밀번호를 입력해주세요.");
@@ -268,12 +272,12 @@ export default function LoginPage() {
 //         {pwdError && <p style={{ color: "red", marginTop: "0.5rem" }}>{pwdError}</p>}
 //       </div>
 //       <div className={styles.ButtonWrapper}>
-//         <button 
-//           className={styles.btn} 
+//         <button
+//           className={styles.btn}
 //           onClick={() => {
 //             validateFields(); // 검증 후
 //             handleLogin(); // 로그인 시도
-//           }} 
+//           }}
 //           disabled={loading}
 //         >
 //           {loading ? "로그인 중..." : "로그인"}
