@@ -1,4 +1,4 @@
-.diary-container {
+.chathistory-container {
   width: 100%;
   height: 100vh;
   background-color: #fefcf8;
@@ -7,85 +7,28 @@
   align-items: center;
   padding: 24px 16px;
   box-sizing: border-box;
-  overflow: auto; 
+  overflow: auto;
 }
 
 @media (max-height: 700px) {
-  .diary-container {
+  .chathistory-container {
     padding: 20px 12px;
   }
 }
 
 @media (max-height: 600px) {
-  .diary-container {
+  .chathistory-container {
     padding: 16px 10px;
   }
 }
 
 @media (max-height: 500px) {
-  .diary-container {
+  .chathistory-container {
     padding: 12px 8px;
   }
 }
-/* Header */
-.diary-header {
-  width: 100%;
-  max-width: 400px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
 
-.header-title {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.header-space {
-  width: 20px;
-}
-
-/* Selectors */
-.selector-container {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
-  width: 100%;
-  max-width: 400px;
-  justify-content: flex-start;
-  margin-top: 65px;
-  margin-left: 22px;
-}
-
-.selector-button {
-  background-color: #e8ddcf;
-  border: none;
-  border-radius: 12px;
-  padding: 8px 16px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #7a5e3a;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100px;
-  height: 40px;
-}
-
-.selector-button:active {
-  background-color: #c9b7a2; 
-}
-
-.selector-icon {
-  width: 16px;
-  height: 16px;
-  color: #7a5e3a;
-}
-
-/* Diary List */
-.diary-list-container {
+.chathistory-list-container {
   width: 100%;
   max-width: 400px;
   background-color: #f6f2e6;
@@ -100,64 +43,49 @@
   position: relative;
 }
 
-.diary-list-title {
+.chathistory-list-title {
   font-size: 21px;
   font-weight: bold;
   color: #7a5e3a;
   margin-bottom: 16px;
 }
 
-.diary-item {
+.chathistory-item {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  border: 1px solid #e4ddd3;
-  border-radius: 20px;
-  padding: 12px;
+  border-radius: 60px;
+  padding: 12px 16px;
   margin-bottom: 16px;
   background-color: #ffffff;
   border: 2px solid #c9b7a2;
 }
 
-.diary-item-left {
-  display: flex;
-  align-items: center;
+.chathistory-item:hover {
+  background-color: #e2d8c5;
+  transition: background-color 0.2s ease;
 }
 
-.diary-item-image {
-  width: 60px;
-  height: 60px;
+.chathistory-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.chathistory-item-date {
+  font-size: 15px;
+  font-weight: 500;
+  color: #575757;
   margin-right: 12px;
 }
 
-.diary-item-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.diary-item-date {
-  font-size: 16px;
-  font-weight: 500;
-  color: #575757;
-}
-
-.diary-item-status {
-  font-size: 12px;
-  color: #575757;
-}
-
-.diary-change-button {
-  background-color: #e8ddcf;
-  border: none;
-  border-radius: 900px;
-  padding: 12px 18px;
+.chathistory-item-status {
   font-size: 14px;
-  cursor: pointer;
-}
-
-.diary-change-button:active{
-  background-color: #704f2363;
-  opacity: 1;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .scroll-to-top-button {
@@ -211,6 +139,43 @@
   }
 }
 
+.selector-container {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  width: 100%;
+  max-width: 400px;
+  justify-content: flex-start;
+  margin-top: 65px;
+  margin-left: 22px;
+}
+
+.selector-button {
+  background-color: #e8ddcf;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #7a5e3a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100px;
+  height: 40px;
+}
+
+.selector-button:active{
+  background-color: #d6c9b6;
+}
+
+.selector-icon {
+  width: 16px;
+  height: 16px;
+  color: #7a5e3a;
+}
+
 .dropdown {
   position: absolute;
   top: 100%;
@@ -241,7 +206,7 @@
   color: #7a5e3a;
   font-size: 16px;
   position: relative;
-} 
+}
 
 .dropdown-item:hover {
   background-color: #d6c9b6;
@@ -256,7 +221,6 @@
   font-weight: bold;
 }
 
-/* Scrollbar */
 .dropdown::-webkit-scrollbar {
   width: 4px;
 }
@@ -270,7 +234,6 @@
   background-color: transparent;
 }
 
-/* Wrapper */
 .dropdown-wrapper {
   position: relative;
   margin-right: 8px;

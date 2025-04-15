@@ -125,7 +125,7 @@ export default function MyPage() {
           </svg>
         </Link>
         <div className={styles.divider}></div>
-        <Link href="/chat" className={styles.menuItem}>
+        <Link href="/chat-history" className={styles.menuItem}>
           <span>대화 내역</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"

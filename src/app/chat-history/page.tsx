@@ -4,9 +4,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Header from "../components/Header";
-import styles from "./diaryhistory.module.css";
+import styles from "./chathistory.module.css";
 
-export default function DiaryHistory() {
+export default function ChatHistory() {
   const router = useRouter();
 
   const [showYearDropdown, setShowYearDropdown] = useState(false);
@@ -14,8 +14,8 @@ export default function DiaryHistory() {
   const [selectedYear, setSelectedYear] = useState("연도");
   const [selectedMonth, setSelectedMonth] = useState("월");
 
-  const [isAtBottom, setIsAtBottom] = useState(false); 
-  const [isScrolled, setIsScrolled] = useState(false); 
+  const [isAtBottom, setIsAtBottom] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const currentYear = new Date().getFullYear();
   const years = Array.from(
@@ -28,7 +28,7 @@ export default function DiaryHistory() {
   ];
 
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const diaryListRef = useRef<HTMLDivElement>(null);
+  const resultListRef = useRef<HTMLDivElement>(null);
 
   const handleYearSelect = (year: string) => {
     setSelectedYear(year);
@@ -41,8 +41,8 @@ export default function DiaryHistory() {
   };
 
   const scrollToTop = () => {
-    if (diaryListRef.current) {
-      diaryListRef.current.scrollTo({
+    if (resultListRef.current) {
+      resultListRef.current.scrollTo({
         top: 0,
         behavior: "smooth",
       });
@@ -50,31 +50,29 @@ export default function DiaryHistory() {
   };
 
   useEffect(() => {
-    const container = diaryListRef.current;
+    const container = resultListRef.current;
     if (!container) return;
 
     const handleScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = container;
-
       const isBottom = scrollTop + clientHeight >= scrollHeight - 10;
       setIsAtBottom(isBottom);
-
-      const scrolled = scrollTop > 0;
-      setIsScrolled(scrolled);
+      setIsScrolled(scrollTop > 0);
     };
 
     container.addEventListener("scroll", handleScroll);
     return () => container.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return (
-    <div className={styles["diary-container"]} ref={dropdownRef}>
-      {/* Header */}
-      <Header title="일기내역" showBack />
+  const mockResults = Array.from({ length: 10 }, (_, i) => ({
+    date: `2025/03/${20 + i}`
+  }));
 
-      {/* Year & Month Selector */}
+  return (
+    <div className={styles["chathistory-container"]} ref={dropdownRef}>
+      <Header title="대화 내역" showBack />
+
       <div className={styles["selector-container"]}>
-        {/* Year Selector */}
         <div className={styles["dropdown-wrapper"]}>
           <button
             className={`${styles["selector-button"]} ${
@@ -117,7 +115,6 @@ export default function DiaryHistory() {
           )}
         </div>
 
-        {/* Month Selector */}
         <div className={styles["dropdown-wrapper"]}>
           <button
             className={`${styles["selector-button"]} ${
@@ -161,28 +158,16 @@ export default function DiaryHistory() {
         </div>
       </div>
 
-      {/* Diary List */}
-      <div className={styles["diary-list-container"]} ref={diaryListRef}>
-        <h2 className={styles["diary-list-title"]}>2025년 3월</h2>
-        {[1, 2, 3, 4, 5, 6].map((item) => (
-          <div key={item} className={styles["diary-item"]}>
-            <div className={styles["diary-item-left"]}>
-              <img
-                src="/1.png"
-                alt="peach"
-                className={styles["diary-item-image"]}
-              />
-              <div className={styles["diary-item-text"]}>
-                <p className={styles["diary-item-date"]}>2025/03/20</p>
-                <p className={styles["diary-item-status"]}>완전 좋음</p>
-              </div>
-            </div>
-            <button
-              className={styles["diary-change-button"]}
-              onClick={() => router.push(`/diary/edit/${item}`)}
-            >
-              변경
-            </button>
+      <div className={styles["chathistory-list-container"]} ref={resultListRef}>
+        <h2 className={styles["chathistory-list-title"]}>2025년 3월</h2>
+        {mockResults.map((item, idx) => (
+          <div
+            key={idx}
+            className={styles["chathistory-item"]}
+            onClick={() => router.push(`/chat/${item.date.replaceAll("/", "-")}`)}
+            style={{ cursor: "pointer" }}
+          >
+            <p className={styles["chathistory-item-date"]}>{item.date}</p>
           </div>
         ))}
 
