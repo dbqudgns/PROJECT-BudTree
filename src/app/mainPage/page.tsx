@@ -81,18 +81,16 @@ export default function MainPage() {
             </button>
           </div>
         </div>
+      </div>
 
-        <div className={styles.bottomImage}>
-          <div className={styles.imageWrapper}>
-            <Image
-              className={styles.realImage}
-              src="/selfcheck.png"
-              alt="selfcheck"
-              width={270}
-              height={270}
-            />
-          </div>
-        </div>
+      <div className={styles.bottomImage}>
+        <Image
+          className={styles.realImage}
+          src="/selfcheck.png"
+          alt="selfcheck"
+          width={270}
+          height={270}
+        />
       </div>
     </div>
   );

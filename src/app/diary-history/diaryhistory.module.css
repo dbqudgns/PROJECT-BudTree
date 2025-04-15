@@ -36,7 +36,7 @@
   max-width: 400px;
   justify-content: flex-start;
   margin-top: 65px;
-  margin-left:22px;
+  margin-left: 22px;
 }
 
 .selector-button {
@@ -70,7 +70,7 @@
 .diary-list-container {
   width: 100%;
   max-width: 400px;
-  background-color: #F6F2E6;
+  background-color: #f6f2e6;
   border-radius: 12px;
   padding: 16px;
   border: none;
@@ -150,7 +150,7 @@
   max-width: 15%;
   min-width: 40px;
   box-sizing: border-box;
-  float : right;
+  float: right;
 }
 
 .scroll-to-top-button:hover {
@@ -164,8 +164,6 @@
   width: 16px;
   height: 16px;
 }
-
-
 
 /* Dropdown */
 .dropdown {
@@ -201,7 +199,7 @@
 }
 
 .dropdown-item.selected::after {
-  content: '❯';
+  content: "❯";
   position: absolute;
   right: 16px;
   color: #7a5e3a;
@@ -227,5 +225,3 @@
   position: relative;
   margin-right: 8px;
 }
-
-
