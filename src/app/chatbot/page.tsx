@@ -17,14 +17,32 @@ export default function ChatPage() {
     []
   );
   const [showAllQuestions, setShowAllQuestions] = useState(false);
-  const [nickname, setNickname] = useState("이름");
+  const [nickname, setNickname] = useState("누구");
   const [isLoading, setIsLoading] = useState(false);
+  const [surveyId, setSurveyId] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const searchParams = new URLSearchParams(window.location.search);
       const nicknameParam = searchParams.get("nickname");
       if (nicknameParam) setNickname(nicknameParam);
+
+      const id = searchParams.get("surveyId");
+      setSurveyId(id);
+      if (id) {
+        const dummyResults = [
+          { question: "일 또는 여가 활동에 흥미를 느끼지 못함", score: 0 },
+          { question: "기분이 가라앉고 희망이 없음", score: 1 },
+          { question: "잠을 너무 많이 잠", score: 2 },
+          { question: "피곤하고 기운이 없음", score: 0 },
+          { question: "입맛이 없거나 과식을 함", score: 3 },
+          { question: "자신을 실패자라 느낌", score: 1 },
+          { question: "집중 어려움", score: 0 },
+          { question: "너무 느리거나 너무 들떠 있음", score: 2 },
+          { question: "자살 생각", score: 3 },
+        ];
+        setResults(dummyResults);
+      }
     }
   }, []);
 
@@ -79,7 +97,7 @@ export default function ChatPage() {
         ...prev,
         {
           role: "assistant",
-          content: "현재 서버와 연결할 수 없어요. 나중에 다시 시도해줘!",
+          content: "현재 서버와 연결할 수 없어. 나중에 다시 시도해줘!",
         },
       ]);
     } finally {
@@ -91,25 +109,25 @@ export default function ChatPage() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const surveyId = searchParams.get("surveyId");
+  // useEffect(() => {
+  //   const searchParams = new URLSearchParams(window.location.search);
+  //   const surveyId = searchParams.get("surveyId");
 
-    if (surveyId) {
-      const dummyResults = [
-        { question: "일 또는 여가 활동에 흥미를 느끼지 못함", score: 0 },
-        { question: "기분이 가라앉고 희망이 없음", score: 1 },
-        { question: "잠을 너무 많이 잠", score: 2 },
-        { question: "피곤하고 기운이 없음", score: 0 },
-        { question: "입맛이 없거나 과식을 함", score: 3 },
-        { question: "자신을 실패자라 느낌", score: 1 },
-        { question: "집중 어려움", score: 0 },
-        { question: "너무 느리거나 너무 들떠 있음", score: 2 },
-        { question: "자살 생각", score: 3 },
-      ];
-      setResults(dummyResults);
-    }
-  }, []);
+  //   if (surveyId) {
+  //     const dummyResults = [
+  //       { question: "일 또는 여가 활동에 흥미를 느끼지 못함", score: 0 },
+  //       { question: "기분이 가라앉고 희망이 없음", score: 1 },
+  //       { question: "잠을 너무 많이 잠", score: 2 },
+  //       { question: "피곤하고 기운이 없음", score: 0 },
+  //       { question: "입맛이 없거나 과식을 함", score: 3 },
+  //       { question: "자신을 실패자라 느낌", score: 1 },
+  //       { question: "집중 어려움", score: 0 },
+  //       { question: "너무 느리거나 너무 들떠 있음", score: 2 },
+  //       { question: "자살 생각", score: 3 },
+  //     ];
+  //     setResults(dummyResults);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (selectedQuestion) {
@@ -127,6 +145,18 @@ export default function ChatPage() {
       sendInitialPrompt();
     }
   }, [selectedQuestion]);
+
+  const getNicknameSuffix = (name: string): string => {
+    if (!name) return "";
+    const lastChar = name[name.length - 1];
+    const code = lastChar.charCodeAt(0) - 0xac00;
+
+    if (code < 0 || code > 0xd7a3 - 0xac00) {
+      return "아!";
+    }
+    const jong = code % 28;
+    return jong === 0 ? "야!" : "아!";
+  };
 
   return (
     <main className={styles.container}>
@@ -153,39 +183,42 @@ export default function ChatPage() {
         <div className={styles.botMessageText}>
           <p className={styles.botMessageName}>buddy</p>
           <p className={styles.botMessage}>
-            안녕, {nickname}아!
-            <br />
-            아래는 자가진단 검사 항목별 점수를 정리한 거야. 나와 이야기하고 싶은
-            항목을 선택하면, 내가 상담해주고 함께 해결해 줄게!
+            안녕, {nickname}
+            {getNicknameSuffix(nickname)} <br />
+            {surveyId
+              ? "아래는 자가진단 검사 항목별 점수를 정리한 거야. 나와 이야기하고 싶은 항목을 선택하면, 내가 상담해주고 함께 해결해 줄게!"
+              : "편안하게 대화를 시작해봐! 궁금하거나 나누고 싶은 이야기가 있다면, 언제든지 편하게 말해줘!"}
           </p>
         </div>
       </div>
 
-      <div className={styles.scoreButtons}>
-        {[0, 1, 2, 3].map((score) => {
-          const matchedIndexes = results
-            .map((r, i) => (r.score === score ? `Q${i + 1}` : null))
-            .filter(Boolean)
-            .join(", ");
-          return (
-            <button
-              key={score}
-              className={styles.scoreButton}
-              onClick={() => setSelectedScore(score)}
-            >
-              <strong>{scoreLabels[score]}</strong>
-              {matchedIndexes && (
-                <>
-                  <br />
-                  {matchedIndexes}
-                </>
-              )}
-            </button>
-          );
-        })}
-      </div>
+      {surveyId && (
+        <div className={styles.scoreButtons}>
+          {[0, 1, 2, 3].map((score) => {
+            const matchedIndexes = results
+              .map((r, i) => (r.score === score ? `Q${i + 1}` : null))
+              .filter(Boolean)
+              .join(", ");
+            return (
+              <button
+                key={score}
+                className={styles.scoreButton}
+                onClick={() => setSelectedScore(score)}
+              >
+                <strong>{scoreLabels[score]}</strong>
+                {matchedIndexes && (
+                  <>
+                    <br />
+                    {matchedIndexes}
+                  </>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
-      {selectedScore !== null && (
+      {surveyId && selectedScore !== null && (
         <div
           className={styles.overlay}
           onClick={(e) => {
@@ -228,7 +261,7 @@ export default function ChatPage() {
         </div>
       )}
 
-      {showAllQuestions && (
+      {surveyId && showAllQuestions && (
         <div
           className={styles.overlay}
           onClick={() => setShowAllQuestions(false)}

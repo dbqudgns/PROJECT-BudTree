@@ -31,8 +31,13 @@
 .bottomTab > a {
   margin-top: 10px;
 }
-.icon {
+.iconActive {
   font-family: "Material Icons";
   font-size: 28px;
   color: #5e4528;
+}
+.iconInactive {
+  font-family: "Material Icons";
+  font-size: 28px;
+  color: #b39b85;
 }

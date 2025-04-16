@@ -31,12 +31,12 @@ export default function DiaryEditPage() {
 
   const handleSave = () => {
     console.log("Updated:", { postId, content, emotion });
-    router.push("/diary");
+    router.push("/diary-history");
   };
 
   const handleDelete = () => {
     console.log("Deleted:", postId);
-    router.push("/diary");
+    router.push("/diary-history");
   };
 
   return (

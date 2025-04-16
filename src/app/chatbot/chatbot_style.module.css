@@ -85,6 +85,11 @@
   background-color: #f9f5ec;
   border: 2px solid #866023;
   transition: transform 0.3s ease;
+  transform-origin: center;
+}
+
+.rotated {
+  transform: rotate(45deg);
 }
 
 .input {
@@ -254,8 +259,4 @@
     transform: translateY(0);
     opacity: 1;
   }
-}
-
-.rotated {
-  transform: rotate(45deg);
 }
