@@ -15,8 +15,13 @@ export default function LoginPage() {
   const [name, setName] = useState("");
 
   const handleLogin = async () => {
-    if (id.trim() === "" || password.trim() === "") {
-      alert("아이디와 비밀번호를 입력해주세요.");
+    if (id.trim() === "") {
+      alert("아이디를 입력해주세요.");
+      return;
+    }
+
+    if (password.trim() === "") {
+      alert("비밀번호를 입력해주세요.");
       return;
     }
 

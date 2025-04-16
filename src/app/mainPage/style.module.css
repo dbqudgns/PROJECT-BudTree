@@ -127,13 +127,25 @@
   justify-content: center;
 }
 
-.firstExplanation,
+.firstExplanation {
+  display: flex;
+  flex-direction: column;
+  color: #575757;
+  font-size: 14px;
+  line-height: 2;
+  flex: 1;
+  padding-left: 22px;
+  border-radius: 15px;
+  text-align: center;
+  padding-left: 0;
+}
+
 .secondExplanation {
   display: flex;
   flex-direction: column;
   color: #575757;
   font-size: 14px;
-  line-height: 1.8;
+  line-height: 2;
   flex: 1;
   padding-left: 20px;
   border-radius: 15px;
@@ -190,19 +202,20 @@
 @media (max-width: 360px) {
   .container {
     min-height: 120vh;
+    overflow: hidden;
   }
 
   /* 카드 영역을 좀 더 컴팩트하게 조정 */
   .selfCheckDiv {
     height: auto; /* 내용에 따라 유동적으로 늘어나도록 */
-    padding-bottom: 80px; /* 하단 캐릭터와 겹치지 않도록 여유 확보 */
+    padding-bottom: 50px; /* 하단 캐릭터와 겹치지 않도록 여유 확보 */
     gap: 12px; /* 카드 간 갭을 줄임 */
   }
 
   /* 각 카드의 패딩과 폰트 크기를 줄임 */
   .firstSelfCheck,
   .secondSelfCheck {
-    padding: 15px; /* 기존 20px → 15px로 축소 */
+    padding: 12px; /* 기존 20px → 15px로 축소 */
     gap: 8px; /* 내부 갭도 줄여서 컴팩트하게 */
   }
 
@@ -224,12 +237,17 @@
   }
 
   .bottomImage {
-    top: 300px; /* 화면이 작아질 때 캐릭터의 위치도 위로 이동 */
-    transform: translateX(-50%);
+    top: 320px; /* 화면이 작아질 때 캐릭터의 위치도 위로 이동 */
+    transform: translateX(-49%);
+    z-index: 1;
+    margin-left: 0;
+    position: absolute;
   }
 
   .realImage {
     width: 15rem;
-    height: 20rem;
+    height: 16rem;
+    padding: 0;
+    margin: 0;
   }
 }
