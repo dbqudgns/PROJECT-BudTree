@@ -17,7 +17,7 @@ export default function ChatPage() {
     []
   );
   const [showAllQuestions, setShowAllQuestions] = useState(false);
-  const [nickname, setNickname] = useState("친구");
+  const [nickname, setNickname] = useState("이름");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
