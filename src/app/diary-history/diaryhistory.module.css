@@ -231,7 +231,7 @@
   margin-right: 8px;
 }
 
-/* 반응형 미디어쿼리 */
+
 @media (max-width: 480px){
   .header-title {
     font-size: 0.95rem;
@@ -252,9 +252,19 @@
     font-size: 0.7rem;
   }
   .diary-change-button {
-    font-size: 0.8rem;
-    padding: 0.5rem 0.8rem;
+    font-size: 0.84rem;
+    padding: 0.65rem 1.08rem;
   }
+  .dropdown-item {
+    font-size: 0.95rem;
+  } 
+
+  .dropdown-item.selected::after {
+    content: "❯";
+    right: 10px;
+   
+  }
+
 }
 
 @media (max-width: 375px){
@@ -274,9 +284,12 @@
     font-size: 0.68rem;
   }
   .diary-change-button {
-    font-size: 0.75rem;
-    padding: 0.4rem 0.7rem;
+    font-size: 0.79rem;
+    padding: 0.60rem 0.96rem;
   }
+  .dropdown-item {
+    font-size: 0.9rem;
+  } 
 }
 
 @media (max-width: 320px) {
@@ -302,6 +315,10 @@
     font-size: 0.7rem;
     padding: 0.4rem 0.6rem;
   }
+
+  .dropdown-item {
+    font-size: 0.85rem;
+  } 
 }
 
 @media (max-height: 400px) {
