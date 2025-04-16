@@ -88,6 +88,10 @@
   display: block;
   cursor: pointer;
 }
+.nextButton:hover {
+  background-color: #b6ac9e;
+  transition: background-color 0.3s ease;
+}
 
 .fixedFooter {
   position: fixed;
@@ -157,8 +161,16 @@
   background-color: #f2f0ea;
   color: #5c5c5c;
 }
+.cancelButton:hover {
+  background-color: #e0dcd4;
+  transition: background-color 0.3s ease;
+}
 
 .confirmButton {
   background-color: #d8cebd;
   color: #fff;
+}
+.confirmButton:hover {
+  background-color: #b6ac9e;
+  transition: background-color 0.3s ease;
 }

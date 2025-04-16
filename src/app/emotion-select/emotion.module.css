@@ -141,6 +141,9 @@
   background-color: #f1e9e1;
   color: #c0b8b1;
 }
+.completeButton:hover:enabled {
+  background-color: #b6ac9e;
+}
 .emotionItemWrapper {
   display: flex;
   flex-direction: column;

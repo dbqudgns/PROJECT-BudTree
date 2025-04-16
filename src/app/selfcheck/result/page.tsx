@@ -11,6 +11,26 @@ export default function ResultPage() {
   const score = Number(searchParams.get("score") || "0");
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  // const handleConfirm = async () => {
+  //   setLoading(true);
+  //   try {
+  //     // 백엔드 API 엔드포인트를 호출하여 surveyId를 받아옵니다.
+  //     const response = await fetch("/api/getSurveyId");
+  //     if (!response.ok) {
+  //       throw new Error("백엔드 응답 오류");
+  //     }
+  //     const data = await response.json();
+  //     // data.surveyId에 실제 survey ID가 들어있다고 가정합니다.
+  //     router.push(`/chatbot?surveyId=${data.surveyId}`);
+  //   } catch (error) {
+  //     console.error("surveyId를 받아오는데 문제가 발생했습니다.", error);
+  //     // 오류 처리 로직 추가 가능 (예: 사용자 안내 메시지)
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <main className={styles.container}>
@@ -191,15 +211,19 @@ export default function ResultPage() {
             <div className={styles.modalButtons}>
               <button
                 className={styles.cancelButton}
-                onClick={() => setShowModal(false)}
+                onClick={() => {
+                  setShowModal(false);
+                  router.push("/mainPage");
+                }}
               >
                 취소
               </button>
               <button
                 className={styles.confirmButton}
-                onClick={() => router.push("/chatbot")}
+                onClick={() => router.push("/chatbot?surveyId=123")}
+                disabled={loading}
               >
-                확인
+                {loading ? "처리중..." : "확인"}
               </button>
             </div>
           </div>

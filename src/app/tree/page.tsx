@@ -42,7 +42,7 @@ export default function Page() {
       postId: "6",
       emotion: "1",
       date: "4월 6일 화요일",
-      content: "오늘은 날씨가 흐렸지만 기분은 괜찮았다.",
+      content: "오늘은 날씨도 좋고 기분도 좋음.",
     },
   ];
 

@@ -127,7 +127,7 @@
 }
 
 .nextButton {
-  background-color: #7f5f3c;
+  background-color: #a38c6e;
   color: white;
   border: none;
   width: 70px;
@@ -136,9 +136,13 @@
   border-radius: 12px;
   cursor: pointer;
 }
+.nextButton:hover {
+  background-color: #886e4d;
+  transition: background-color 0.3s ease;
+}
 
 .submitButton {
-  background-color: #3c2b10;
+  background-color: rgb(127, 95, 60);
   color: white;
   border: none;
   border-radius: 12px;
@@ -146,4 +150,8 @@
   width: 70px;
   height: 40px;
   font-size: 14px;
+}
+.submitButton:hover {
+  background-color: rgb(103, 77, 49);
+  transition: background-color 0.3s ease;
 }
