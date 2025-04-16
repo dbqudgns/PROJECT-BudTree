@@ -7,11 +7,11 @@ import styles from "./emotion.module.css"; // 별도 스타일 파일 생성 필
 import Header from "../components/Header"; // Header 컴포넌트 경로에 맞게 수정
 
 const emotions = [
-  { label: "완전 좋음", value: "very_good", icon: "/1.png" },
-  { label: "좋음", value: "good", icon: "/2.png" },
-  { label: "그럭저럭", value: "soso", icon: "/3.png" },
-  { label: "나쁨", value: "bad", icon: "/4.png" },
-  { label: "완전 나쁨", value: "very_bad", icon: "/5.png" },
+  { label: "완전 좋음", value: "EXCELLENT", icon: "/1.png" },
+  { label: "좋음", value: "GOOD", icon: "/2.png" },
+  { label: "그럭저럭", value: "SOSO", icon: "/3.png" },
+  { label: "나쁨", value: "BAD", icon: "/4.png" },
+  { label: "완전 나쁨", value: "TERRIBLE", icon: "/5.png" },
 ];
 
 export default function EmotionSelectPage() {

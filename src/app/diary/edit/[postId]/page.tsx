@@ -6,11 +6,11 @@ import styles from "./page.module.css";
 import Header from "src/app/components/Header";
 
 const EMOTIONS = [
-  { id: "very_good", label: "완전 좋음", src: "/1.png" },
-  { id: "good", label: "좋음", src: "/2.png" },
-  { id: "soso", label: "그럭저럭", src: "/3.png" },
-  { id: "bad", label: "나쁨", src: "/4.png" },
-  { id: "very_bad", label: "완전 나쁨", src: "/5.png" },
+  { id: "EXCELLENT", label: "완전 좋음", src: "/1.png" },
+  { id: "GOOD", label: "좋음", src: "/2.png" },
+  { id: "SOSO", label: "그럭저럭", src: "/3.png" },
+  { id: "BAD", label: "나쁨", src: "/4.png" },
+  { id: "TERRIBLE", label: "완전 나쁨", src: "/5.png" },
 ];
 
 export default function DiaryEditPage() {
