@@ -96,7 +96,7 @@ html {
 }
 
 .StartImage {
-  padding: 15px;
+  padding: 20px;
   justify-content: center;
   align-items: center;
   margin-top: 40px;
@@ -124,10 +124,12 @@ html {
 
 .button-group {
   display: flex;
+  flex-direction: column;
   gap: 12px;
   margin-bottom: 20px;
   justify-content: space-evenly;
   margin-top: 30px;
+  width: 100%;
 }
 
 .primary-button {
@@ -136,7 +138,7 @@ html {
   border: none;
   border-radius: 27px;
   padding: 14px;
-  width: 130px;
+  width: 100%;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
@@ -148,7 +150,7 @@ html {
   border: 1px solid #7f5f3c;
   border-radius: 27px;
   padding: 14px;
-  width: 130px;
+  width: 100%;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
