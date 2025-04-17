@@ -54,10 +54,10 @@ public class ChatroomService {
     );
 
     private static final Map<Integer, String> CHOOSE = Map.of(
-            1, "전혀 방해받지 않았다",
-            2, "며칠 동안 방해받았다",
-            3, "7일 이상 방해받았다",
-            4, "거의 매일 방해받았다"
+            1, "전혀 방해 받지 않았다",
+            2, "며칠 동안 방해 받았다",
+            3, "7일 이상 방해 받았다",
+            4, "거의 매일 방해 받았다"
     );
 
     public ChatroomFirstSurveyRP responseFirstChat(Long surveyId, CustomMemberDetails customMemberDetails) throws AccessDeniedException {
