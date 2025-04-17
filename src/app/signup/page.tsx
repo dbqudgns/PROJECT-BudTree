@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import styles from "./style.module.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 // 1. 아이디를 입력하면 중복확인
 // 2. 아이디,닉네임 비밀번호, 비밀번호 확인에서 하나라도 빠질시 인풋창 밑에 경고문 출력해주기
@@ -26,7 +27,29 @@ export default function Signup() {
 
   const buttonClick = () => {
     // Validation could be added here
-    router.push("./tree");
+    router.push("./LoginPage");
+  };
+
+  const [passwordType1, setPasswordType1] = useState({
+    type: "password",
+    visible: false,
+  });
+  const [passwordType2, setPasswordType2] = useState({
+    type: "password",
+    visible: false,
+  });
+  const handlePasswordType1 = () => {
+    setPasswordType1((prev) => ({
+      type: prev.visible ? "password" : "text",
+      visible: !prev.visible,
+    }));
+  };
+
+  const handlePasswordType2 = () => {
+    setPasswordType2((prev) => ({
+      type: prev.visible ? "password" : "text",
+      visible: !prev.visible,
+    }));
   };
 
   return (
@@ -54,35 +77,55 @@ export default function Signup() {
 
         <div className={styles.inputPassword}>
           <div className={styles.newpwd}>닉네임</div>
-          <input
-            type="text"
-            placeholder="닉네임을 입력해주세요."
-            className={styles.inputpwd}
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-          />
+          <div className={styles.inputContainer}>
+            <input
+              type="text"
+              placeholder="닉네임을 입력해주세요."
+              className={styles.inputOnly}
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+            />
+          </div>
         </div>
 
         <div className={styles.inputPassword}>
           <div className={styles.newpwd}>비밀번호</div>
-          <input
-            type="password"
-            placeholder="비밀번호 (8자 이상, 문자/숫자/기호 사용)"
-            className={styles.inputpwd}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className={styles.inputContainer}>
+            <input
+              type={passwordType1.type}
+              placeholder="비밀번호 (8자 이상, 문자/숫자/기호 사용)"
+              className={styles.inputOnly}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <div className={styles.toggleView} onClick={handlePasswordType1}>
+              {passwordType1.visible ? (
+                <Image src="/eye-off.png" alt="숨기기" width={24} height={24} />
+              ) : (
+                <Image src="/eye.png" alt="보이기" width={24} height={24} />
+              )}
+            </div>
+          </div>
         </div>
 
         <div className={styles.inputPassword}>
           <div className={styles.newpwd}>비밀번호 확인</div>
-          <input
-            type="password"
-            placeholder="비밀번호 확인"
-            className={styles.inputpwd}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
+          <div className={styles.inputContainer}>
+            <input
+              type={passwordType2.type}
+              placeholder="비밀번호 확인"
+              className={styles.inputOnly}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            <div className={styles.toggleView} onClick={handlePasswordType2}>
+              {passwordType2.visible ? (
+                <Image src="/eye-off.png" alt="숨기기" width={24} height={24} />
+              ) : (
+                <Image src="/eye.png" alt="보이기" width={24} height={24} />
+              )}
+            </div>
+          </div>
         </div>
       </div>
 

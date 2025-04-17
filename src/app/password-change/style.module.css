@@ -78,6 +78,20 @@
   background-color: rgba(255, 255, 255, 0.5);
   font-size: 16px;
   color: #575757;
+  padding-right: 150px; /* 아이콘 공간 확보 */
+}
+
+.toggleView {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
 }
 
 .inputPassword2 {
