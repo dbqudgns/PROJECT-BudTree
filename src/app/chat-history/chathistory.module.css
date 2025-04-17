@@ -10,22 +10,42 @@
   overflow: auto;
 }
 
-@media (max-height: 700px) {
-  .chathistory-container {
-    padding: 20px 12px;
-  }
+.selector-container {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  width: 100%;
+  max-width: 400px;
+  justify-content: flex-start;
+  margin-top: 65px;
+  margin-left: 22px;
 }
 
-@media (max-height: 600px) {
-  .chathistory-container {
-    padding: 16px 10px;
-  }
+.selector-button {
+  background-color: #e8ddcf;
+  border: none;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #7a5e3a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100px;
+  height: 40px;
 }
 
-@media (max-height: 500px) {
-  .chathistory-container {
-    padding: 12px 8px;
-  }
+.selector-button.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.selector-icon {
+  width: 16px;
+  height: 16px;
+  color: #7a5e3a;
 }
 
 .chathistory-list-container {
@@ -34,17 +54,15 @@
   background-color: #f6f2e6;
   border-radius: 12px;
   padding: 25px 16px 0px 16px;
-  border: none;
-  box-shadow: none;
-  min-height: 70vh;
   border: 2px solid #c9b7a2;
   overflow-y: auto;
-  height: 60vh;
+  height: 67vh;
+  min-height: 67vh;
   position: relative;
 }
 
 .chathistory-list-title {
-  font-size: 21px;
+  font-size: 1.3rem;
   font-weight: bold;
   color: #7a5e3a;
   margin-bottom: 16px;
@@ -52,40 +70,25 @@
 
 .chathistory-item {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   border-radius: 60px;
-  padding: 12px 16px;
+  padding: 12px;
   margin-bottom: 16px;
   background-color: #ffffff;
   border: 2px solid #c9b7a2;
 }
 
-.chathistory-item:hover {
+.chathistory-item:active {
   background-color: #e2d8c5;
   transition: background-color 0.2s ease;
-}
-
-.chathistory-item-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
+} 
 
 .chathistory-item-date {
   font-size: 15px;
   font-weight: 500;
   color: #575757;
-  margin-right: 12px;
-}
-
-.chathistory-item-status {
-  font-size: 14px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  margin-left: 8px;
 }
 
 .scroll-to-top-button {
@@ -105,75 +108,13 @@
 }
 
 .scroll-to-top-button:active {
-  background-color: #5e4327; 
+  background-color: #5e4327;
 }
 
 .scroll-top-icon {
   color: #fff;
   width: 24px;
   height: 24px;
-}
-
-
-@media (max-height: 700px) {
-  .scroll-to-top-button {
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 44px);
-  }
-}
-
-@media (max-height: 600px) {
-  .scroll-to-top-button {
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 64px);
-  }
-}
-
-@media (max-height: 500px) {
-  .scroll-to-top-button {
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 104px);
-  }
-}
-
-@media (max-height: 400px) {
-  .scroll-to-top-button {
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 124px);
-  }
-}
-
-.selector-container {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
-  width: 100%;
-  max-width: 400px;
-  justify-content: flex-start;
-  margin-top: 65px;
-  margin-left: 22px;
-}
-
-.selector-button {
-  background-color: #e8ddcf;
-  border: none;
-  border-radius: 12px;
-  padding: 8px 16px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #7a5e3a;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100px;
-  height: 40px;
-}
-
-.selector-button:active{
-  background-color: #d6c9b6;
-}
-
-.selector-icon {
-  width: 16px;
-  height: 16px;
-  color: #7a5e3a;
 }
 
 .dropdown {
@@ -191,12 +132,7 @@
   padding: 0;
   font-family: inherit;
   font-weight: bold;
-  font-size: 16px;
-}
-
-.selector-button.active {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  font-size: 1rem;
 }
 
 .dropdown-item {
@@ -204,7 +140,7 @@
   cursor: pointer;
   font-weight: bold;
   color: #7a5e3a;
-  font-size: 16px;
+  font-size: 1rem;
   position: relative;
 }
 
@@ -221,20 +157,69 @@
   font-weight: bold;
 }
 
-.dropdown::-webkit-scrollbar {
-  width: 4px;
-}
-
-.dropdown::-webkit-scrollbar-thumb {
-  background-color: #ffffff;
-  border-radius: 4px;
-}
-
-.dropdown::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
 .dropdown-wrapper {
   position: relative;
   margin-right: 8px;
+}
+
+@media (max-width: 375px) {
+  .selector-button {
+    font-size: 0.9rem;
+    width: 85px;
+    height: 34px;
+  }
+  .chathistory-list-title {
+    font-size: 1rem;
+  }
+  .chathistory-item-date {
+    font-size: 0.865rem;
+  }
+  .dropdown-item {
+    font-size: 0.9rem;
+  }
+  .dropdown-item.selected::after {
+    right: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .selector-button {
+    font-size: 0.85rem;
+    width: 80px;
+    height: 32px;
+  }
+  .chathistory-item-date {
+    font-size: 0.65rem;
+  }
+  .dropdown-item {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-height: 700px) {
+  .chathistory-list-container {
+    height: 61vh;
+    min-height: 61vh;
+  }
+}
+
+@media (max-height: 600px) {
+  .chathistory-list-container {
+    height: 56vh;
+    min-height: 56vh;
+  }
+}
+
+@media (max-height: 530px) {
+  .chathistory-list-container {
+    height: 52vh;
+    min-height: 52vh;
+  }
+}
+
+@media (max-height: 485px) {
+  .chathistory-list-container {
+    height: 48vh;
+    min-height: 48vh;
+  }
 }

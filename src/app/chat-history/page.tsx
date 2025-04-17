@@ -70,7 +70,7 @@ export default function ChatHistory() {
 
   return (
     <div className={styles["chathistory-container"]} ref={dropdownRef}>
-      <Header title="대화 내역" showBack />
+      <Header title="대화 내역"showBack onBack={() => router.push("/mypage")}/>
 
       <div className={styles["selector-container"]}>
         <div className={styles["dropdown-wrapper"]}>

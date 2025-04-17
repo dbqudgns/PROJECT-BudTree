@@ -70,7 +70,7 @@ export default function DiaryHistory() {
   return (
     <div className={styles["diary-container"]} ref={dropdownRef}>
       {/* Header */}
-      <Header title="일기내역" showBack />
+      <Header title="일기내역"  showBack onBack={() => router.push("/mypage")}/>
 
       {/* Year & Month Selector */}
       <div className={styles["selector-container"]}>
