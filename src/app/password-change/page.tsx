@@ -4,10 +4,14 @@ import styles from "./style.module.css";
 import { useState } from "react";
 import Header from "../components/Header";
 import Image from "next/image";
+import { useRouter } from "next/navigation"; // ✅ 올바른 import
 
 export default function ChangePwd() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const router = useRouter();
 
   const [passwordType1, setPasswordType1] = useState({
     type: "password",
@@ -31,6 +35,10 @@ export default function ChangePwd() {
     }));
   };
 
+  const passwordCheckBtn = () => {
+    router.push("./mainPage");
+  };
+
   return (
     <div className={styles.container}>
       {/* header */}
@@ -48,8 +56,17 @@ export default function ChangePwd() {
               placeholder="비밀번호를 입력해주세요."
               className={styles.inputpwd}
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (password && password !== e.target.value) {
+                  setErrorMessage("비밀번호가 일치하지 않습니다.");
+                } else {
+                  setErrorMessage("");
+                }
+              }}
             />
+            {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+
             <div className={styles.toggleView} onClick={handlePasswordType1}>
               {passwordType1.visible ? (
                 <Image src="/eye-off.png" alt="숨기기" width={24} height={24} />
@@ -66,11 +83,19 @@ export default function ChangePwd() {
           <div className={styles.inputWrapper}>
             <input
               type={passwordType2.type}
-              placeholder="비밀번호를 입력해주세요."
+              placeholder="비밀번호를 다시 입력해주세요."
               className={styles.inputpwd}
-              value={confirmPassword} // ✅ 여기!
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={confirmPassword}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+                if (confirmPassword && e.target.value !== confirmPassword) {
+                  setErrorMessage("비밀번호가 일치하지 않습니다.");
+                } else {
+                  setErrorMessage("");
+                }
+              }}
             />
+            {errorMessage && <p className={styles.error}>{errorMessage}</p>}
             <div className={styles.toggleView} onClick={handlePasswordType2}>
               {passwordType2.visible ? (
                 <Image src="/eye-off.png" alt="숨기기" width={24} height={24} />
@@ -84,7 +109,13 @@ export default function ChangePwd() {
 
       {/* footer */}
       <div className={styles.footer}>
-        <button className={styles.btn}>완료</button>
+        <button
+          className={styles.btn}
+          onClick={passwordCheckBtn}
+          disabled={password.trim() === ""}
+        >
+          완료
+        </button>
       </div>
     </div>
   );

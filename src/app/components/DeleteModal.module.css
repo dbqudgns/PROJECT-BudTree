@@ -12,7 +12,7 @@
 }
 
 .modalContent {
-  background: #f3efe9;
+  background: white;
   width: 312px;
   height: 221px;
   border-radius: 10px;
@@ -22,7 +22,6 @@
 }
 
 .message1 {
-  display: block; /* ✅ 줄바꿈 되도록 설정 */
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 20px;
@@ -31,11 +30,16 @@
 }
 
 .message2 {
-  display: block; /* ✅ 줄바꿈 되도록 설정 */
   font-size: 15px;
   font-weight: bold;
   margin-bottom: 10px;
   color: #575757;
+  text-align: center;
+  line-height: 2;
+  text-align: left;
+}
+
+.message2Container {
   text-align: left;
 }
 
@@ -46,24 +50,25 @@
   padding: 20px;
 }
 
-.cancelButton {
+.cancelButton,
+.confirmButton {
   padding: 10px 20px;
-  border: 1px solid #dddacf;
-  background: #fff4f4;
-  color: #65481a;
   border-radius: 30px;
   font-weight: bold;
   cursor: pointer;
-  width: 150px;
+  font-size: 16px;
+  min-width: 110px;
+  height: 45px;
+}
+
+.cancelButton {
+  background: #fff4f4;
+  border: 1px solid #dddacf;
+  color: #65481a;
 }
 
 .confirmButton {
-  padding: 10px 20px;
   background: #ff9d9d;
-  color: white;
   border: none;
-  border-radius: 30px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 150px;
+  color: white;
 }
