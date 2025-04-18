@@ -79,7 +79,8 @@
 .error {
   color: #ff7f7f;
   font-size: 14px;
-  margin-top: 8px;
+  margin-top: 7px;
+  margin-left: 12px;
 }
 
 .footer {
@@ -108,7 +109,7 @@
 }
 
 .btn:disabled {
-  background-color: #b9b6ad;
-  color: #f6f2e6;
+  background-color: #f3efe9;
+  color: #d9cebb;
   cursor: not-allowed;
 }

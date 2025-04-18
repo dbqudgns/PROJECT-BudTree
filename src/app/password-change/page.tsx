@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./style.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Image from "next/image";
 import { useRouter } from "next/navigation"; // ✅ 올바른 import
@@ -12,6 +12,16 @@ export default function ChangePwd() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const router = useRouter();
+  useEffect(() => {
+    if (password.trim() === "") {
+      setErrorMessage("비밀번호를 입력해주세요.");
+    }
+    if (confirmPassword.trim() === "") {
+      setErrorMessage("비밀번호를 다시 입력해주세요.");
+    } else {
+      setErrorMessage("");
+    }
+  }, [password]);
 
   const [passwordType1, setPasswordType1] = useState({
     type: "password",
