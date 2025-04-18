@@ -13,6 +13,7 @@ import DeleteModal from "../components/DeleteModal"; // 위치에 맞게 경로 
 // 2. 닉네임 변경
 // 3. 비밀번호 변경
 // 4. 회원탈퇴 모달
+// 5. 로그아웃 모달
 
 export default function MyPage() {
   const router = useRouter();
@@ -79,14 +80,7 @@ export default function MyPage() {
 
   return (
     <div className={styles.container}>
-      <Header title="마이페이지" showBack />
-      {showModal && (
-        <DeleteModal
-          onClose={() => setShowModal(false)}
-          onConfirm={handleDeleteProfile}
-        />
-      )}
-      ;
+      <Header title="마이 페이지" showBack />;
       <div className={styles.content}>
         {/* 프로필 섹션 */}
         <div className={styles.profileCard}>
@@ -209,6 +203,13 @@ export default function MyPage() {
           회원탈퇴
         </button>
       </div>
+      {/* 모달 렌더링 */}
+      {showModal && (
+        <DeleteModal
+          onClose={() => setShowModal(false)}
+          onConfirm={handleDeleteProfile}
+        />
+      )}
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"; // ✅ 올바른 import
 
 export default function MainPage() {
   const searchParams = useSearchParams();
-  const name = searchParams.get("name"); // 여기서 name 받아오기
+  const name = searchParams.get("name");
   const [userName, setUserName] = useState("");
   const router = useRouter();
 
@@ -20,14 +20,12 @@ export default function MainPage() {
     }
   }, [searchParams]);
 
-  console.log(name);
-
   const selfCheckBtn = () => {
     router.push("./selfcheck");
   };
 
   const BuddyBtn = () => {
-    router.push("./diary");
+    router.push("./chatbot");
   };
 
   return (
