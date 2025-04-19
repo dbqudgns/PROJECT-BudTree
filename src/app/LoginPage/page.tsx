@@ -1,6 +1,6 @@
 "use client";
 import styles from "./style.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image"; // Image 컴포넌트 import
 import Header from "../components/Header";
 import axios from "axios";
@@ -13,6 +13,17 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const router = useRouter();
   const [name, setName] = useState("");
+  const [passwordType1, setPasswordType1] = useState({
+    type: "password",
+    visible: false,
+  });
+
+  const handlePasswordType1 = () => {
+    setPasswordType1((prev) => ({
+      type: prev.visible ? "password" : "text",
+      visible: !prev.visible,
+    }));
+  };
 
   const handleLogin = async () => {
     if (id.trim() === "") {
@@ -64,6 +75,8 @@ export default function LoginPage() {
       console.log("name response : ", nameFromResponse);
 
       if (nameFromResponse) {
+        localStorage.setItem("nickname", nameFromResponse);
+        localStorage.setItem("id", id);
         router.push(`/mainPage?name=${encodeURIComponent(nameFromResponse)}`);
       } else {
         alert("회원정보가 없으니 회원가입을 해주세요.");
@@ -99,15 +112,22 @@ export default function LoginPage() {
         />
 
         <br />
-
-        <br></br>
-        <input
-          type="password"
-          placeholder="비밀번호를 입력해주세요."
-          className={styles.inputpwd}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className={styles.inputWrapper}>
+          <input
+            type={passwordType1.type}
+            placeholder="비밀번호를 입력해주세요."
+            className={styles.inputpwd}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <div className={styles.eyeIcon} onClick={handlePasswordType1}>
+            {passwordType1.visible ? (
+              <Image src="/eye-off.png" alt="숨기기" width={24} height={24} />
+            ) : (
+              <Image src="/eye.png" alt="보이기" width={24} height={24} />
+            )}
+          </div>
+        </div>
       </div>
       <div className={styles.ButtonWrapper}>
         <button className={styles.btn} onClick={handleLogin} disabled={loading}>

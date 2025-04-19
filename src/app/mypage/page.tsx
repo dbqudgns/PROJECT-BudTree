@@ -19,25 +19,23 @@ export default function MyPage() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [userId, setUserId] = useState("");
 
-  // useEffect(() => {
-  //   const fetchUserInfo = async () => {
-  //     try {
-  //       const res = await axios.get(
-  //         "https://api.budtree.store/member/profile",
-  //         {
-  //           withCredentials: true,
-  //         }
-  //       );
-  //       console.log("닉네임 응답 결과:", res.data);
-  //       setName(res.data.name); // 🔥 여기를 정확히 이렇게!
-  //     } catch (error) {
-  //       console.error("닉네임 불러오기 실패:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const nicknameFromStorage = localStorage.getItem("userName");
+    const idFromStorage = localStorage.getItem("id");
 
-  //   fetchUserInfo();
-  // }, []);
+    console.log("마이페이지에서 닉네임:", nicknameFromStorage);
+    console.log("마이페이지에서 아이디:", idFromStorage);
+
+    if (idFromStorage) {
+      setUserId(idFromStorage);
+    }
+
+    if (nicknameFromStorage) {
+      setName(nicknameFromStorage);
+    }
+  }, []);
 
   const handleDeleteProfile = (e) => {
     e.preventDefault();
@@ -95,7 +93,7 @@ export default function MyPage() {
           </div>
           <div className={styles.userInfo}>
             <h2 className={styles.nickname}>{name}</h2>
-            <p className={styles.userId}>아이디</p>
+            <p className={styles.userId}>{userId}</p>
           </div>
         </div>
       </div>
