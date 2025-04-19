@@ -93,7 +93,7 @@ export default function Signup() {
           <div className={styles.inputContainer}>
             <input
               type={passwordType1.type}
-              placeholder="비밀번호를 입력하세요"
+              placeholder="비밀번호를 입력하세요."
               className={styles.inputOnly}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -113,7 +113,7 @@ export default function Signup() {
           <div className={styles.inputContainer}>
             <input
               type={passwordType2.type}
-              placeholder="비밀번호를 다시 입력하세요"
+              placeholder="비밀번호를 다시 입력하세요."
               className={styles.inputOnly}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}

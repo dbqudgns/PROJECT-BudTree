@@ -95,6 +95,7 @@ export default function ChangePwd() {
               type={passwordType2.type}
               placeholder="비밀번호를 다시 입력해주세요."
               className={styles.inputpwd}
+              id="write"
               value={confirmPassword}
               onChange={(e) => {
                 setConfirmPassword(e.target.value);

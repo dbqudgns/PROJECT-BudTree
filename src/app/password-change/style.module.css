@@ -43,7 +43,7 @@
   background-color: rgba(255, 255, 255, 0.5);
   font-size: 16px;
   color: #575757;
-  padding-right: 150px; /* 아이콘 공간 확보 */
+  padding-right: 120px; /* 아이콘 공간 확보 */
 }
 
 .nickSetting {
@@ -86,7 +86,7 @@
 .footer {
   width: 100%;
   padding: 20px;
-  margin-bottom: 50px;
+  margin-bottom: 55px;
 }
 
 .btn {
@@ -112,4 +112,16 @@
   background-color: #f3efe9;
   color: #d9cebb;
   cursor: not-allowed;
+}
+
+@media (max-width: 360px) {
+  .inputpwd {
+    font-size: 15px;
+  }
+
+  .footer {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+  }
 }
