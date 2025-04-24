@@ -50,6 +50,9 @@ apiClient.interceptors.response.use(
           // 재발급 실패 시 로컬 스토리지와 세션 스토리지에 있는 모든 값 삭제 후 로그인 페이지로 이동
           localStorage.clear()
           sessionStorage.clear()
+
+          alert('로그인 정보가 만료되었습니다. 다시 로그인해 주세요.');
+
           window.location.href = '/LoginPage';
           return Promise.reject(refreshError);
         }
