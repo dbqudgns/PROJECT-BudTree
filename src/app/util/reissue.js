@@ -32,7 +32,6 @@ apiClient.interceptors.response.use(
           // 재발급 요청 (빈 바디, 쿠키 포함)
           const reissueRes = await axios.get(
             `${serverURL}/member/reissue`,
-            {},
             { withCredentials: true }
           );
             
@@ -44,11 +43,6 @@ apiClient.interceptors.response.use(
             originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
           }
   
-          // 바디에 새 Refresh Token이 있으면 쿠키 덮어쓰기
-          if (reissueRes.data?.refreshToken) {
-            document.cookie = `refresh=${reissueRes.data.refreshToken}; path=/;`;
-          }
-  
           // 토큰 갱신 후 원래 요청 재시도
           return apiClient(originalRequest);
 
@@ -56,8 +50,7 @@ apiClient.interceptors.response.use(
           // 재발급 실패 시 로컬 스토리지와 세션 스토리지에 있는 모든 값 삭제 후 로그인 페이지로 이동
           localStorage.clear()
           sessionStorage.clear()
-          document.cookie = 'refresh=; path=/; max-age=0;';
-        //  window.location.href = '/LoginPage';
+          window.location.href = '/LoginPage';
           return Promise.reject(refreshError);
         }
       }
