@@ -70,6 +70,7 @@
   border-top: 1px solid #d8cbb5;
   gap: 10px;
   z-index: 1000;
+  min-width: 280px;
 }
 
 .profileBtn {
@@ -86,6 +87,7 @@
   border: 2px solid #866023;
   transition: transform 0.3s ease;
   transform-origin: center;
+  flex-shrink: 0;
 }
 
 .rotated {
@@ -99,6 +101,7 @@
   padding: 10px 14px;
   font-size: 14px;
   outline: none;
+  min-width: 0;
 }
 
 .sendBtn {
@@ -109,6 +112,7 @@
   border: none;
   font-weight: bold;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .botMessageBox {
@@ -208,7 +212,8 @@
 
 .questionList {
   position: absolute;
-  width: 430px;
+  width: 100%;
+  max-width: 430px;
   margin: 0 auto;
   bottom: 68px;
   left: 0;
@@ -219,15 +224,17 @@
   box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
   max-height: 60vh;
   overflow-y: auto;
-  line-height: 40px;
+  /* line-height: 35px; */
   padding-right: 8px;
   transform: translateY(100%);
   animation: slideUp 0.4s ease-out forwards;
 }
 .questionList p {
   cursor: pointer;
+  margin-top: 20px;
 }
 .overlay {
+  /* width: 100%; */
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.2);
@@ -258,5 +265,17 @@
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+@media (max-width: 320px) {
+  .inputSection {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+  .profileBtn,
+  .sendBtn {
+    width: 30px;
+    height: 30px;
   }
 }

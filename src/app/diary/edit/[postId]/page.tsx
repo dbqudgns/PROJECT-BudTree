@@ -26,7 +26,7 @@ export default function DiaryEditPage() {
   useEffect(() => {
     // TODO: Replace with API fetch
     setContent("하늘이 맑아서 기분이 좋았다...");
-    setEmotion("good");
+    setEmotion("GOOD");
   }, [postId]);
 
   const handleSave = () => {
