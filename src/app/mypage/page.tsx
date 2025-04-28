@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"; // ✅ 올바른 import
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
 import DeleteModal from "../components/DeleteModal"; // 위치에 맞게 경로 조정
+import LogoutModal from "../components/LogoutModal";
 
 // 1. 로그인 아이디 정보 불러오기
 // 2. 닉네임 변경
@@ -18,7 +19,9 @@ import DeleteModal from "../components/DeleteModal"; // 위치에 맞게 경로 
 export default function MyPage() {
   const router = useRouter();
   const [name, setName] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false); // 회원탈퇴 모달
+  const [showLogoutModal, setShowLogoutModal] = useState(false); // 로그아웃 모달
+
   const [userId, setUserId] = useState("");
 
   useEffect(() => {
@@ -37,23 +40,18 @@ export default function MyPage() {
     }
   }, []);
 
-  const handleDeleteProfile = (e) => {
-    e.preventDefault();
-    if (window.confirm("확인을 누르면 회원 정보가 삭제됩니다.")) {
-      axios
-        .delete(`${process.env.REACT_APP_PROXY_URL}/member/edit`, {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("ACCESS_TOKEN"),
-          },
-        })
-        .then(() => {
-          localStorage.clear();
-          alert("그동안 이용해주셔서 감사합니다.");
-          router.push("/");
-        })
-        .catch((err) => alert(err.response.data.message));
-    } else {
-      return;
+  const handleDeleteProfile = async () => {
+    try {
+      await axios.delete("https://api.budtree.store/member/edit", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("ACCESS_TOKEN"),
+        },
+      });
+      localStorage.clear();
+      alert("그동안 이용해주셔서 감사합니다.");
+      router.push("/");
+    } catch (err) {
+      alert(err.response?.data?.message || "회원 탈퇴에 실패했습니다.");
     }
   };
 
@@ -71,7 +69,6 @@ export default function MyPage() {
     } finally {
       localStorage.removeItem("token");
       delete axios.defaults.headers.common["Authorization"];
-      alert("로그아웃 되었습니다.");
       router.push("/LoginPage");
     }
   };
@@ -190,9 +187,18 @@ export default function MyPage() {
       </div>
       {/* 회원 탈퇴 및 로그아웃 */}
       <div className={styles.footer}>
-        <button className={styles.textButton} onClick={handleLogout}>
+        <button
+          className={styles.textButton}
+          onClick={() => setShowLogoutModal(true)}
+        >
           로그아웃
         </button>
+        {showLogoutModal && (
+          <LogoutModal
+            onClose={() => setShowLogoutModal(false)}
+            onConfirm={handleLogout}
+          />
+        )}
         <span className={styles.separator}>|</span>
         <button
           className={styles.textButton}

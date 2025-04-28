@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation"; // ✅ 올바른 import
 export default function ChangePwd() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [passwordTouched, setPasswordTouched] = useState(false);
 
   const router = useRouter();
@@ -40,9 +40,9 @@ export default function ChangePwd() {
     setPassword(value);
 
     if (confirmPassword && value !== confirmPassword) {
-      setErrorMessage("비밀번호가 일치하지 않습니다.");
+      setConfirmPasswordError("비밀번호가 일치하지 않습니다.");
     } else {
-      setErrorMessage("");
+      setConfirmPasswordError("");
     }
   };
 
@@ -53,9 +53,9 @@ export default function ChangePwd() {
     setConfirmPassword(value);
 
     if (password && password !== value) {
-      setErrorMessage("비밀번호가 일치하지 않습니다.");
+      setConfirmPasswordError("비밀번호가 일치하지 않습니다.");
     } else {
-      setErrorMessage("");
+      setConfirmPasswordError("");
     }
   };
 
@@ -65,11 +65,11 @@ export default function ChangePwd() {
   const handlePasswordBlur = () => {
     setPasswordTouched(true);
     if (password.trim() === "") {
-      setErrorMessage("변경할 비밀번호를 입력해주세요.");
+      setConfirmPasswordError("변경할 비밀번호를 입력해주세요.");
     } else if (confirmPassword && password !== confirmPassword) {
-      setErrorMessage("비밀번호가 일치하지 않습니다.");
+      setConfirmPasswordError("비밀번호가 일치하지 않습니다.");
     } else {
-      setErrorMessage("");
+      setConfirmPasswordError("");
     }
   };
 
@@ -89,7 +89,7 @@ export default function ChangePwd() {
               type={passwordType1.type}
               placeholder="비밀번호를 입력해주세요."
               className={`${styles.inputpwd} ${
-                errorMessage ? styles.errorBorder : ""
+                confirmPasswordError ? styles.errorBorder : ""
               }`}
               value={password}
               onChange={handlePasswordChange}
@@ -117,7 +117,7 @@ export default function ChangePwd() {
               type={passwordType2.type}
               placeholder="비밀번호를 다시 입력해주세요."
               className={`${styles.inputpwd} ${
-                errorMessage && confirmPassword.trim() === ""
+                confirmPasswordError && confirmPassword.trim() === ""
                   ? styles.errorBorder
                   : ""
               }`}
@@ -125,7 +125,7 @@ export default function ChangePwd() {
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}
             />
-            {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+
             <div className={styles.toggleView2} onClick={handlePasswordType2}>
               {passwordType2.visible ? (
                 <Image src="/eye-off.png" alt="숨기기" width={24} height={24} />
@@ -134,6 +134,9 @@ export default function ChangePwd() {
               )}
             </div>
           </div>
+          {confirmPasswordError && (
+            <p className={styles.error}>{confirmPasswordError}</p>
+          )}
         </div>
       </div>
 
