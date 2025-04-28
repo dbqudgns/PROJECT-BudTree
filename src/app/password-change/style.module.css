@@ -54,9 +54,17 @@
   padding: 0 20px;
 }
 
-.toggleView {
+.toggleView1 {
   position: absolute;
-  top: 35%;
+  top: 45%;
+  right: 20px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.toggleView2 {
+  position: absolute;
+  top: 45%;
   right: 20px;
   transform: translateY(-50%);
   cursor: pointer;
@@ -80,7 +88,8 @@
   color: #ff7f7f;
   font-size: 14px;
   margin-top: 7px;
-  margin-left: 12px;
+  margin-left: 15px;
+  width: 100%;
 }
 
 .footer {

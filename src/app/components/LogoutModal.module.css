@@ -14,7 +14,7 @@
 .modalContent {
   background: white;
   width: 312px;
-  height: 221px;
+  height: 165px;
   border-radius: 10px;
   padding: 20px 20px;
   text-align: center;
@@ -22,32 +22,19 @@
 }
 
 .message1 {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
   margin-top: 8px;
   color: #575757;
   text-align: left;
-  margin-left: 12px;
-}
-
-.message2 {
-  font-size: 15px;
-  color: #575757;
-  font-weight: bold;
-  line-height: 2.1;
-  margin-top: 10px;
-  margin-left: 12px;
-}
-
-.message2Container {
-  text-align: left;
+  margin-left: 19px;
 }
 
 .buttonGroup {
   display: flex;
   justify-content: center;
   gap: 20px;
-  padding: 20px;
+  margin-top: 30px;
 }
 
 .cancelButton,
