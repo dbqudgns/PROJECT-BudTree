@@ -12,9 +12,14 @@ export default function DiaryPage() {
   // 텍스트가 공백이 아닌 경우만 버튼 활성화
   const isDisabled = text.trim().length === 0;
 
+  // function handleSubmit() {
+  //   // 이동할 페이지(감정 선택 페이지) 경로 지정
+  //   router.push("/emotion-select");
+  // }
+
   function handleSubmit() {
-    // 이동할 페이지(감정 선택 페이지) 경로 지정
-    router.push("/emotion-select");
+    const encoded = encodeURIComponent(text.trim());
+    router.push(`/emotion-select?content=${encoded}`);
   }
 
   return (
