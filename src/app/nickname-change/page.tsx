@@ -97,7 +97,7 @@ export default function NickChange() {
             onChange={(e) => {
               setNickname(e.target.value);
               if (e.target.value.trim() !== "") {
-                setErrorMessage(""); 
+                setErrorMessage("");
               }
             }}
             onBlur={validateNickname} // 포커스 벗어나면 검증
@@ -110,6 +110,7 @@ export default function NickChange() {
         <button
           className={styles.completeButton}
           onClick={nicknameComplete}
+          disabled={nickname.trim() === ""}
         >
           완료
         </button>
