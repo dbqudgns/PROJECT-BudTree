@@ -18,13 +18,22 @@ export default function ChatHistory() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const currentYear = new Date().getFullYear();
-  const years = Array.from(
-    { length: currentYear - 2020 + 1 },
-    (_, index) => (2020 + index).toString()
+  const years = Array.from({ length: currentYear - 2020 + 1 }, (_, index) =>
+    (2020 + index).toString()
   );
   const months = [
-    "1월", "2월", "3월", "4월", "5월", "6월",
-    "7월", "8월", "9월", "10월", "11월", "12월",
+    "1월",
+    "2월",
+    "3월",
+    "4월",
+    "5월",
+    "6월",
+    "7월",
+    "8월",
+    "9월",
+    "10월",
+    "11월",
+    "12월",
   ];
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -65,12 +74,16 @@ export default function ChatHistory() {
   }, []);
 
   const mockResults = Array.from({ length: 10 }, (_, i) => ({
-    date: `2025/03/${20 + i}`
+    date: `2025/03/${20 + i}`,
   }));
 
   return (
     <div className={styles["chathistory-container"]} ref={dropdownRef}>
-      <Header title="대화 내역"showBack onBack={() => router.push("/mypage")}/>
+      <Header
+        title="대화 내역"
+        showBack
+        onBack={() => router.push("/mypage")}
+      />
 
       <div className={styles["selector-container"]}>
         <div className={styles["dropdown-wrapper"]}>
@@ -164,7 +177,9 @@ export default function ChatHistory() {
           <div
             key={idx}
             className={styles["chathistory-item"]}
-            onClick={() => router.push(`/chat/${item.date.replaceAll("/", "-")}`)}
+            onClick={() =>
+              router.push(`/chat/${item.date.replaceAll("/", "-")}`)
+            }
             style={{ cursor: "pointer" }}
           >
             <p className={styles["chathistory-item-date"]}>{item.date}</p>
