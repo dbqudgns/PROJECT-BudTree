@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,6 +33,12 @@ public class SecurityConfig {
 
     private final JWTUtil jwtUtil;
     private final RedisUtil redisUtil;
+
+    @Value("${API_SERVER}")
+    private String API_SERVER;
+
+    @Value("${FRONT_SERVER}")
+    private String FRONT_SERVER;
 
     @Bean //사용자 비밀번호 암호화를 위해 필요
     public BCryptPasswordEncoder passwordEncoder() throws Exception {
@@ -101,7 +108,7 @@ public class SecurityConfig {
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
 
                        CorsConfiguration config = new CorsConfiguration();
-                       config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://api.budtree.store", "https://www.budtree.store"));
+                       config.setAllowedOrigins(Arrays.asList("http://localhost:3000", API_SERVER, FRONT_SERVER));
                        config.setAllowedMethods(Collections.singletonList("*"));
                        config.setAllowCredentials(true);
                        config.setAllowedHeaders(Collections.singletonList("*"));
