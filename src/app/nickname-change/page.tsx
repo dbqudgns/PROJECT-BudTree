@@ -53,6 +53,7 @@
 //     </div>
 //   );
 // }
+
 "use client";
 
 import styles from "./style.module.css";
@@ -107,6 +108,7 @@ export default function NickChange() {
       // 성공 시 localStorage에 닉네임 저장
       localStorage.setItem("userName", nickname);
       alert("닉네임이 성공적으로 변경되었습니다.");
+      console.log(response.data);
       router.push("./mainPage");
     } catch (err) {
       console.error("닉네임 변경 실패:", err);

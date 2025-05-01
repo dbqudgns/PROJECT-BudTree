@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import axios from "axios";
+import apiRequest from "../util/reissue";
 
 // 1. 아이디를 입력하면 중복확인
 // 2. 아이디,닉네임 비밀번호, 비밀번호 확인에서 하나라도 빠질시 인풋창 밑에 경고문 출력해주기
@@ -28,10 +29,23 @@ export default function Signup() {
 
   const handleDuplicateCheck = async () => {
     handleId(); // 강제로 blur 처리
+
+    try {
+      const response = await apiRequest.post("member/check", { username: id });
+
+      console.log("중복확인 응답:", response.data);
+      if (response.data === 1) {
+        setIdError("사용 가능한 아이디입니다.");
+      } else {
+        setIdError("이미 사용 중인 아이디입니다.");
+      }
+    } catch (error) {
+      console.error("중복확인 에러:", error);
+      setIdError("서버 오류가 발생했습니다.");
+    }
   };
 
   const buttonClick = () => {
-    // Validation could be added here
     router.push("./LoginPage");
   };
 
