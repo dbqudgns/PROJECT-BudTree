@@ -15,18 +15,19 @@ export default function LoginPage() {
   const router = useRouter();
   const serverURL = process.env.NEXT_PUBLIC_API_SERVER_URL;
   const [passwordType1, setPasswordType1] = useState({
-    type: "password", 
+    type: "password",
     visible: false, // 비밀번호가 가려진 상태
   });
 
-  const goToHome = () => { // 로그인 페이지에서 이전 페이지로 이동할 시 무조건 시작화면으로 고정 
+  const goToHome = () => {
+    // 로그인 페이지에서 이전 페이지로 이동할 시 무조건 시작화면으로 고정
     router.push("/");
   };
 
   const handlePassword = () => {
     setPasswordType1((before) => ({
-      type: before.visible ? "password" : "text", // 1. 처음에 visible이 false이므로 눈 모양 클릭 했으니 text를 보여줌 
-      visible: !before.visible, // 2. 그 다음을 위해 visible = true 지정 => 1, 2 과정 반복 
+      type: before.visible ? "password" : "text", // 1. 처음에 visible이 false이므로 눈 모양 클릭 했으니 text를 보여줌
+      visible: !before.visible, // 2. 그 다음을 위해 visible = true 지정 => 1, 2 과정 반복
     }));
   };
 
@@ -57,13 +58,16 @@ export default function LoginPage() {
       const response = await axios.post(
         `${serverURL}/member/login`,
         { username: id, password: password },
-        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
 
       // Access Token 추출
       const authHeader = response.headers["authorization"];
-      const token = authHeader?.split(" ")[1]; // ? : authHeader가 null이면 .split(" ")을 아예 시도하지 않고 undefined를 반환 => 즉, 코드가 중단되지 않음 
-      if (token) localStorage.setItem("token", token); // Access Token 로컬 스토리지에 저장 
+      const token = authHeader?.split(" ")[1]; // ? : authHeader가 null이면 .split(" ")을 아예 시도하지 않고 undefined를 반환 => 즉, 코드가 중단되지 않음
+      if (token) localStorage.setItem("token", token); // Access Token 로컬 스토리지에 저장
 
       const data = response.data as {
         status: number;
@@ -76,12 +80,13 @@ export default function LoginPage() {
       } else {
         alert("회원정보가 없으니 회원가입을 해주세요.");
       }
-      
     } catch (err: any) {
       console.error("로그인 중 오류 발생:", err);
       if (err.response) {
         if (err.response.status === 401) {
-          alert("아이디 또는 비밀번호가 일치하지 않습니다.\n회원가입을 진행하지 않으셨으면 회원가입을 진행해주세요 !");
+          alert(
+            "아이디 또는 비밀번호가 일치하지 않습니다.\n회원가입을 진행하지 않으셨으면 회원가입을 진행해주세요 !"
+          );
         } else {
           alert("로그인 중 오류가 발생했습니다.");
         }
@@ -158,11 +163,7 @@ export default function LoginPage() {
       </div>
 
       <div className={styles.ButtonWrapper}>
-        <button
-          className={styles.btn}
-          onClick={handleLogin}
-          disabled={loading}
-        >
+        <button className={styles.btn} onClick={handleLogin} disabled={loading}>
           {loading ? "로그인 중..." : "로그인"}
         </button>
       </div>

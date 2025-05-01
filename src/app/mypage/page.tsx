@@ -21,22 +21,26 @@ export default function MyPage() {
   const [name, setName] = useState("");
   const [showModal, setShowModal] = useState(false); // 회원탈퇴 모달
   const [showLogoutModal, setShowLogoutModal] = useState(false); // 로그아웃 모달
-
   const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    const nicknameFromStorage = localStorage.getItem("userName");
-    const idFromStorage = localStorage.getItem("id");
+    const savedNickname = localStorage.getItem("userName");
+    const savedUserId = localStorage.getItem("id"); // ✅ userId도 가져오기
 
-    console.log("마이페이지에서 닉네임:", nicknameFromStorage);
-    console.log("마이페이지에서 아이디:", idFromStorage);
-
-    if (idFromStorage) {
-      setUserId(idFromStorage);
+    // 닉네임 저장
+    if (savedNickname) {
+      setName(savedNickname);
+      console.log("저장된 닉네임:", savedNickname);
+    } else {
+      console.log("닉네임이 localStorage에 없습니다.");
     }
 
-    if (nicknameFromStorage) {
-      setName(nicknameFromStorage);
+    // 아이디 저장
+    if (savedUserId) {
+      setUserId(savedUserId); // ✅ state를 업데이트해야 함!
+      console.log("저장된 유저 ID:", savedUserId);
+    } else {
+      console.log("유저 ID가 localStorage에 없습니다.");
     }
   }, []);
 
