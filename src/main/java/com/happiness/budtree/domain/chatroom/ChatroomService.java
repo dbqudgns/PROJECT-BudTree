@@ -68,7 +68,6 @@ public class ChatroomService {
         chatroomRepository.save(newChatroom);
 
         return ChatroomIdRP.builder()
-                .name(member.getName())
                 .roomId(newChatroom.getRoomId())
                 .build();
     }
