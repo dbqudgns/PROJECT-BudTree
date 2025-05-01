@@ -23,7 +23,7 @@ public class ChatroomController {
     private final ChatroomService chatroomService;
 
     @PostMapping("/create")
-    @Operation(summary = "첫 대화 시 채팅방 생성(자가진단 때는 필요 없음)")
+    @Operation(summary = "첫 대화 시 채팅방 생성")
     public ResponseEntity<?> createChatroom(@AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
         return ResponseEntity.ok(ApiResponse.success(chatroomService.createChatroom(customMemberDetails)));
     }
