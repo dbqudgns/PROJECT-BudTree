@@ -58,7 +58,8 @@
 import styles from "./style.module.css";
 import Header from "../components/Header";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function NickChange() {
   const router = useRouter();
@@ -74,9 +75,36 @@ export default function NickChange() {
     return true;
   };
 
-  const nicknameComplete = () => {
-    if (validateNickname()) {
+  useEffect(() => {
+    console.log(
+      "페이지 렌더 후 ACCESS_TOKEN:",
+      localStorage.getItem("ACCESS_TOKEN")
+    );
+  }, []);
+
+  const nicknameComplete = async () => {
+    console.log("보내는 닉네임:", nickname);
+    console.log("ACCESS_TOKEN:", localStorage.getItem("token"));
+    if (!validateNickname()) return;
+
+    try {
+      await axios.patch(
+        "https://api.budtree.store/member/change-name",
+        { name: nickname },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      // 성공 시 localStorage에 닉네임 저장
+      localStorage.setItem("userName", nickname);
+      alert("닉네임이 성공적으로 변경되었습니다.");
       router.push("./mainPage");
+    } catch (err) {
+      console.error("닉네임 변경 실패:", err);
+      alert(err.response?.data?.message || "닉네임 변경에 실패했습니다.");
     }
   };
 
