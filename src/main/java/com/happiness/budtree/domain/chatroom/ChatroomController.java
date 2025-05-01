@@ -22,13 +22,6 @@ public class ChatroomController {
 
     private final ChatroomService chatroomService;
 
-    @GetMapping("/chat/survey/first/{surveyId}")
-    @Operation(summary = "자가진단 항목별 점수 정리 후 반환(채팅방 생성됨)")
-    public ResponseEntity<?> responseFirstChat(@PathVariable("surveyId") Long surveyId,
-            @AuthenticationPrincipal CustomMemberDetails customMemberDetails) throws AccessDeniedException {
-        return ResponseEntity.ok(ApiResponse.success(chatroomService.responseFirstChat(surveyId, customMemberDetails)));
-    }
-
     @PostMapping("/create")
     @Operation(summary = "첫 대화 시 채팅방 생성(자가진단 때는 필요 없음)")
     public ResponseEntity<?> createChatroom(@AuthenticationPrincipal CustomMemberDetails customMemberDetails) {

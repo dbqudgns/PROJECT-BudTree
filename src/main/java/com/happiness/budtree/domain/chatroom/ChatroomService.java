@@ -7,8 +7,6 @@ import com.happiness.budtree.domain.member.Member;
 import com.happiness.budtree.domain.message.Message;
 import com.happiness.budtree.domain.message.MessageRepository;
 import com.happiness.budtree.domain.message.SenderType;
-import com.happiness.budtree.domain.survey.Survey;
-import com.happiness.budtree.domain.survey.SurveyRepository;
 import com.happiness.budtree.jwt.Custom.CustomMemberDetails;
 import com.happiness.budtree.util.ReturnMember;
 import org.springframework.core.io.Resource;
@@ -33,7 +31,6 @@ import java.util.*;
 public class ChatroomService {
 
     private final ReturnMember returnMember;
-    private final SurveyRepository surveyRepository;
     private final ChatroomRepository chatroomRepository;
     private final MessageRepository messageRepository;
     private final ChatClient chatClient;
@@ -59,59 +56,6 @@ public class ChatroomService {
             3, "7일 이상 방해 받았다",
             4, "거의 매일 방해 받았다"
     );
-
-    public ChatroomFirstSurveyRP responseFirstChat(Long surveyId, CustomMemberDetails customMemberDetails) throws AccessDeniedException {
-
-        Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
-
-        Survey survey = surveyRepository.findById(surveyId)
-                .orElseThrow(() -> new EntityNotFoundException("해당 자가 진단을 찾을 수 없습니다."));
-
-        if (!Objects.equals(survey.getMember().getUsername(), member.getUsername())) {
-            throw new AccessDeniedException("로그인 한 사용자는 해당 자가진단을 조회 할 수 없습니다.");
-        }
-
-        Chatroom chatroom = Chatroom.builder()
-                .member(member)
-                .build();
-
-        chatroomRepository.save(chatroom);
-
-        Map<String, List<String>> scoreMap = organizeResponse(survey);
-
-        return ChatroomFirstSurveyRP.builder()
-                .name(member.getName())
-                .roomId(chatroom.getRoomId())
-                .result(scoreMap)
-                .build();
-    }
-
-    private Map<String, List<String>> organizeResponse(Survey survey) {
-
-        Map<String, List<String>> scoreMap = new HashMap<>();
-
-        for (int i = 1; i<=9; i++) {
-            int score = getSurveyScore(survey, i);
-            String scoreString = String.valueOf(score);
-            scoreMap.computeIfAbsent(scoreString, k -> new ArrayList<>()).add(PART.get(i));
-        }
-        return scoreMap;
-    }
-
-    private int getSurveyScore(Survey survey, int part) {
-        return switch (part) {
-            case 1 -> survey.getPart1();
-            case 2 -> survey.getPart2();
-            case 3 -> survey.getPart3();
-            case 4 -> survey.getPart4();
-            case 5 -> survey.getPart5();
-            case 6 -> survey.getPart6();
-            case 7 -> survey.getPart7();
-            case 8 -> survey.getPart8();
-            case 9 -> survey.getPart9();
-            default -> throw new IllegalArgumentException("잘못된 항목 번호입니다.");
-        };
-    }
 
     @Transactional
     public ChatroomIdRP createChatroom(CustomMemberDetails customMemberDetails) {
