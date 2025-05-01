@@ -59,6 +59,7 @@ import styles from "./style.module.css";
 import Header from "../components/Header";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import apiRequest from "../util/reissue";
 import axios from "axios";
 
 export default function NickChange() {
@@ -88,8 +89,8 @@ export default function NickChange() {
     if (!validateNickname()) return;
 
     try {
-      await axios.patch(
-        "https://api.budtree.store/member/change-name",
+      const response = await apiRequest.patch(
+        "/member/change-name",
         { name: nickname },
         {
           headers: {
@@ -97,6 +98,11 @@ export default function NickChange() {
           },
         }
       );
+
+      const data = response.data as {
+        status: number;
+        message: string;
+      };
 
       // 성공 시 localStorage에 닉네임 저장
       localStorage.setItem("userName", nickname);
