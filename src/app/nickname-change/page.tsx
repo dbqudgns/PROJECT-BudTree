@@ -78,10 +78,15 @@ export default function NickChange() {
   };
 
   useEffect(() => {
-    console.log(
-      "페이지 렌더 후 ACCESS_TOKEN:",
-      localStorage.getItem("ACCESS_TOKEN")
-    );
+    // console.log(
+    //   "페이지 렌더 후 ACCESS_TOKEN:",
+    //   localStorage.getItem("ACCESS_TOKEN")
+    // );
+
+    const savedNickname = localStorage.getItem("userName");
+    if (savedNickname) {
+      setNickname(savedNickname);
+    }
   }, []);
 
   const nicknameComplete = async () => {
@@ -90,15 +95,9 @@ export default function NickChange() {
     if (!validateNickname()) return;
 
     try {
-      const response = await apiRequest.patch(
-        "/member/change-name",
-        { name: nickname },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await apiRequest.patch("/member/change-name", {
+        name: nickname,
+      });
 
       const data = response.data as {
         status: number;
@@ -118,7 +117,7 @@ export default function NickChange() {
 
   return (
     <div className={styles.container}>
-      <Header title={"닉네임변경"} showBack />
+      <Header title={"닉네임 변경"} showBack />
 
       <br />
       <br />

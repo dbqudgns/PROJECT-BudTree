@@ -4,17 +4,14 @@ import styles from "./style.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
-import { useRouter } from "next/navigation"; // ✅ 올바른 import
+import { useRouter } from "next/navigation";
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
-import DeleteModal from "../components/DeleteModal"; // 위치에 맞게 경로 조정
+import DeleteModal from "../components/DeleteModal";
 import LogoutModal from "../components/LogoutModal";
+import apiRequest from "../util/reissue";
 
 // 1. 로그인 아이디 정보 불러오기
-// 2. 닉네임 변경
-// 3. 비밀번호 변경
-// 4. 회원탈퇴 모달
-// 5. 로그아웃 모달
 
 export default function MyPage() {
   const router = useRouter();
@@ -24,8 +21,8 @@ export default function MyPage() {
   const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    const savedNickname = localStorage.getItem("userName");
-    const savedUserId = localStorage.getItem("id"); // ✅ userId도 가져오기
+    const savedNickname = localStorage.getItem("nickname");
+    const savedUserId = localStorage.getItem("id");
 
     // 닉네임 저장
     if (savedNickname) {
@@ -46,11 +43,15 @@ export default function MyPage() {
 
   const handleDeleteProfile = async () => {
     try {
-      await axios.delete("https://api.budtree.store/member/edit", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("ACCESS_TOKEN"),
-        },
-      });
+      // await axios.delete("https://api.budtree.store/member/edit", {
+      //   headers: {
+      //     Authorization: "Bearer " + localStorage.getItem("ACCESS_TOKEN"),
+      //   },
+      // });
+
+      const response = await apiRequest.delete("member/edit", {});
+      const data = response.data as {};
+
       localStorage.clear();
       alert("그동안 이용해주셔서 감사합니다.");
       router.push("/");
@@ -61,13 +62,8 @@ export default function MyPage() {
 
   const handleLogout = async () => {
     try {
-      await axios.post(
-        "https://api.budtree.store/member/logout",
-        {},
-        {
-          withCredentials: true, // 쿠키(리프레시 토큰) 포함
-        }
-      );
+      const response = await apiRequest.get("member/logout", {});
+      const data = response.data as {};
     } catch (e) {
       console.error("백엔드 로그아웃 실패:", e);
     } finally {

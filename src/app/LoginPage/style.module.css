@@ -85,6 +85,14 @@
   margin-top: 0px;
 }
 
+.error {
+  color: #ff7f7f;
+  font-size: 15px;
+  margin-top: 10px;
+  margin-left: 55px;
+  width: 100%;
+}
+
 .btn {
   border-radius: 25px;
   /* border: 1px solid #b9b6ad; */

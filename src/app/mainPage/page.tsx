@@ -13,7 +13,6 @@ export default function MainPage() {
 
   // 쿼리 파라미터에서 name 가져오고 localStorage에도 저장
   useEffect(() => {
-    const name = searchParams.get("name");
     const nameFromStorage = localStorage.getItem("userName");
 
     if (name) {
@@ -22,7 +21,7 @@ export default function MainPage() {
     } else if (nameFromStorage) {
       setUserName(nameFromStorage);
     }
-  }, [searchParams]);
+  }, [name]);
 
   const selfCheckBtn = () => {
     router.push("./selfcheck");
