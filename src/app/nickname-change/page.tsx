@@ -61,7 +61,6 @@ import Header from "../components/Header";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import apiRequest from "../util/reissue";
-import axios from "axios";
 
 export default function NickChange() {
   const router = useRouter();
@@ -95,9 +94,11 @@ export default function NickChange() {
     if (!validateNickname()) return;
 
     try {
-      const response = await apiRequest.patch("/member/change-name", {
-        name: nickname,
-      });
+
+      const response = await apiRequest.patch(
+        "/member/change-name",
+        { name: nickname }
+      );
 
       const data = response.data as {
         status: number;
