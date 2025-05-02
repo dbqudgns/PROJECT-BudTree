@@ -53,6 +53,7 @@
 //     </div>
 //   );
 // }
+
 "use client";
 
 import styles from "./style.module.css";
@@ -76,10 +77,15 @@ export default function NickChange() {
   };
 
   useEffect(() => {
-    console.log(
-      "페이지 렌더 후 ACCESS_TOKEN:",
-      localStorage.getItem("ACCESS_TOKEN")
-    );
+    // console.log(
+    //   "페이지 렌더 후 ACCESS_TOKEN:",
+    //   localStorage.getItem("ACCESS_TOKEN")
+    // );
+
+    const savedNickname = localStorage.getItem("userName");
+    if (savedNickname) {
+      setNickname(savedNickname);
+    }
   }, []);
 
   const nicknameComplete = async () => {
@@ -88,6 +94,7 @@ export default function NickChange() {
     if (!validateNickname()) return;
 
     try {
+
       const response = await apiRequest.patch(
         "/member/change-name",
         { name: nickname }
@@ -101,6 +108,7 @@ export default function NickChange() {
       // 성공 시 localStorage에 닉네임 저장
       localStorage.setItem("userName", nickname);
       alert("닉네임이 성공적으로 변경되었습니다.");
+      console.log(response.data);
       router.push("./mainPage");
     } catch (err) {
       console.error("닉네임 변경 실패:", err);
@@ -110,7 +118,7 @@ export default function NickChange() {
 
   return (
     <div className={styles.container}>
-      <Header title={"닉네임변경"} showBack />
+      <Header title={"닉네임 변경"} showBack />
 
       <br />
       <br />

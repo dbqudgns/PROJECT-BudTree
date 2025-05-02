@@ -5,6 +5,7 @@ import Image from "next/image";
 import Header from "../components/Header";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import apiRequest from "../util/reissue";
 
 export default function LoginPage() {
   const [id, setId] = useState("");
@@ -16,7 +17,7 @@ export default function LoginPage() {
   const serverURL = process.env.NEXT_PUBLIC_API_SERVER_URL;
   const [passwordType1, setPasswordType1] = useState({
     type: "password",
-    visible: false, // 비밀번호가 가려진 상태
+    visible: false,
   });
 
   const goToHome = () => {
@@ -63,6 +64,8 @@ export default function LoginPage() {
           withCredentials: true,
         }
       );
+
+      console.log("로그인 성공 응답:", response.data);
 
       // Access Token 추출
       const authHeader = response.headers["authorization"];
@@ -127,9 +130,7 @@ export default function LoginPage() {
               : setIdError("")
           }
         />
-        {idError && (
-          <p style={{ color: "red", marginTop: "0.25rem" }}>{idError}</p>
-        )}
+        {idError && <p className={styles.error}>{idError}</p>}
         <br />
 
         {/* 비밀번호 입력 */}
@@ -157,9 +158,7 @@ export default function LoginPage() {
             )}
           </div>
         </div>
-        {pwdError && (
-          <p style={{ color: "red", marginTop: "0.25rem" }}>{pwdError}</p>
-        )}
+        {pwdError && <p className={styles.error}>{pwdError}</p>}
       </div>
 
       <div className={styles.ButtonWrapper}>

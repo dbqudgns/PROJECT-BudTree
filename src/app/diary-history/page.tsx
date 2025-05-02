@@ -15,8 +15,8 @@
 //   const [selectedYear, setSelectedYear] = useState("연도");
 //   const [selectedMonth, setSelectedMonth] = useState("월");
 
-//   const [isAtBottom, setIsAtBottom] = useState(false); 
-//   const [isScrolled, setIsScrolled] = useState(false); 
+//   const [isAtBottom, setIsAtBottom] = useState(false);
+//   const [isScrolled, setIsScrolled] = useState(false);
 
 //   const currentYear = new Date().getFullYear();
 //   const years = Array.from(
@@ -232,7 +232,9 @@ export default function DiaryHistory() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: currentYear - 2020 + 1 }, (_, index) => (2020 + index).toString());
+  const years = Array.from({ length: currentYear - 2020 + 1 }, (_, index) =>
+    (2020 + index).toString()
+  );
   const months = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -254,8 +256,10 @@ export default function DiaryHistory() {
     }
   };
 
-  const getYearValue = () => (selectedYear === "연도" ? 0 : parseInt(selectedYear));
-  const getMonthValue = () => (selectedMonth === "월" ? 0 : parseInt(selectedMonth.replace("월", "")));
+  const getYearValue = () =>
+    selectedYear === "연도" ? 0 : parseInt(selectedYear);
+  const getMonthValue = () =>
+    selectedMonth === "월" ? 0 : parseInt(selectedMonth.replace("월", ""));
 
   const emotionTextMap: Record<DiaryItem["emotion"], string> = {
     EXCELLENT: "완전 좋음",
@@ -276,10 +280,13 @@ export default function DiaryHistory() {
   useEffect(() => {
     const fetchDiaryList = async () => {
       try {
-        const response = await apiRequest.post<{ message: DiaryItem[] }>("/post/all", {
-          year: getYearValue(),
-          month: getMonthValue(),
-        });
+        const response = await apiRequest.post<{ message: DiaryItem[] }>(
+          "/post/all",
+          {
+            year: getYearValue(),
+            month: getMonthValue(),
+          }
+        );
 
         if (response.status === 200 && Array.isArray(response.data.message)) {
           setDiaryList(response.data.message);
@@ -314,31 +321,47 @@ export default function DiaryHistory() {
 
   return (
     <div className={styles["diary-container"]} ref={dropdownRef}>
-      <Header title="일기 내역" showBack onBack={() => router.push("/mypage")} />
+      <Header
+        title="일기 내역"
+        showBack
+        onBack={() => router.push("/mypage")}
+      />
+
 
       {/* Year & Month Selector */}
       <div className={styles["selector-container"]}>
         {/* Year Selector */}
         <div className={styles["dropdown-wrapper"]}>
           <button
-            className={`${styles["selector-button"]} ${showYearDropdown ? styles.active : ""}`}
+            className={`${styles["selector-button"]} ${
+              showYearDropdown ? styles.active : ""
+            }`}
             onClick={() => {
               setShowYearDropdown(!showYearDropdown);
               setShowMonthDropdown(false);
             }}
           >
             {selectedYear}
-            {showYearDropdown ? <ChevronUp className={styles["selector-icon"]} /> : <ChevronDown className={styles["selector-icon"]} />}
+            {showYearDropdown ? (
+              <ChevronUp className={styles["selector-icon"]} />
+            ) : (
+              <ChevronDown className={styles["selector-icon"]} />
+            )}
           </button>
           {showYearDropdown && (
             <div className={styles.dropdown}>
-              <div className={styles["dropdown-item"]} onClick={() => handleYearSelect("연도")}>
+              <div
+                className={styles["dropdown-item"]}
+                onClick={() => handleYearSelect("연도")}
+              >
                 선택안함
               </div>
               {years.map((year) => (
                 <div
                   key={year}
-                  className={`${styles["dropdown-item"]} ${selectedYear === year ? styles.selected : ""}`}
+                  className={`${styles["dropdown-item"]} ${
+                    selectedYear === year ? styles.selected : ""
+                  }`}
                   onClick={() => handleYearSelect(year)}
                 >
                   {year}
@@ -351,24 +374,35 @@ export default function DiaryHistory() {
         {/* Month Selector */}
         <div className={styles["dropdown-wrapper"]}>
           <button
-            className={`${styles["selector-button"]} ${showMonthDropdown ? styles.active : ""}`}
+            className={`${styles["selector-button"]} ${
+              showMonthDropdown ? styles.active : ""
+            }`}
             onClick={() => {
               setShowMonthDropdown(!showMonthDropdown);
               setShowYearDropdown(false);
             }}
           >
             {selectedMonth}
-            {showMonthDropdown ? <ChevronUp className={styles["selector-icon"]} /> : <ChevronDown className={styles["selector-icon"]} />}
+            {showMonthDropdown ? (
+              <ChevronUp className={styles["selector-icon"]} />
+            ) : (
+              <ChevronDown className={styles["selector-icon"]} />
+            )}
           </button>
           {showMonthDropdown && (
             <div className={styles.dropdown}>
-              <div className={styles["dropdown-item"]} onClick={() => handleMonthSelect("월")}>
+              <div
+                className={styles["dropdown-item"]}
+                onClick={() => handleMonthSelect("월")}
+              >
                 선택안함
               </div>
               {months.map((month) => (
                 <div
                   key={month}
-                  className={`${styles["dropdown-item"]} ${selectedMonth === month ? styles.selected : ""}`}
+                  className={`${styles["dropdown-item"]} ${
+                    selectedMonth === month ? styles.selected : ""
+                  }`}
                   onClick={() => handleMonthSelect(month)}
                 >
                   {month}
@@ -393,8 +427,12 @@ export default function DiaryHistory() {
                   className={styles["diary-item-image"]}
                 />
                 <div className={styles["diary-item-text"]}>
-                  <p className={styles["diary-item-date"]}>{item.createdDate.split("T")[0]}</p>
-                  <p className={styles["diary-item-status"]}>{emotionTextMap[item.emotion]}</p>
+                  <p className={styles["diary-item-date"]}>
+                    {item.createdDate.split("T")[0]}
+                  </p>
+                  <p className={styles["diary-item-status"]}>
+                    {emotionTextMap[item.emotion]}
+                  </p>
                 </div>
               </div>
               <button
@@ -409,7 +447,9 @@ export default function DiaryHistory() {
 
         {isScrolled && (
           <button
-            className={`${styles["scroll-to-top-button"]} ${isAtBottom ? styles["at-bottom"] : ""}`}
+            className={`${styles["scroll-to-top-button"]} ${
+              isAtBottom ? styles["at-bottom"] : ""
+            }`}
             onClick={scrollToTop}
           >
             <ChevronUp className={styles["scroll-top-icon"]} />
