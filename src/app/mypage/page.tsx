@@ -25,7 +25,7 @@ export default function MyPage() {
 
   useEffect(() => {
     const savedNickname = localStorage.getItem("userName");
-    const savedUserId = localStorage.getItem("id"); // ✅ userId도 가져오기
+    const savedUserId = localStorage.getItem("id");
 
     // 닉네임 저장
     if (savedNickname) {
@@ -93,7 +93,7 @@ export default function MyPage() {
             />
           </div>
           <div className={styles.userInfo}>
-            <h2 className={styles.nickname}>{name}</h2>
+            <h4 className={styles.nickname}>{name}</h4>
             <p className={styles.userId}>{userId}</p>
           </div>
         </div>
