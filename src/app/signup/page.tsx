@@ -47,12 +47,10 @@ export default function Signup() {
       //   response.data.message.success
       // );
 
+      const data = response.data as any;
+
       // 서버 응답 구조 확인
-      if (
-        response.data &&
-        response.data.message &&
-        response.data.message.success === 1
-      ) {
+      if (data && data.message && data.message.success === 1) {
         setIdError("사용 가능한 아이디입니다.");
         localStorage.setItem("id", id);
         setIdChecked(true);
