@@ -56,7 +56,7 @@ export default function Signup() {
       // 서버 응답 구조 확인
       if (data && data.message && data.message.success === 1) {
         setIdError("사용 가능한 아이디입니다.");
-        localStorage.setItem("id", id);
+        //localStorage.setItem("id", id);
         setIdChecked(true);
       } else {
         setIdError("이미 사용 중인 아이디입니다.");
