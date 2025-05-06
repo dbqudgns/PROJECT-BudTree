@@ -100,7 +100,7 @@
 
 .messages {
   flex: 1;
-  padding: 80px 10px 69px;
+  padding: 72px 10px 69px;
   overflow-y: auto;
   background: #ffffff;
 }
@@ -112,12 +112,15 @@
 }
 
 .dateText {
-  font-size: 12px; 
-  font-weight: bold;
-  color: #000000;
-  background: #D9CEBB;
-  padding: 4px 8px; 
-  border-radius: 16px;
+  font-size: 12px;
+  display: inline-block;
+  background-color: #e9dfce;
+  color: #333;
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .buddyMessageRow,
