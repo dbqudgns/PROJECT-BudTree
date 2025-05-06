@@ -75,7 +75,7 @@ export default function LoginPage() {
       };
 
       if (data.message?.name) {
-        // localStorage.setItem("id", id); // 로컬 스토리지에 사용자 아이디 저장 (마이 페이지에 쓰임)
+        localStorage.setItem("id", id); // 로컬 스토리지에 사용자 아이디 저장 (마이 페이지에 쓰임)
         router.push(`/mainPage?name=${encodeURIComponent(data.message.name)}`);
       } else {
         alert("회원정보가 없으니 회원가입을 해주세요.");

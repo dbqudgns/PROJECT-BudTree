@@ -56,7 +56,7 @@ export default function Signup() {
       // 서버 응답 구조 확인
       if (data && data.message && data.message.success === 1) {
         setIdError("사용 가능한 아이디입니다.");
-        localStorage.setItem("id", id);
+        //localStorage.setItem("id", id);
         setIdChecked(true);
       } else {
         setIdError("이미 사용 중인 아이디입니다.");
@@ -96,9 +96,6 @@ export default function Signup() {
           "Content-Type": "application/json",
         },
       });
-
-      // localStorage.setItem("id", id);
-      // localStorage.setItem("nickname", nickname);
       alert("회원가입이 완료되었습니다!");
       router.push("./LoginPage");
     } catch (err) {
