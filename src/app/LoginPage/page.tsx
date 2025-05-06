@@ -61,11 +61,8 @@ export default function LoginPage() {
         { username: id, password: password },
         {
           headers: { "Content-Type": "application/json" },
-          withCredentials: true,
         }
       );
-
-      console.log("로그인 성공 응답:", response.data);
 
       // Access Token 추출
       const authHeader = response.headers["authorization"];
@@ -78,7 +75,7 @@ export default function LoginPage() {
       };
 
       if (data.message?.name) {
-        localStorage.setItem("id", id); // 로컬 스토리지에 사용자 아이디 저장 (마이 페이지에 쓰임)
+        // localStorage.setItem("id", id); // 로컬 스토리지에 사용자 아이디 저장 (마이 페이지에 쓰임)
         router.push(`/mainPage?name=${encodeURIComponent(data.message.name)}`);
       } else {
         alert("회원정보가 없으니 회원가입을 해주세요.");
