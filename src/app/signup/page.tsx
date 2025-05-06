@@ -96,9 +96,6 @@ export default function Signup() {
           "Content-Type": "application/json",
         },
       });
-
-      // localStorage.setItem("id", id);
-      // localStorage.setItem("nickname", nickname);
       alert("회원가입이 완료되었습니다!");
       router.push("./LoginPage");
     } catch (err) {
