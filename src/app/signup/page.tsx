@@ -40,12 +40,16 @@ export default function Signup() {
 
     // 중복확인
     try {
-      const response = await apiRequest.post("member/check", { username: id });
-      console.log("중복확인 응답:", response.data);
-      // console.log(
-      //   "response.data.message.success:",
-      //   response.data.message.success
-      // );
+      const response = await apiRequest.post(
+        "member/check",
+        { username: id },
+        {
+          headers: {
+            Authorization: null, // ✅ 토큰 헤더 제거
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const data = response.data as any;
 
@@ -69,7 +73,7 @@ export default function Signup() {
     }
   };
 
-  console.log("최종 요청 주소:", `${serverURL}/member/register`);
+  //console.log("최종 요청 주소:", `${serverURL}/member/register`);
 
   const buttonClick = async () => {
     //localStorage.setItem("userName", nickname);
@@ -86,12 +90,15 @@ export default function Signup() {
         password: password,
         verifyPassword: confirmPassword,
         success: idChecked ? 1 : 0, // ✅ 추가: 아이디 중복확인 여부
+
+        headers: {
+          Authorization: null, // ✅ 기존 인터셉터의 Authorization 헤더 무효화
+          "Content-Type": "application/json",
+        },
       });
 
-      console.log(response);
-
-      localStorage.setItem("id", id);
-      localStorage.setItem("nickname", nickname);
+      // localStorage.setItem("id", id);
+      // localStorage.setItem("nickname", nickname);
       alert("회원가입이 완료되었습니다!");
       router.push("./LoginPage");
     } catch (err) {
@@ -169,7 +176,10 @@ export default function Signup() {
               placeholder="아이디를 입력해주세요."
               className={styles.inputid__}
               value={id}
-              onChange={(e) => setId(e.target.value)}
+              onChange={(e) => {
+                setId(e.target.value);
+                setIdChecked(false);
+              }}
               onBlur={handleId}
             />
             <button
