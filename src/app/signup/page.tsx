@@ -203,7 +203,7 @@ export default function Signup() {
                 {
                   username: id,
                   name: nickname,
-                  password,
+                  password : password,
                   verifyPassword: confirmPassword,
                   success: idChecked ? 1 : 0
                 },
