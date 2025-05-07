@@ -79,7 +79,7 @@ export default function ChatPage() {
     return data.message.answer;
   };
 
-  // 자가진단 기반 메시지 전송 (part[항목], choose[선택안안])
+  // 자가진단 기반 메시지 전송 (part[항목], choose[선택안])
   const sendSurveyToBot = async (part: number, choose: number): Promise<string> => {
     const id = roomId ?? (await createChatRoom());
     const response = await apiRequest.post(`/chatroom/chat/survey/${id}`, { part, choose });
