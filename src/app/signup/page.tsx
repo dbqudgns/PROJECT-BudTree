@@ -54,6 +54,7 @@ export default function Signup() {
         { username: id },
         { headers: { "Content-Type": "application/json" } }
       );
+
       const data = response.data as any;
       if (data.message.success === 1) {
         setIdError("사용 가능한 아이디입니다.");

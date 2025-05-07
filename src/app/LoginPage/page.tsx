@@ -60,11 +60,9 @@ export default function LoginPage() {
         { username: id, password: password },
         {
           headers: { "Content-Type": "application/json" },
-          withCredentials: true,
+          withCredentials: true
         }
       );
-
-      console.log("로그인 성공 응답:", response.data);
 
       // Access Token 추출
       const authHeader = response.headers["authorization"];
