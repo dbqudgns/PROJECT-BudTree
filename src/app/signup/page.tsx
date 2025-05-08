@@ -10,8 +10,8 @@ import apiRequest from "../util/reissue";
 // 1. 아이디를 입력하면 중복확인 ✔️
 // 2. 아이디,닉네임 비밀번호, 비밀번호 확인에서 하나라도 빠질시 인풋창 밑에 경고문 출력해주기 ✔️
 // 3. 비밀번호와 비밀번호 확인 동일한지 check ✔️
-// 4. 반응형 check
-// 5. 아이디 중복확인후 로컬스토리지에 저장 후 마이페이지, 메인페이지에서 불러오기
+// 4. 반응형 check ✔️
+// 5. 아이디 중복확인후 로컬스토리지에 저장 후 마이페이지, 메인페이지에서 불러오기 ✔️
 // 6. 비밀번호 저장
 
 export default function Signup() {
@@ -19,6 +19,8 @@ export default function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [id, setId] = useState("");
   const [nickname, setNickname] = useState("");
+  const [lastCheckedId, setLastCheckedId] = useState("");
+
   const router = useRouter();
   const serverURL = process.env.NEXT_PUBLIC_API_SERVER_URL;
 
@@ -58,6 +60,7 @@ export default function Signup() {
         setIdError("사용 가능한 아이디입니다.");
         //localStorage.setItem("id", id);
         setIdChecked(true);
+        setLastCheckedId(id); // ✅ 중복확인된 id 기억
       } else {
         setIdError("이미 사용 중인 아이디입니다.");
         setIdChecked(false);
@@ -78,8 +81,8 @@ export default function Signup() {
   const buttonClick = async () => {
     //localStorage.setItem("userName", nickname);
 
-    if (!idChecked) {
-      alert("중복확인을 해주세요");
+    if (id !== lastCheckedId) {
+      alert("아이디를 수정하셨습니다. 다시 중복확인을 해주세요.");
       return;
     }
 
@@ -92,7 +95,6 @@ export default function Signup() {
         success: idChecked ? 1 : 0, // ✅ 추가: 아이디 중복확인 여부
 
         headers: {
-          Authorization: null, // ✅ 기존 인터셉터의 Authorization 헤더 무효화
           "Content-Type": "application/json",
         },
       });

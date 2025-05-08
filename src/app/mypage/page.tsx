@@ -64,11 +64,16 @@ export default function MyPage() {
     try {
       const response = await apiRequest.get("member/logout", {});
       const data = response.data as {};
+
+      // 2. 무조건 localStorage 비우기
+      localStorage.clear();
+      // 3. 완료 알림
+      alert("로그아웃되었습니다!");
+      router.push("/");
     } catch (e) {
-      console.error("백엔드 로그아웃 실패:", e);
-    } finally {
-      localStorage.removeItem("token");
-      delete axios.defaults.headers.common["Authorization"];
+      localStorage.clear();
+      // 토큰이 만료되었거나 유효하지 않은 상태에서도 토큰,아이디,닉네임을 삭제해서 다음 로그인때 꼬이는 현상 방지
+      alert("로그아웃 중 오류가 발생했습니다. 다시 로그인해주세요.");
       router.push("/LoginPage");
     }
   };

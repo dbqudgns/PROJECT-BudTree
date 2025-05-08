@@ -61,6 +61,7 @@ export default function LoginPage() {
         { username: id, password: password },
         {
           headers: { "Content-Type": "application/json" },
+          withCredentials: true,
         }
       );
 

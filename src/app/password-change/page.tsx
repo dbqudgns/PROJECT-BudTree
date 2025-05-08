@@ -4,13 +4,18 @@ import styles from "./style.module.css";
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Image from "next/image";
-import { useRouter } from "next/navigation"; // ✅ 올바른 import
+import { useRouter } from "next/navigation";
+import apiRequest from "../util/reissue";
 
 export default function ChangePwd() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [passwordTouched, setPasswordTouched] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState(""); // 현재 비밀번호
+  const [currentPasswordTouched, setCurrentPasswordTouched] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
 
   const router = useRouter();
 
@@ -22,6 +27,20 @@ export default function ChangePwd() {
     type: "password",
     visible: false,
   });
+
+  // // 현재 비밀번호와 새로운 비밀번호가 동일한지 다른지 체크하기 위함
+  const [currentPasswordType, setCurrentPasswordType] = useState({
+    type: "password",
+    visible: false,
+  });
+
+  const handleCurrentPasswordType = () => {
+    setCurrentPasswordType((prev) => ({
+      type: prev.visible ? "password" : "text",
+      visible: !prev.visible,
+    }));
+  };
+
   const handlePasswordType1 = () => {
     setPasswordType1((prev) => ({
       type: prev.visible ? "password" : "text",
@@ -35,6 +54,12 @@ export default function ChangePwd() {
       visible: !prev.visible,
     }));
   };
+
+  const handleCurrentPasswordChange = (e) => {
+    setCurrentPassword(e.target.value);
+    setCurrentPasswordTouched(true);
+  };
+
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
@@ -59,9 +84,6 @@ export default function ChangePwd() {
     }
   };
 
-  const passwordCheckBtn = () => {
-    router.push("./mainPage");
-  };
   const handlePasswordBlur = () => {
     setPasswordTouched(true);
     if (password.trim() === "") {
@@ -70,6 +92,32 @@ export default function ChangePwd() {
       setConfirmPasswordError("비밀번호가 일치하지 않습니다.");
     } else {
       setConfirmPasswordError("");
+    }
+  };
+
+  const passwordCheckBtn = async () => {
+    try {
+      setIsLoading(true);
+
+      // 현재 비밀번호와 새 비밀번호 모두 전송
+      await apiRequest.patch("/member/change-password", {
+        newPassword: password, // ✅ 새 비밀번호
+        verifyPassword: currentPassword, // ✅ 현재 비밀번호
+      });
+
+      alert("비밀번호가 성공적으로 변경되었습니다. 다시 로그인해주세요.");
+
+      // 기존 로그인 정보 삭제
+      localStorage.removeItem("token");
+      localStorage.removeItem("id");
+      localStorage.removeItem("nickname");
+
+      router.push("/loginPage");
+    } catch (err: any) {
+      console.error("비밀번호 변경 실패:", err);
+      alert(err.response?.data?.message || "비밀번호 변경에 실패했습니다.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -148,10 +196,12 @@ export default function ChangePwd() {
           disabled={
             password.trim() === "" ||
             confirmPassword.trim() === "" ||
-            password !== confirmPassword
+            password !== confirmPassword ||
+            !!passwordError
           }
         >
-          완료
+          {/* 완료 */}
+          {isLoading ? "처리 중..." : "완료"}
         </button>
       </div>
     </div>

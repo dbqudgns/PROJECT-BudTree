@@ -8,6 +8,7 @@
   flex-direction: column;
   position: relative;
   background-color: #f6f2e6;
+  overflow-y: auto; /* ✅ 추가 */
 }
 
 .header {
@@ -136,4 +137,29 @@
 .separator {
   color: #ccc;
   margin: 0 8px;
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 10px;
+    min-height: auto;
+    height: auto;
+    overflow-y: auto;
+  }
+  .footer {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  .textButton {
+    width: 45%;
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .separator {
+    display: none;
+  }
 }
