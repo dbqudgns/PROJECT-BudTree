@@ -306,11 +306,11 @@ export default function SelfCheckHistory() {
   };
 
   const getStatusColor = (score: number): string => {
-    if (score <= 4) return "#21bf73"; 
-    if (score <= 9) return "#d06cf4"; 
-    if (score <= 14) return "#619dff"; 
-    if (score <= 19) return "#ffb44d"; 
-    return "#ff4d4f"; 
+    if (score <= 4) return "#8dd884"; 
+    if (score <= 9) return "#e986fd"; 
+    if (score <= 14) return "#6fa4ff"; 
+    if (score <= 19) return "#ffb74d"; 
+    return "#e57373"; 
   };
 
   return (
