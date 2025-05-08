@@ -293,12 +293,20 @@ export default function DiaryHistory() {
           setErrorMessage("");
         } else {
           setDiaryList([]);
-          setErrorMessage("해당 날짜에 작성한 일기장이 존재하지 않습니다.");
+          setErrorMessage("일기장이 존재하지 않습니다.");
         }
-      } catch (error) {
-        console.error("일기장 불러오기 실패:", error);
+      } catch (err: any) {
         setDiaryList([]);
-        setErrorMessage("해당 날짜에 작성한 일기장이 존재하지 않습니다.");
+        const status = err?.response?.status;
+        const message = err?.response?.data?.message;
+
+        if (status === 400 && message) {
+          setErrorMessage(message);
+          console.error({ status: 400, message });
+        } else {
+          setErrorMessage("일기장 조회 중 오류가 발생했습니다.");
+          console.error("알 수 없는 오류:", err);
+        }
       }
     };
 
@@ -327,10 +335,8 @@ export default function DiaryHistory() {
         onBack={() => router.push("/mypage")}
       />
 
-
       {/* Year & Month Selector */}
       <div className={styles["selector-container"]}>
-        {/* Year Selector */}
         <div className={styles["dropdown-wrapper"]}>
           <button
             className={`${styles["selector-button"]} ${
@@ -371,7 +377,6 @@ export default function DiaryHistory() {
           )}
         </div>
 
-        {/* Month Selector */}
         <div className={styles["dropdown-wrapper"]}>
           <button
             className={`${styles["selector-button"]} ${
@@ -415,6 +420,13 @@ export default function DiaryHistory() {
 
       {/* Diary List */}
       <div className={styles["diary-list-container"]} ref={diaryListRef}>
+        {(getYearValue() !== 0 || getMonthValue() !== 0) && (
+          <h2 className={styles["diary-list-title"]}>
+            {getYearValue() !== 0 && `${getYearValue()}년`}
+            {getMonthValue() !== 0 && ` ${getMonthValue()}월`}
+          </h2>
+        )}
+
         {errorMessage ? (
           <p className={styles["empty-message"]}>{errorMessage}</p>
         ) : (
