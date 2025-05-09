@@ -94,11 +94,9 @@ export default function NickChange() {
     if (!validateNickname()) return;
 
     try {
-
-      const response = await apiRequest.patch(
-        "/member/change-name",
-        { name: nickname }
-      );
+      const response = await apiRequest.patch("/member/change-name", {
+        name: nickname,
+      });
 
       const data = response.data as {
         status: number;

@@ -12,7 +12,7 @@ import apiRequest from "../util/reissue";
 // 3. 비밀번호와 비밀번호 확인 동일한지 check ✔️
 // 4. 반응형 check ✔️
 // 5. 아이디 중복확인후 로컬스토리지에 저장 후 마이페이지, 메인페이지에서 불러오기 ✔️
-// 6. 비밀번호 저장
+// 6. 비밀번호 저장 ✔️
 
 export default function Signup() {
   const [password, setPassword] = useState("");
@@ -75,8 +75,6 @@ export default function Signup() {
       setIdChecked(false);
     }
   };
-
-  //console.log("최종 요청 주소:", `${serverURL}/member/register`);
 
   const buttonClick = async () => {
     //localStorage.setItem("userName", nickname);

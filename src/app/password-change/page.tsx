@@ -10,12 +10,9 @@ import apiRequest from "../util/reissue";
 export default function ChangePwd() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordTouched, setPasswordTouched] = useState(false); // 포커스를 벗어나면 true로 바뀜
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
-  const [passwordTouched, setPasswordTouched] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentPassword, setCurrentPassword] = useState(""); // 현재 비밀번호
-  const [currentPasswordTouched, setCurrentPasswordTouched] = useState(false);
-  const [passwordError, setPasswordError] = useState("");
 
   const router = useRouter();
 
@@ -27,19 +24,6 @@ export default function ChangePwd() {
     type: "password",
     visible: false,
   });
-
-  // // 현재 비밀번호와 새로운 비밀번호가 동일한지 다른지 체크하기 위함
-  const [currentPasswordType, setCurrentPasswordType] = useState({
-    type: "password",
-    visible: false,
-  });
-
-  const handleCurrentPasswordType = () => {
-    setCurrentPasswordType((prev) => ({
-      type: prev.visible ? "password" : "text",
-      visible: !prev.visible,
-    }));
-  };
 
   const handlePasswordType1 = () => {
     setPasswordType1((prev) => ({
@@ -53,11 +37,6 @@ export default function ChangePwd() {
       type: prev.visible ? "password" : "text",
       visible: !prev.visible,
     }));
-  };
-
-  const handleCurrentPasswordChange = (e) => {
-    setCurrentPassword(e.target.value);
-    setCurrentPasswordTouched(true);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,21 +80,32 @@ export default function ChangePwd() {
 
       // 현재 비밀번호와 새 비밀번호 모두 전송
       await apiRequest.patch("/member/change-password", {
-        newPassword: password, // ✅ 새 비밀번호
-        verifyPassword: currentPassword, // ✅ 현재 비밀번호
+        newPassword: password,
+        verifyPassword: confirmPassword,
       });
 
-      alert("비밀번호가 성공적으로 변경되었습니다. 다시 로그인해주세요.");
+      alert("비밀번호가 성공적으로 변경되었습니다. 다시 로그인해 주세요.");
 
       // 기존 로그인 정보 삭제
       localStorage.removeItem("token");
       localStorage.removeItem("id");
       localStorage.removeItem("nickname");
 
-      router.push("/loginPage");
+      router.push("/LoginPage");
     } catch (err: any) {
-      console.error("비밀번호 변경 실패:", err);
-      alert(err.response?.data?.message || "비밀번호 변경에 실패했습니다.");
+      console.error(
+        "비밀번호 변경 실패:",
+        err.response?.data?.message || err.message
+      );
+
+      // 만약 토큰 만료로 인한 에러(401)면 로그인 페이지로 보내기
+      if (err.response?.status === 401) {
+        alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+        localStorage.clear();
+        router.push("/LoginPage");
+      } else {
+        alert(err.response?.data?.message || "비밀번호 변경에 실패했습니다.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -196,8 +186,7 @@ export default function ChangePwd() {
           disabled={
             password.trim() === "" ||
             confirmPassword.trim() === "" ||
-            password !== confirmPassword ||
-            !!passwordError
+            password !== confirmPassword
           }
         >
           {/* 완료 */}

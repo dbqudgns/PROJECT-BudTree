@@ -56,24 +56,37 @@ export default function MyPage() {
       alert("그동안 이용해주셔서 감사합니다.");
       router.push("/");
     } catch (err) {
+      localStorage.clear();
       alert(err.response?.data?.message || "회원 탈퇴에 실패했습니다.");
+      router.push("/LoginPage");
     }
   };
 
   const handleLogout = async () => {
+    const token = localStorage.getItem("token");
+
+    // 1️⃣ 토큰 없으면 서버에 요청하지 않고 바로 로컬 로그아웃 처리
+    if (!token) {
+      alert("이미 로그아웃된 상태입니다.");
+      localStorage.clear();
+      router.push("/LoginPage");
+      return;
+    }
+
     try {
       const response = await apiRequest.get("member/logout", {});
-      const data = response.data as {};
 
-      // 2. 무조건 localStorage 비우기
+      if (response.status === 200) {
+        localStorage.clear();
+        alert("로그아웃되었습니다!");
+        router.push("/");
+      } else {
+        throw new Error("로그아웃 요청이 실패했습니다");
+      }
+    } catch (error) {
+      //console.error("로그아웃 처리 중 오류 발생:", error);
+
       localStorage.clear();
-      // 3. 완료 알림
-      alert("로그아웃되었습니다!");
-      router.push("/");
-    } catch (e) {
-      localStorage.clear();
-      // 토큰이 만료되었거나 유효하지 않은 상태에서도 토큰,아이디,닉네임을 삭제해서 다음 로그인때 꼬이는 현상 방지
-      alert("로그아웃 중 오류가 발생했습니다. 다시 로그인해주세요.");
       router.push("/LoginPage");
     }
   };
