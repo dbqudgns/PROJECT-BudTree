@@ -163,30 +163,31 @@
     overflow-y: hidden;
     justify-content: space-between;
 
-  .all_content {
-    flex: 1;
-    flex-shrink: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-bottom: 16px;
-    gap: 2px;
-    max-height: calc(100vh - 160px);
-    margin-top: 0px;
-    overflow: hidden;
-  }
+    .all_content {
+      flex: 1;
+      flex-shrink: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      gap: 2px;
+      max-height: calc(100vh - 160px);
+      margin-top: 0px;
+      overflow: hidden;
+    }
 
-  .footer {
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-    flex-wrap: wrap;
-    margin: 5px;
-    margin-top: 0px;
-  }
-  .textButton {
-    width: 45%;
-    font-size: 14px;
-    padding: 10px;
+    .footer {
+      display: flex;
+      flex-direction: row;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin: 5px;
+      margin-top: 0px;
+    }
+    .textButton {
+      width: 45%;
+      font-size: 14px;
+      padding: 10px;
+    }
   }
 }
