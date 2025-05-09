@@ -222,14 +222,10 @@ export default function SelfCheckHistory() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const currentYear = new Date().getFullYear();
-  const years = Array.from(
-    { length: currentYear - 2020 + 1 },
-    (_, index) => (2020 + index).toString()
+  const years = Array.from({ length: currentYear - 2020 + 1 }, (_, index) =>
+    (currentYear - index).toString()
   );
-  const months = [
-    "1월", "2월", "3월", "4월", "5월", "6월",
-    "7월", "8월", "9월", "10월", "11월", "12월",
-  ];
+  const months = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const resultListRef = useRef<HTMLDivElement>(null);
@@ -255,10 +251,10 @@ export default function SelfCheckHistory() {
     const month = selectedMonth === "월" ? 0 : parseInt(selectedMonth, 10);
 
     try {
-      const response = await apiRequest.post<{ message: SelfCheckResult[] }>("/survey/all", {
-        year,
-        month,
-      });
+      const response = await apiRequest.post<{ message: SelfCheckResult[] }>(
+        "/survey/all",
+        { year, month }
+      );
       const data = response.data.message;
 
       if (response.status === 200 && Array.isArray(data) && data.length > 0) {
@@ -306,11 +302,11 @@ export default function SelfCheckHistory() {
   };
 
   const getStatusColor = (score: number): string => {
-    if (score <= 4) return "#8dd884"; 
-    if (score <= 9) return "#e986fd"; 
-    if (score <= 14) return "#6fa4ff"; 
-    if (score <= 19) return "#ffb74d"; 
-    return "#e57373"; 
+    if (score <= 4) return "#8dd884";
+    if (score <= 9) return "#e986fd";
+    if (score <= 14) return "#6fa4ff";
+    if (score <= 19) return "#ffb74d";
+    return "#e57373";
   };
 
   return (
@@ -328,15 +324,26 @@ export default function SelfCheckHistory() {
             }}
           >
             {selectedYear}
-            {showYearDropdown ? <ChevronUp className={styles["selector-icon"]} /> : <ChevronDown className={styles["selector-icon"]} />}
+            {showYearDropdown ? (
+              <ChevronUp className={styles["selector-icon"]} />
+            ) : (
+              <ChevronDown className={styles["selector-icon"]} />
+            )}
           </button>
           {showYearDropdown && (
             <div className={styles.dropdown}>
-              <div className={`${styles["dropdown-item"]} ${selectedYear === "연도" ? styles.selected : ""}`} onClick={() => handleYearSelect("연도")}>
+              <div
+                className={`${styles["dropdown-item"]} ${selectedYear === "연도" ? styles.selected : ""}`}
+                onClick={() => handleYearSelect("연도")}
+              >
                 선택안함
               </div>
               {years.map((year) => (
-                <div key={year} className={`${styles["dropdown-item"]} ${selectedYear === year ? styles.selected : ""}`} onClick={() => handleYearSelect(year)}>
+                <div
+                  key={year}
+                  className={`${styles["dropdown-item"]} ${selectedYear === year ? styles.selected : ""}`}
+                  onClick={() => handleYearSelect(year)}
+                >
                   {year}
                 </div>
               ))}
@@ -353,15 +360,26 @@ export default function SelfCheckHistory() {
             }}
           >
             {selectedMonth}
-            {showMonthDropdown ? <ChevronUp className={styles["selector-icon"]} /> : <ChevronDown className={styles["selector-icon"]} />}
+            {showMonthDropdown ? (
+              <ChevronUp className={styles["selector-icon"]} />
+            ) : (
+              <ChevronDown className={styles["selector-icon"]} />
+            )}
           </button>
           {showMonthDropdown && (
             <div className={styles.dropdown}>
-              <div className={`${styles["dropdown-item"]} ${selectedMonth === "월" ? styles.selected : ""}`} onClick={() => handleMonthSelect("월")}>
+              <div
+                className={`${styles["dropdown-item"]} ${selectedMonth === "월" ? styles.selected : ""}`}
+                onClick={() => handleMonthSelect("월")}
+              >
                 선택안함
               </div>
               {months.map((month) => (
-                <div key={month} className={`${styles["dropdown-item"]} ${selectedMonth === month ? styles.selected : ""}`} onClick={() => handleMonthSelect(month)}>
+                <div
+                  key={month}
+                  className={`${styles["dropdown-item"]} ${selectedMonth === month ? styles.selected : ""}`}
+                  onClick={() => handleMonthSelect(month)}
+                >
                   {month}
                 </div>
               ))}
@@ -372,16 +390,20 @@ export default function SelfCheckHistory() {
 
       {/* 결과 리스트 */}
       <div className={styles["selfcheckhistory-list-container"]} ref={resultListRef}>
-        {(selectedYear !== "연도" || selectedMonth !== "월") && (
-          <h2 className={styles["selfcheckhistory-list-title"]}>
-            {selectedYear !== "연도" ? `${selectedYear}년 ` : ""}
-            {selectedMonth !== "월" ? `${selectedMonth}` : ""}
-          </h2>
-        )}
+        <h2 className={styles["selfcheckhistory-list-title"]}>
+          {selectedYear === "연도" && selectedMonth === "월"
+            ? "전체 내역"
+            : `${selectedYear !== "연도" ? `${selectedYear}년` : ""} ${
+                selectedMonth !== "월" ? `${selectedMonth}` : ""
+              }`.trim()}
+        </h2>
+
         {error && <p className={styles["error-message"]}>{error}</p>}
         {results.map((item, idx) => {
           const dateObj = new Date(item.createdDate);
-          const formattedDate = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, "0")}-${String(dateObj.getDate()).padStart(2, "0")}`;
+          const formattedDate = `${dateObj.getFullYear()}-${String(
+            dateObj.getMonth() + 1
+          ).padStart(2, "0")}-${String(dateObj.getDate()).padStart(2, "0")}`;
 
           return (
             <div key={idx} className={styles["selfcheckhistory-item"]}>
