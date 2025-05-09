@@ -73,7 +73,7 @@ export default function Signup() {
     //localStorage.setItem("userName", nickname);
 
     if (id !== lastCheckedId) {
-      alert("아이디를 수정하셨습니다. 다시 중복확인을 해주세요.");
+      alert("중복확인을 해주세요.");
       return;
     }
 
