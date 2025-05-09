@@ -77,11 +77,6 @@ export default function NickChange() {
   };
 
   useEffect(() => {
-    // console.log(
-    //   "페이지 렌더 후 ACCESS_TOKEN:",
-    //   localStorage.getItem("ACCESS_TOKEN")
-    // );
-
     const savedNickname = localStorage.getItem("userName");
     if (savedNickname) {
       setNickname(savedNickname);
@@ -94,11 +89,9 @@ export default function NickChange() {
     if (!validateNickname()) return;
 
     try {
-
-      const response = await apiRequest.patch(
-        "/member/change-name",
-        { name: nickname }
-      );
+      const response = await apiRequest.patch("/member/change-name", {
+        name: nickname,
+      });
 
       const data = response.data as {
         status: number;

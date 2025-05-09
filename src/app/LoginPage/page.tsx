@@ -84,9 +84,7 @@ export default function LoginPage() {
       console.error("로그인 중 오류 발생:", err);
       if (err.response) {
         if (err.response.status === 401) {
-          alert(
-            "아이디 또는 비밀번호가 일치하지 않습니다.\n회원가입을 진행하지 않으셨으면 회원가입을 진행해주세요 !"
-          );
+          alert("아이디 또는 비밀번호가 틀렸습니다.");
         } else {
           alert("로그인 중 오류가 발생했습니다.");
         }

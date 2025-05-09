@@ -4,13 +4,15 @@ import styles from "./style.module.css";
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Image from "next/image";
-import { useRouter } from "next/navigation"; // ✅ 올바른 import
+import { useRouter } from "next/navigation";
+import apiRequest from "../util/reissue";
 
 export default function ChangePwd() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordTouched, setPasswordTouched] = useState(false); // 포커스를 벗어나면 true로 바뀜
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
-  const [passwordTouched, setPasswordTouched] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
@@ -22,6 +24,7 @@ export default function ChangePwd() {
     type: "password",
     visible: false,
   });
+
   const handlePasswordType1 = () => {
     setPasswordType1((prev) => ({
       type: prev.visible ? "password" : "text",
@@ -35,6 +38,7 @@ export default function ChangePwd() {
       visible: !prev.visible,
     }));
   };
+
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
@@ -59,9 +63,6 @@ export default function ChangePwd() {
     }
   };
 
-  const passwordCheckBtn = () => {
-    router.push("./mainPage");
-  };
   const handlePasswordBlur = () => {
     setPasswordTouched(true);
     if (password.trim() === "") {
@@ -70,6 +71,43 @@ export default function ChangePwd() {
       setConfirmPasswordError("비밀번호가 일치하지 않습니다.");
     } else {
       setConfirmPasswordError("");
+    }
+  };
+
+  const passwordCheckBtn = async () => {
+    try {
+      setIsLoading(true);
+
+      // 현재 비밀번호와 새 비밀번호 모두 전송
+      await apiRequest.patch("/member/change-password", {
+        newPassword: password,
+        verifyPassword: confirmPassword,
+      });
+
+      alert("비밀번호가 성공적으로 변경되었습니다. 다시 로그인해 주세요.");
+
+      // 기존 로그인 정보 삭제
+      localStorage.removeItem("token");
+      localStorage.removeItem("id");
+      localStorage.removeItem("nickname");
+
+      router.push("/LoginPage");
+    } catch (err: any) {
+      console.error(
+        "비밀번호 변경 실패:",
+        err.response?.data?.message || err.message
+      );
+
+      // 만약 토큰 만료로 인한 에러(401)면 로그인 페이지로 보내기
+      if (err.response?.status === 401) {
+        alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+        localStorage.clear();
+        router.push("/LoginPage");
+      } else {
+        alert(err.response?.data?.message || "비밀번호 변경에 실패했습니다.");
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -151,7 +189,8 @@ export default function ChangePwd() {
             password !== confirmPassword
           }
         >
-          완료
+          {/* 완료 */}
+          {isLoading ? "처리 중..." : "완료"}
         </button>
       </div>
     </div>

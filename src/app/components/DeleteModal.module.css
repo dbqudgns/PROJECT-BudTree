@@ -72,3 +72,20 @@
   border: none;
   color: white;
 }
+
+@media (max-width: 480px) {
+  .modalContent {
+    width: 95%;
+    padding: 16px;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+  }
+
+  .cancelButton,
+  .confirmButton {
+    width: 100%;
+    padding: 10px;
+  }
+}
