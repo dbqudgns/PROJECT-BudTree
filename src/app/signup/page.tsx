@@ -7,13 +7,6 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import apiRequest from "../util/reissue";
 
-// 1. 아이디를 입력하면 중복확인 ✔️
-// 2. 아이디,닉네임 비밀번호, 비밀번호 확인에서 하나라도 빠질시 인풋창 밑에 경고문 출력해주기 ✔️
-// 3. 비밀번호와 비밀번호 확인 동일한지 check ✔️
-// 4. 반응형 check ✔️
-// 5. 아이디 중복확인후 로컬스토리지에 저장 후 마이페이지, 메인페이지에서 불러오기 ✔️
-// 6. 비밀번호 저장 ✔️
-
 export default function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

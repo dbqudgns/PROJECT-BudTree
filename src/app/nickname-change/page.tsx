@@ -77,11 +77,6 @@ export default function NickChange() {
   };
 
   useEffect(() => {
-    // console.log(
-    //   "페이지 렌더 후 ACCESS_TOKEN:",
-    //   localStorage.getItem("ACCESS_TOKEN")
-    // );
-
     const savedNickname = localStorage.getItem("userName");
     if (savedNickname) {
       setNickname(savedNickname);
