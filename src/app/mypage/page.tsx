@@ -11,8 +11,6 @@ import DeleteModal from "../components/DeleteModal";
 import LogoutModal from "../components/LogoutModal";
 import apiRequest from "../util/reissue";
 
-// 1. 로그인 아이디 정보 불러오기
-
 export default function MyPage() {
   const router = useRouter();
   const [name, setName] = useState("");
@@ -34,7 +32,7 @@ export default function MyPage() {
 
     // 아이디 저장
     if (savedUserId) {
-      setUserId(savedUserId); // ✅ state를 업데이트해야 함!
+      setUserId(savedUserId);
       console.log("저장된 유저 ID:", savedUserId);
     } else {
       console.log("유저 ID가 localStorage에 없습니다.");
@@ -43,12 +41,6 @@ export default function MyPage() {
 
   const handleDeleteProfile = async () => {
     try {
-      // await axios.delete("https://api.budtree.store/member/edit", {
-      //   headers: {
-      //     Authorization: "Bearer " + localStorage.getItem("ACCESS_TOKEN"),
-      //   },
-      // });
-
       const response = await apiRequest.delete("member/edit", {});
       const data = response.data as {};
 
@@ -84,8 +76,6 @@ export default function MyPage() {
         throw new Error("로그아웃 요청이 실패했습니다");
       }
     } catch (error) {
-      //console.error("로그아웃 처리 중 오류 발생:", error);
-
       localStorage.clear();
       router.push("/LoginPage");
     }
