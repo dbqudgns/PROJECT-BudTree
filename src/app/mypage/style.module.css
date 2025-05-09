@@ -150,10 +150,10 @@
     height: 120vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* ✅ 전체 뷰포트에서 스크롤 제거 */
+    overflow: hidden;
   }
   .container {
-    overflow: hidden; /* ✅ container 내부 스크롤 제거 */
+    overflow: hidden;
     min-height: 280vh;
     padding: 5px 10px;
     min-height: auto;
@@ -161,8 +161,7 @@
     height: auto;
     margin-bottom: 50px;
     overflow-y: hidden;
-    justify-content: space-between; /* ✅ footer와 content 사이 분배 */
-  }
+    justify-content: space-between;
 
   .all_content {
     flex: 1;
