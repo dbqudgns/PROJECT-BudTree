@@ -233,7 +233,7 @@ export default function DiaryHistory() {
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: currentYear - 2020 + 1 }, (_, index) =>
-    (2020 + index).toString()
+    (currentYear - index).toString()
   );
   const months = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);
 
@@ -293,7 +293,6 @@ export default function DiaryHistory() {
           setErrorMessage("");
         } else {
           setDiaryList([]);
-          setErrorMessage("일기장이 존재하지 않습니다.");
         }
       } catch (err: any) {
         setDiaryList([]);
@@ -420,12 +419,13 @@ export default function DiaryHistory() {
 
       {/* Diary List */}
       <div className={styles["diary-list-container"]} ref={diaryListRef}>
-        {(getYearValue() !== 0 || getMonthValue() !== 0) && (
-          <h2 className={styles["diary-list-title"]}>
-            {getYearValue() !== 0 && `${getYearValue()}년`}
-            {getMonthValue() !== 0 && ` ${getMonthValue()}월`}
-          </h2>
-        )}
+        <h2 className={styles["diary-list-title"]}>
+          {getYearValue() === 0 && getMonthValue() === 0
+            ? "전체 내역"
+            : `${getYearValue() !== 0 ? getYearValue() + "년" : ""} ${
+                getMonthValue() !== 0 ? getMonthValue() + "월" : ""
+              }`.trim()}
+        </h2>
 
         {errorMessage ? (
           <p className={styles["empty-message"]}>{errorMessage}</p>
