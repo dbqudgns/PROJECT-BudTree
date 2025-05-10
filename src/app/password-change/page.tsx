@@ -85,11 +85,9 @@ export default function ChangePwd() {
       });
 
       alert("비밀번호가 성공적으로 변경되었습니다. 다시 로그인해 주세요.");
-
-      // 기존 로그인 정보 삭제
-      localStorage.removeItem("token");
+      localStorage.removeItem("userName");
       localStorage.removeItem("id");
-      localStorage.removeItem("nickname");
+      localStorage.removeItem("token");
 
       router.push("/LoginPage");
     } catch (err: any) {
@@ -101,8 +99,6 @@ export default function ChangePwd() {
       // 만약 토큰 만료로 인한 에러(401)면 로그인 페이지로 보내기
       if (err.response?.status === 401) {
         alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-        localStorage.clear();
-        router.push("/LoginPage");
       } else {
         alert(err.response?.data?.message || "비밀번호 변경에 실패했습니다.");
       }

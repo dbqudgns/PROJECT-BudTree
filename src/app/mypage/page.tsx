@@ -70,7 +70,7 @@ export default function MyPage() {
 
       if (response.status === 200) {
         localStorage.clear();
-        alert("로그아웃되었습니다!");
+        alert("로그아웃 되었습니다!");
         router.push("/");
       } else {
         throw new Error("로그아웃 요청이 실패했습니다");

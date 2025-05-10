@@ -67,7 +67,7 @@
   }
 
   .buttonGroup {
-    flex-direction: column;
+    display: flex;
   }
 
   .cancelButton,
