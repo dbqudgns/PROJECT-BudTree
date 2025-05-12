@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./style.module.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Header from "../components/Header";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -11,10 +11,15 @@ export default function ChangePwd() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordTouched, setPasswordTouched] = useState(false); // 포커스를 벗어나면 true로 바뀜
+
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
+
+  // 비밀번호 변경시 에러 상태
+  const [passwordError, setPasswordError] = useState(""); // 비밀번호가 비어있을시
+  const [passwordFormatError, setPasswordFormatError] = useState(""); //비밀번호 형식이 틀리면
 
   const [passwordType1, setPasswordType1] = useState({
     type: "password",
@@ -39,9 +44,22 @@ export default function ChangePwd() {
     }));
   };
 
+  // 유효성 검사 함수 추가
+  const isPasswordValid = (pwd: string) => {
+    const regex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/;
+    return regex.test(pwd);
+  };
+
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
+
+    if (!isPasswordValid(value)) {
+      setPasswordFormatError("형식에 맞춰 입력해주세요.");
+    } else {
+      setPasswordFormatError("");
+    }
 
     if (confirmPassword && value !== confirmPassword) {
       setConfirmPasswordError("비밀번호가 일치하지 않습니다.");
@@ -62,12 +80,21 @@ export default function ChangePwd() {
       setConfirmPasswordError("");
     }
   };
-
   const handlePasswordBlur = () => {
     setPasswordTouched(true);
+
     if (password.trim() === "") {
-      setConfirmPasswordError("변경할 비밀번호를 입력해주세요.");
-    } else if (confirmPassword && password !== confirmPassword) {
+      setPasswordError("비밀번호를 입력해주세요.");
+      setPasswordFormatError("");
+    } else if (!isPasswordValid(password)) {
+      setPasswordError("");
+      setPasswordFormatError("형식에 맞춰 입력해주세요.");
+    } else {
+      setPasswordError("");
+      setPasswordFormatError("");
+    }
+
+    if (confirmPassword && password !== confirmPassword) {
       setConfirmPasswordError("비밀번호가 일치하지 않습니다.");
     } else {
       setConfirmPasswordError("");
@@ -85,11 +112,9 @@ export default function ChangePwd() {
       });
 
       alert("비밀번호가 성공적으로 변경되었습니다. 다시 로그인해 주세요.");
-
-      // 기존 로그인 정보 삭제
-      localStorage.removeItem("token");
+      localStorage.removeItem("userName");
       localStorage.removeItem("id");
-      localStorage.removeItem("nickname");
+      localStorage.removeItem("token");
 
       router.push("/LoginPage");
     } catch (err: any) {
@@ -101,8 +126,6 @@ export default function ChangePwd() {
       // 만약 토큰 만료로 인한 에러(401)면 로그인 페이지로 보내기
       if (err.response?.status === 401) {
         alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-        localStorage.clear();
-        router.push("/LoginPage");
       } else {
         alert(err.response?.data?.message || "비밀번호 변경에 실패했습니다.");
       }
@@ -125,9 +148,11 @@ export default function ChangePwd() {
           <div className={styles.inputWrapper}>
             <input
               type={passwordType1.type}
-              placeholder="비밀번호를 입력해주세요."
+              placeholder="비밀번호(8자 이상,문자/숫자/기호)"
               className={`${styles.inputpwd} ${
-                confirmPasswordError ? styles.errorBorder : ""
+                confirmPasswordError || passwordFormatError
+                  ? styles.errorBorder
+                  : ""
               }`}
               value={password}
               onChange={handlePasswordChange}
@@ -142,8 +167,10 @@ export default function ChangePwd() {
               )}
             </div>
           </div>
-          {passwordTouched && password.trim() === "" && (
-            <p className={styles.error}>변경할 비밀번호를 입력해주세요.</p>
+          {passwordTouched && (passwordError || passwordFormatError) && (
+            <p className={styles.error}>
+              {passwordError || passwordFormatError}
+            </p>
           )}
         </div>
 
@@ -172,6 +199,7 @@ export default function ChangePwd() {
               )}
             </div>
           </div>
+          {/* ✅ 비밀번호 확인 에러 메시지 출력 */}
           {confirmPasswordError && (
             <p className={styles.error}>{confirmPasswordError}</p>
           )}
@@ -186,7 +214,8 @@ export default function ChangePwd() {
           disabled={
             password.trim() === "" ||
             confirmPassword.trim() === "" ||
-            password !== confirmPassword
+            password !== confirmPassword ||
+            !isPasswordValid(password)
           }
         >
           {/* 완료 */}
