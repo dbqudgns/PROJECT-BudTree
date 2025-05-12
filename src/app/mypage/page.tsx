@@ -3,7 +3,6 @@
 import styles from "./style.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import Header from "../components/Header";
 import { useState, useEffect } from "react";
@@ -25,7 +24,6 @@ export default function MyPage() {
     // 닉네임 저장
     if (savedNickname) {
       setName(savedNickname);
-      console.log("저장된 닉네임:", savedNickname);
     } else {
       console.log("닉네임이 localStorage에 없습니다.");
     }
@@ -33,7 +31,6 @@ export default function MyPage() {
     // 아이디 저장
     if (savedUserId) {
       setUserId(savedUserId);
-      console.log("저장된 유저 ID:", savedUserId);
     } else {
       console.log("유저 ID가 localStorage에 없습니다.");
     }

@@ -25,6 +25,7 @@ export default function Signup() {
   const [nicknameError, setNicknameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [passwordFormatError, setPasswordFormatError] = useState("");
   const [idChecked, setIdChecked] = useState(false);
 
   const serverURL = process.env.NEXT_PUBLIC_API_SERVER_URL;
@@ -78,13 +79,22 @@ export default function Signup() {
   };
 
   const handlePassword = () => {
+    const trimmed = password.trim();
     if (password.trim() === "") setPasswordError("비밀번호를 입력해주세요.");
     else setPasswordError("");
+
+    // 형식에 맞지 않는 비밀번호 입력시 에러 문구 출력
+    setPasswordError(""); // 공백 에러는 이제 없음
+    if (!isPasswordValid(trimmed)) {
+      setPasswordFormatError("형식에 맞춰 입력해주세요.");
+    } else {
+      setPasswordFormatError("");
+    }
   };
 
-  const handleConfirmPassword = () => {
+  const handleConfirmPassword = (e) => {
     if (confirmPassword.trim() === "") {
-      setConfirmPasswordError("비밀번호를 다시 입력해주세요.");
+      setConfirmPasswordError("변경할 비밀번호를 입력해주세요.");
     } else if (password !== confirmPassword) {
       setConfirmPasswordError("비밀번호가 일치하지 않습니다.");
     } else {
@@ -111,6 +121,13 @@ export default function Signup() {
       type: prev.visible ? "password" : "text",
       visible: !prev.visible,
     }));
+  };
+
+  // 유효성 검사 함수 추가
+  const isPasswordValid = (pwd: string) => {
+    const regex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/;
+    return regex.test(pwd);
   };
 
   return (
@@ -158,8 +175,12 @@ export default function Signup() {
           <div className={styles.inputContainer}>
             <input
               type={passwordType1.type}
-              placeholder="비밀번호를 입력하세요."
-              className={styles.inputOnly}
+              placeholder="비밀번호(8자 이상,문자/숫자/기호)"
+              className={`${styles.inputOnly} ${
+                confirmPasswordError || passwordFormatError
+                  ? styles.errorBorder
+                  : ""
+              }`}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onBlur={handlePassword}
@@ -172,7 +193,11 @@ export default function Signup() {
               )}
             </div>
           </div>
-          {passwordError && <p className={styles.error}>{passwordError}</p>}
+
+          {/* 형식 에러 */}
+          {!passwordError && passwordFormatError && (
+            <p className={styles.error}>{passwordFormatError}</p>
+          )}
         </div>
 
         <div className={styles.inputPassword}>
@@ -220,7 +245,7 @@ export default function Signup() {
                 },
                 { headers: { "Content-Type": "application/json" } }
               );
-              alert("회원가입이 완료되었습니다!");
+              alert("회원가입이 완료되었습니다");
               router.push("./LoginPage");
             } catch (err: any) {
               const msg =
@@ -235,7 +260,8 @@ export default function Signup() {
             nickname.trim() === "" ||
             password.trim() === "" ||
             confirmPassword.trim() === "" ||
-            password !== confirmPassword
+            password !== confirmPassword ||
+            !isPasswordValid(password)
           }
         >
           완료
@@ -244,4 +270,3 @@ export default function Signup() {
     </div>
   );
 }
-

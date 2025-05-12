@@ -87,9 +87,9 @@
 .error {
   color: #ff7f7f;
   font-size: 14px;
-  margin-top: 7px;
-  margin-left: 15px;
+  margin-top: 5px;
   width: 100%;
+  padding: 0 5px;
 }
 
 .footer {
