@@ -199,7 +199,10 @@ export default function ChangePwd() {
               )}
             </div>
           </div>
-          {passwordError && <p className={styles.error}>{passwordError}</p>}
+          {/* ✅ 비밀번호 확인 에러 메시지 출력 */}
+          {confirmPasswordError && (
+            <p className={styles.error}>{confirmPasswordError}</p>
+          )}
         </div>
       </div>
 
