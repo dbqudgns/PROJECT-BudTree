@@ -118,11 +118,12 @@ export default function SelfCheckHistory() {
     <div className={styles["selfcheckhistory-container"]} ref={dropdownRef}>
       <Header title="자가진단 내역" showBack />
 
-      {/* 날짜 선택 드롭다운 */}
       <div className={styles["selector-container"]}>
         <div className={styles["dropdown-wrapper"]}>
           <button
-            className={`${styles["selector-button"]} ${showYearDropdown ? styles.active : ""}`}
+            className={`${styles["selector-button"]} ${
+              showYearDropdown ? styles.active : ""
+            }`}
             onClick={() => {
               setShowYearDropdown(!showYearDropdown);
               setShowMonthDropdown(false);
@@ -138,7 +139,9 @@ export default function SelfCheckHistory() {
           {showYearDropdown && (
             <div className={styles.dropdown}>
               <div
-                className={`${styles["dropdown-item"]} ${selectedYear === "연도" ? styles.selected : ""}`}
+                className={`${styles["dropdown-item"]} ${
+                  selectedYear === "연도" ? styles.selected : ""
+                }`}
                 onClick={() => handleYearSelect("연도")}
               >
                 선택안함
@@ -146,7 +149,9 @@ export default function SelfCheckHistory() {
               {years.map((year) => (
                 <div
                   key={year}
-                  className={`${styles["dropdown-item"]} ${selectedYear === year ? styles.selected : ""}`}
+                  className={`${styles["dropdown-item"]} ${
+                    selectedYear === year ? styles.selected : ""
+                  }`}
                   onClick={() => handleYearSelect(year)}
                 >
                   {year}
@@ -158,7 +163,9 @@ export default function SelfCheckHistory() {
 
         <div className={styles["dropdown-wrapper"]}>
           <button
-            className={`${styles["selector-button"]} ${showMonthDropdown ? styles.active : ""}`}
+            className={`${styles["selector-button"]} ${
+              showMonthDropdown ? styles.active : ""
+            }`}
             onClick={() => {
               setShowMonthDropdown(!showMonthDropdown);
               setShowYearDropdown(false);
@@ -174,7 +181,9 @@ export default function SelfCheckHistory() {
           {showMonthDropdown && (
             <div className={styles.dropdown}>
               <div
-                className={`${styles["dropdown-item"]} ${selectedMonth === "월" ? styles.selected : ""}`}
+                className={`${styles["dropdown-item"]} ${
+                  selectedMonth === "월" ? styles.selected : ""
+                }`}
                 onClick={() => handleMonthSelect("월")}
               >
                 선택안함
@@ -182,7 +191,9 @@ export default function SelfCheckHistory() {
               {months.map((month) => (
                 <div
                   key={month}
-                  className={`${styles["dropdown-item"]} ${selectedMonth === month ? styles.selected : ""}`}
+                  className={`${styles["dropdown-item"]} ${
+                    selectedMonth === month ? styles.selected : ""
+                  }`}
                   onClick={() => handleMonthSelect(month)}
                 >
                   {month}
@@ -192,7 +203,10 @@ export default function SelfCheckHistory() {
           )}
         </div>
       </div>
-      <div className={styles["selfcheckhistory-list-container"]} ref={resultListRef}>
+      <div
+        className={styles["selfcheckhistory-list-container"]}
+        ref={resultListRef}
+      >
         <h2 className={styles["selfcheckhistory-list-title"]}>
           {selectedYear === "연도" && selectedMonth === "월"
             ? "전체 내역"
@@ -211,7 +225,9 @@ export default function SelfCheckHistory() {
           return (
             <div key={idx} className={styles["selfcheckhistory-item"]}>
               <div className={styles["selfcheckhistory-item-row"]}>
-                <p className={styles["selfcheckhistory-item-date"]}>{formattedDate}</p>
+                <p className={styles["selfcheckhistory-item-date"]}>
+                  {formattedDate}
+                </p>
                 <p
                   className={styles["selfcheckhistory-item-status"]}
                   style={{ color: getStatusColor(item.score) }}
@@ -225,7 +241,9 @@ export default function SelfCheckHistory() {
 
         {isScrolled && (
           <button
-            className={`${styles["scroll-to-top-button"]} ${isAtBottom ? styles["at-bottom"] : ""}`}
+            className={`${styles["scroll-to-top-button"]} ${
+              isAtBottom ? styles["at-bottom"] : ""
+            }`}
             onClick={scrollToTop}
           >
             <ChevronUp className={styles["scroll-top-icon"]} />

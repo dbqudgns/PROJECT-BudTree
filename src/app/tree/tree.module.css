@@ -13,51 +13,49 @@
 .treeImageWrapper {
   position: relative;
   width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
   max-width: 600px;
+  aspect-ratio: 3 / 4;
   margin: 0 auto;
 }
 
 .treeImage {
   width: 100%;
-  /* height: 100%; */
-  display: block;
+  height: 100%;
+  padding-top: 54px;
   object-fit: cover;
-  z-index: 0;
+  display: block;
 }
 
 .emotionIcon {
   position: absolute;
-  width: 60px;
-  height: 60px;
+  cursor: pointer;
+  width: 65px;
+  height: 65px;
 }
-
-/* .emotion1 {
-  top: 22%;
-  left: 20%;
+.emotion1 {
+  top: 23%;
+  left: 24%;
 }
 .emotion2 {
   top: 18%;
-  left: 58%;
+  left: 52%;
 }
 .emotion3 {
-  top: 40%;
-  left: 32%;
+  top: 35%;
+  left: 40%;
 }
 .emotion4 {
-  top: 48%;
-  left: 64%;
+  top: 29%;
+  left: 71%;
 }
 .emotion5 {
-  top: 72%;
-  left: 22%;
+  top: 38%;
+  left: 12%;
 }
 .emotion6 {
-  top: 78%;
-  left: 60%;
-} */
+  top: 42%;
+  left: 65%;
+}
 
 .buddyContainer {
   position: absolute;
@@ -71,7 +69,6 @@
   gap: 40px;
   z-index: 10;
   max-width: 90%;
-  /* flex-wrap: wrap; */
 }
 .buddyImageWrapper {
   width: 80px;
@@ -85,9 +82,7 @@
 
 .buddyImage {
   width: 90px;
-  /* height: 100px; */
   margin: 0 auto;
-  /* height: 60px; */
   border-radius: 50%;
   transform: translateY(-10px) scale(1.19);
   padding: 4px;
@@ -141,64 +136,28 @@
   }
 
   .emotion1 {
-    top: 21%;
+    top: 25%;
     left: 18%;
   }
   .emotion2 {
-    top: 15%;
+    top: 20%;
     left: 51%;
   }
   .emotion3 {
-    top: 28%;
+    top: 33%;
     left: 43%;
   }
   .emotion4 {
-    top: 30%;
+    top: 32%;
     left: 73%;
   }
   .emotion5 {
-    top: 36%;
+    top: 41%;
     left: 14%;
   }
   .emotion6 {
-    top: 39%;
-    left: 53%;
-  }
-}
-
-@media (min-width: 769px) {
-  .emotionIcon {
-    position: absolute;
-    cursor: pointer;
-    width: 65px;
-    height: 65px;
-  }
-  .treeImage {
-    height: auto;
-  }
-  .emotion1 {
-    top: 22%;
-    left: 20%;
-  }
-  .emotion2 {
-    top: 20%;
-    left: 55%;
-  }
-  .emotion3 {
-    top: 33%;
-    left: 38%;
-  }
-  .emotion4 {
-    top: 38%;
-    left: 69%;
-  }
-  .emotion5 {
-    top: 43%;
-    left: 15%;
-  }
-  .emotion6 {
-    top: 47%;
-    left: 50%;
+    top: 44%;
+    left: 59%;
   }
 }
 
@@ -206,7 +165,6 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  /* transform: translate(-50%, -50%); */
   width: 100vw;
   height: 100dvh;
   background-color: rgba(0, 0, 0, 0.4);
@@ -217,23 +175,6 @@
   align-items: center;
 }
 
-/* .modalContent {
-  background-color: #fcfbf7;
-  border-radius: 16px;
-  padding: 24px 20px;
-  width: 85%;
-  max-width: 348px;
-  max-height: 75vh;
-  overflow-y: auto;
-  text-align: left;
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-} */
 .modalContent {
   background-color: #fcfbf7;
   border-radius: 16px;
@@ -254,22 +195,8 @@
   overflow-y: auto;
   max-height: 60vh;
   width: 100%;
-  /* padding-right: 4px; */
-  /* scrollbar-width: thin; */
-  /* scrollbar-color: #ccc transparent; */
-  /* scrollbar-color: #ccc #f0f0f0; */
-  /* direction: rtl; */
   text-align: left;
 }
-
-/* .modalScrollArea::-webkit-scrollbar {
-  width: 2px;
-}
-
-.modalScrollArea::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-  border-radius: 4px;
-} */
 
 .modalContent h2 {
   margin-top: 0;

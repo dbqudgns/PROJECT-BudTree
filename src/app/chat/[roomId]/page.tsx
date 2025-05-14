@@ -171,8 +171,6 @@
 //   );
 // }
 
-
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -208,28 +206,31 @@ export default function ChatDetailPage() {
       })()
     : "";
 
-    useEffect(() => {
-      if (!roomId) return;
-    
-      const fetchMessages = async () => {
-        try {
-          const response = await apiRequest.get<ChatResponse>(`/chatroom/${roomId}`);
-          if (response.status === 200 && Array.isArray(response.data.message)) {
-            setMessages(response.data.message);
-            setError(null);
-          } else {
-            setMessages([]);
-          }
-        } catch (err: any) {
-          const message = err?.response?.data?.message;
+  useEffect(() => {
+    if (!roomId) return;
+
+    const fetchMessages = async () => {
+      try {
+        const response = await apiRequest.get<ChatResponse>(
+          `/chatroom/${roomId}`
+        );
+        if (response.status === 200 && Array.isArray(response.data.message)) {
+          const ordered = [...response.data.message].reverse();
+          setMessages(ordered);
+          setError(null);
+        } else {
           setMessages([]);
-          setError(message || "대화 조회 중 오류가 발생했습니다.");
-          console.error("채팅 조회 실패:", err);
         }
-      };
-    
-      fetchMessages();
-    }, [roomId]);
+      } catch (err: any) {
+        const message = err?.response?.data?.message;
+        setMessages([]);
+        setError(message || "대화 조회 중 오류가 발생했습니다.");
+        console.error("채팅 조회 실패:", err);
+      }
+    };
+
+    fetchMessages();
+  }, [roomId]);
   return (
     <div className={styles.container}>
       <Header
@@ -279,4 +280,3 @@ export default function ChatDetailPage() {
     </div>
   );
 }
-

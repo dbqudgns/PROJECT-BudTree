@@ -10,7 +10,6 @@
 .resultScore {
   font-size: 28px;
   font-weight: bold;
-  /* color: #d75c5c; */
   text-align: center;
   margin-top: 20px;
   margin-bottom: 24px;
@@ -77,8 +76,8 @@
 
 .nextButton {
   width: 90%;
-  max-width: 300px; /* Restrict button width */
-  margin: 5px auto; /* Center the button */
+  max-width: 300px;
+  margin: 5px auto;
   height: 50px;
   border-radius: 25px;
   background-color: #d8cebd;

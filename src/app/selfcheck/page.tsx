@@ -25,11 +25,12 @@ const options = [
 ];
 
 export default function Page() {
-  const [answers, setAnswers] = useState<number[]>(Array(questions.length).fill(-1));
+  const [answers, setAnswers] = useState<number[]>(
+    Array(questions.length).fill(-1)
+  );
   const [current, setCurrent] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  
 
   const handleSelect = (value: number) => {
     const updated = [...answers];
@@ -44,8 +45,7 @@ export default function Page() {
   const handleSubmit = async () => {
     if (answers[current] === -1) return;
     setIsLoading(true);
-    
-    // request body 생성
+
     const requestBody: { [key: string]: number } = {};
     answers.forEach((score, index) => {
       requestBody[`part${index + 1}`] = score;
@@ -55,21 +55,32 @@ export default function Page() {
       const response = await apiRequest.post("/survey/save", requestBody);
 
       const data = response.data as {
-        status: number
+        status: number;
         message: { surveyId: number };
       };
 
       const surveyId = data.message.surveyId;
-      
-      // 결과 저장
-      const tempResults = questions.map((question, index) => ({ question, score: answers[index] }));
-      const resultsByOneIndex: Record<number, { question: string; score: number }> = {};
+
+      const tempResults = questions.map((question, index) => ({
+        question,
+        score: answers[index],
+      }));
+      const resultsByOneIndex: Record<
+        number,
+        { question: string; score: number }
+      > = {};
       tempResults.forEach((item, index) => {
         resultsByOneIndex[index + 1] = item;
-      });      
-      const totalScore = Object.values(resultsByOneIndex).reduce((sum, r) => sum + r.score, 0);
-      
-      sessionStorage.setItem("selfcheckResults", JSON.stringify(resultsByOneIndex));
+      });
+      const totalScore = Object.values(resultsByOneIndex).reduce(
+        (sum, r) => sum + r.score,
+        0
+      );
+
+      sessionStorage.setItem(
+        "selfcheckResults",
+        JSON.stringify(resultsByOneIndex)
+      );
 
       router.push(`/selfcheck/result?score=${totalScore}&surveyId=${surveyId}`);
     } catch (error) {
@@ -84,14 +95,18 @@ export default function Page() {
       <Header title="자가진단" showBack />
 
       <section className={styles.progressSection}>
-        <span className={styles.progressText}>{current + 1}/{questions.length}</span>
+        <span className={styles.progressText}>
+          {current + 1}/{questions.length}
+        </span>
         <div className={styles.progressBarWrapper}>
           <div
             className={styles.progressBarFill}
             style={{ width: `${((current + 1) / questions.length) * 100}%` }}
           />
         </div>
-        <span className={styles.progressText}>{Math.round(((current + 1) / questions.length) * 100)}%</span>
+        <span className={styles.progressText}>
+          {Math.round(((current + 1) / questions.length) * 100)}%
+        </span>
       </section>
 
       <section className={styles.questionBox}>
@@ -138,7 +153,9 @@ export default function Page() {
         ) : (
           <button
             className={styles.nextButton}
-            onClick={() => answers[current] !== -1 && setCurrent((prev) => prev + 1)}
+            onClick={() =>
+              answers[current] !== -1 && setCurrent((prev) => prev + 1)
+            }
             disabled={answers[current] === -1}
           >
             다음 →

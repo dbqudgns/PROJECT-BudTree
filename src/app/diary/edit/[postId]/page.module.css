@@ -227,9 +227,6 @@
   box-shadow: 0 0 0 3px #f3efe9;
   border-radius: 17px;
 }
-.emotionItem img {
-  /* width: 90%; */
-}
 .emotionItem > .emotionimg {
   width: 90%;
 }
