@@ -43,12 +43,6 @@
   font-size: 12px;
   color: #333;
 }
-
-.selected {
-  /* background-color: #dddacf; */
-  /* box-shadow: 0 0 0 2px #c9c9c9; */
-}
-
 .completeButton {
   background-color: #ddd2c3;
   color: white;
@@ -120,7 +114,6 @@
   background-color: #f3efe9;
   box-shadow: 0 0 0 3px #f3efe9;
   border-radius: 17px;
-  /* padding: 5px; */
 }
 
 .completeButton {

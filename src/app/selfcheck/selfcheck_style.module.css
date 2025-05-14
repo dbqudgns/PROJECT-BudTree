@@ -1,7 +1,6 @@
 .container {
   background-color: #f9f5ec;
   min-height: 100%;
-  /* padding: 56px 0; */
   font-family: sans-serif;
   padding-top: 75px;
 }
@@ -23,7 +22,6 @@
 .progressBarWrapper {
   flex: 1;
   height: 12px;
-  /* margin: 0 12px; */
   background-color: #e5dcc5;
   border-radius: 6px;
   overflow: hidden;
@@ -47,7 +45,6 @@
 .questionText {
   font-size: 16px;
   font-weight: 500;
-  /* margin-bottom: 16px; */
   padding: 10px 0;
 }
 .optionsBox {
@@ -66,10 +63,6 @@
   padding: 8px 0;
 }
 
-/* .options input[type="radio"] {
-  margin-right: 8px;
-} */
-
 .options input[type="radio"] {
   appearance: none;
   -webkit-appearance: none;
@@ -81,7 +74,6 @@
   position: relative;
   background-color: #fff;
   cursor: pointer;
-  /* transition: all 0.2s; */
   vertical-align: middle;
 }
 
@@ -118,7 +110,6 @@
   background-color: white;
   color: #444;
   border: 1px solid #ccc;
-  /* padding: 10px 16px; */
   border-radius: 12px;
   cursor: pointer;
   width: 70px;

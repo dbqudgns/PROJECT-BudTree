@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import Header from "../components/Header";
-import styles from "./tree.module.css"; // CSS 모듈 추가
+import styles from "./tree.module.css";
 import { useState, useEffect } from "react";
 import apiRequest from "../util/reissue";
 
@@ -15,7 +15,6 @@ export default function Page() {
     TERRIBLE: "5",
   };
 
-  // const [diaries, setDiaries] = useState([]);
   const [diaries, setDiaries] = useState([]);
   const searchParams = useSearchParams();
   const selectedEmoji = searchParams.get("emoji");
@@ -47,18 +46,6 @@ export default function Page() {
     <div className={styles.container}>
       <Header title="하루나무" showBack />
       <img src="/treeimg.png" alt="tree" className={styles.treeImage} />
-      {/* {dummyEmojis.map((emoji, index) => (
-        <img
-          key={index}
-          src={`/${emoji}.png`}
-          alt={`emotion-${index}`}
-          className={`${styles.emotionIcon} ${styles["emotion" + (index + 1)]}`}
-          onClick={() => {
-            const matched = dummyDiaries.find((d) => d.emotion === emoji);
-            if (matched) setSelectedDiary(matched);
-          }}
-        />
-      ))} */}
       {Array.isArray(diaries) &&
         diaries.map((diary, index) => {
           const emotionId = emotionMap[diary.emotion] ?? "1";

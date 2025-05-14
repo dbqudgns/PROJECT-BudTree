@@ -2,27 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @font-face {
-  font-family: "Ownglyph_ParkDaHyun";
-  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2")
-    format("woff2");
-  font-weight: normal;
-  font-style: normal;
-} */
-/* @font-face {
-  font-family: "Ownglyph_meetme-Rg";
-  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/Ownglyph_meetme-Rg.woff2")
-    format("woff2");
-  font-weight: normal;
-  font-style: normal;
-} */
-/* @font-face {
-  font-family: "iceHimchan-Rg";
-  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/iceHimchan-Rg.woff2")
-    format("woff2");
-  font-weight: normal;
-  font-style: normal;
-} */
 @font-face {
   font-family: "Pretendard-Regular";
   src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
@@ -35,7 +14,6 @@
   font-family: "Pretendard-Regular", sans-serif;
 }
 
-/* Hide scrollbars globally */
 * {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
@@ -49,13 +27,6 @@ html {
   background-color: rgb(211, 211, 211);
   color: #333;
 }
-
-/* body {
-  max-width: 430px;
-  min-height: 100vh;
-  margin: 0 auto;
-  background-color: #f6f2e6;
-} */
 
 .frame {
   max-width: 430px;
@@ -79,7 +50,6 @@ html {
 .content-scroll {
   flex: 1;
   overflow-y: auto;
-  /* padding-bottom: 70px; 하단바 공간 확보 */
 }
 
 .container {
