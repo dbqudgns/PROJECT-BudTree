@@ -119,6 +119,13 @@
   margin-top: 2px;
   padding: 0 16px;
 }
+.botMessageBoxTop {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 2px;
+  padding: 0 16px;
+  margin-bottom: 11px;
+}
 
 .botMessageProfile {
   width: 42px;
@@ -166,7 +173,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin: 15px 16px;
+  margin: 3px 16px 15px;
 }
 
 .scoreButton {

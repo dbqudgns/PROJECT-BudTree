@@ -19,7 +19,8 @@ export default function ChatPage() {
 
   const [results, setResults] = useState<SurveyResult[]>([]);
   const [selectedScore, setSelectedScore] = useState<number | null>(null);
-  const [selectedSelection, setSelectedSelection] = useState<SurveyResult | null>(null);
+  const [selectedSelection, setSelectedSelection] =
+    useState<SurveyResult | null>(null);
   const [showAllQuestions, setShowAllQuestions] = useState(false);
   const [surveyId, setSurveyId] = useState<string | null>(null);
 
@@ -47,7 +48,10 @@ export default function ChatPage() {
     const stored = sessionStorage.getItem("selfcheckResults");
     if (stored) {
       try {
-        const raw = JSON.parse(stored) as Record<string, { question: string; score: number }>;
+        const raw = JSON.parse(stored) as Record<
+          string,
+          { question: string; score: number }
+        >;
         const arr = Object.entries(raw)
           .map(([key, { question, score }]) => ({
             id: Number(key),
@@ -65,7 +69,10 @@ export default function ChatPage() {
   // 채팅방 생성
   const createChatRoom = async (): Promise<number> => {
     const response = await apiRequest.post("/chatroom/create");
-    const data = response.data as { status: number; message: { roomId: number } };
+    const data = response.data as {
+      status: number;
+      message: { roomId: number };
+    };
     const roomId = data.message.roomId;
     setRoomId(roomId);
     return roomId;
@@ -75,15 +82,27 @@ export default function ChatPage() {
   const sendMessageToBot = async (query: string): Promise<string> => {
     const id = roomId ?? (await createChatRoom());
     const response = await apiRequest.post(`/chatroom/chat/${id}`, { query });
-    const data = response.data as { status: number; message: { answer: string } };
+    const data = response.data as {
+      status: number;
+      message: { answer: string };
+    };
     return data.message.answer;
   };
 
   // 자가진단 기반 메시지 전송 (part[항목], choose[선택안])
-  const sendSurveyToBot = async (part: number, choose: number): Promise<string> => {
+  const sendSurveyToBot = async (
+    part: number,
+    choose: number
+  ): Promise<string> => {
     const id = roomId ?? (await createChatRoom());
-    const response = await apiRequest.post(`/chatroom/chat/survey/${id}`, { part, choose });
-    const data = response.data as { status: number; message: { answer: string } };
+    const response = await apiRequest.post(`/chatroom/chat/survey/${id}`, {
+      part,
+      choose,
+    });
+    const data = response.data as {
+      status: number;
+      message: { answer: string };
+    };
     return data.message.answer;
   };
 
@@ -117,7 +136,10 @@ export default function ChatPage() {
 
     setMessages((prev) => [
       ...prev,
-      { role: "MEMBER", content: `${question}에서 ${scoreLabels[score]}를 선택했어.` },
+      {
+        role: "MEMBER",
+        content: `${question}에서 ${scoreLabels[score]}를 선택했어.`,
+      },
     ]);
     setSelectedSelection(null);
     setIsLoading(true);
@@ -166,7 +188,7 @@ export default function ChatPage() {
         })}
       </div>
 
-      <div className={styles.botMessageBox}>
+      <div className={styles.botMessageBoxTop}>
         <div className={styles.Profile}>
           <img src="/chat.png" alt="buddy" />
         </div>
