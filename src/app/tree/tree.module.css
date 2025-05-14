@@ -28,6 +28,7 @@
 
 .emotionIcon {
   position: absolute;
+  cursor: pointer;
   width: 65px;
   height: 65px;
 }
