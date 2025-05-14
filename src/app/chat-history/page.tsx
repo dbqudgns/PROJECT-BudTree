@@ -77,13 +77,16 @@ export default function ChatHistory() {
     const fetchChatRooms = async () => {
       const year = selectedYear === "연도" ? 0 : parseInt(selectedYear);
       const month = selectedMonth === "월" ? 0 : parseInt(selectedMonth);
-  
+
       try {
-        const response = await apiRequest.post<ChatRoomResponse>("/chatroom/all", {
-          year,
-          month,
-        });
-  
+        const response = await apiRequest.post<ChatRoomResponse>(
+          "/chatroom/all",
+          {
+            year,
+            month,
+          }
+        );
+
         if (response.status === 200 && Array.isArray(response.data.message)) {
           setChatRooms(response.data.message);
           setError(null);
@@ -97,14 +100,14 @@ export default function ChatHistory() {
         console.error("조회 실패:", err);
       }
     };
-  
+
     fetchChatRooms();
   }, [selectedYear, selectedMonth]);
-  
 
   const getTitle = () => {
     const year = selectedYear === "연도" ? null : selectedYear;
-    const month = selectedMonth === "월" ? null : selectedMonth.replace("월", "");
+    const month =
+      selectedMonth === "월" ? null : selectedMonth.replace("월", "");
     if (year && month) return `${year}년 ${month}월`;
     if (year) return `${year}년`;
     if (month) return `${month}월`;
@@ -117,24 +120,36 @@ export default function ChatHistory() {
 
   return (
     <div className={styles["chathistory-container"]} ref={dropdownRef}>
-      <Header title="대화 내역" showBack onBack={() => router.push("/mypage")} />
+      <Header
+        title="대화 내역"
+        showBack
+        onBack={() => router.push("/mypage")}
+      />
 
       <div className={styles["selector-container"]}>
         <div className={styles["dropdown-wrapper"]}>
           <button
-            className={`${styles["selector-button"]} ${showYearDropdown ? styles.active : ""}`}
+            className={`${styles["selector-button"]} ${
+              showYearDropdown ? styles.active : ""
+            }`}
             onClick={() => {
               setShowYearDropdown(!showYearDropdown);
               setShowMonthDropdown(false);
             }}
           >
             {selectedYear}
-            {showYearDropdown ? <ChevronUp className={styles["selector-icon"]} /> : <ChevronDown className={styles["selector-icon"]} />}
+            {showYearDropdown ? (
+              <ChevronUp className={styles["selector-icon"]} />
+            ) : (
+              <ChevronDown className={styles["selector-icon"]} />
+            )}
           </button>
           {showYearDropdown && (
             <div className={styles.dropdown}>
               <div
-                className={`${styles["dropdown-item"]} ${selectedYear === "연도" ? styles.selected : ""}`}
+                className={`${styles["dropdown-item"]} ${
+                  selectedYear === "연도" ? styles.selected : ""
+                }`}
                 onClick={() => handleYearSelect("연도")}
               >
                 선택안함
@@ -142,7 +157,9 @@ export default function ChatHistory() {
               {years.map((year) => (
                 <div
                   key={year}
-                  className={`${styles["dropdown-item"]} ${selectedYear === year ? styles.selected : ""}`}
+                  className={`${styles["dropdown-item"]} ${
+                    selectedYear === year ? styles.selected : ""
+                  }`}
                   onClick={() => handleYearSelect(year)}
                 >
                   {year}
@@ -154,19 +171,27 @@ export default function ChatHistory() {
 
         <div className={styles["dropdown-wrapper"]}>
           <button
-            className={`${styles["selector-button"]} ${showMonthDropdown ? styles.active : ""}`}
+            className={`${styles["selector-button"]} ${
+              showMonthDropdown ? styles.active : ""
+            }`}
             onClick={() => {
               setShowMonthDropdown(!showMonthDropdown);
               setShowYearDropdown(false);
             }}
           >
             {selectedMonth}
-            {showMonthDropdown ? <ChevronUp className={styles["selector-icon"]} /> : <ChevronDown className={styles["selector-icon"]} />}
+            {showMonthDropdown ? (
+              <ChevronUp className={styles["selector-icon"]} />
+            ) : (
+              <ChevronDown className={styles["selector-icon"]} />
+            )}
           </button>
           {showMonthDropdown && (
             <div className={styles.dropdown}>
               <div
-                className={`${styles["dropdown-item"]} ${selectedMonth === "월" ? styles.selected : ""}`}
+                className={`${styles["dropdown-item"]} ${
+                  selectedMonth === "월" ? styles.selected : ""
+                }`}
                 onClick={() => handleMonthSelect("월")}
               >
                 선택안함
@@ -174,7 +199,9 @@ export default function ChatHistory() {
               {months.map((month) => (
                 <div
                   key={month}
-                  className={`${styles["dropdown-item"]} ${selectedMonth === month ? styles.selected : ""}`}
+                  className={`${styles["dropdown-item"]} ${
+                    selectedMonth === month ? styles.selected : ""
+                  }`}
                   onClick={() => handleMonthSelect(month)}
                 >
                   {month}
@@ -201,13 +228,17 @@ export default function ChatHistory() {
             onClick={() => router.push(`/chat/${item.roomId}`)}
             style={{ cursor: "pointer" }}
           >
-            <p className={styles["chathistory-item-date"]}>{formatDate(item.createdTime)}</p>
+            <p className={styles["chathistory-item-date"]}>
+              {formatDate(item.createdTime)}
+            </p>
           </div>
         ))}
 
         {isScrolled && (
           <button
-            className={`${styles["scroll-to-top-button"]} ${isAtBottom ? styles["at-bottom"] : ""}`}
+            className={`${styles["scroll-to-top-button"]} ${
+              isAtBottom ? styles["at-bottom"] : ""
+            }`}
             onClick={scrollToTop}
           >
             <ChevronUp className={styles["scroll-top-icon"]} />

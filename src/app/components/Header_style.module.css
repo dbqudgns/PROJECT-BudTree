@@ -13,7 +13,6 @@
   align-items: center;
 }
 
-/* 왼쪽: 뒤로가기 아이콘 */
 .left {
   position: absolute;
   left: 16px;
@@ -21,7 +20,6 @@
   cursor: pointer;
 }
 
-/* 가운데: 타이틀 */
 .center {
   margin: 0 auto;
   font-size: 18px;
