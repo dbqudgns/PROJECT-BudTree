@@ -147,7 +147,6 @@
 
 .cancelButton,
 .confirmButton {
-  /* flex: 1; */
   height: 40px;
   border: none;
   border-radius: 20px;
