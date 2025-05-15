@@ -12,17 +12,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class LogoutService {
+public class JwtValidateService {
 
     private final JWTUtil jwtUtil;
     private final RedisUtil redisUtil;
 
-    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ResponseEntity<?> deleteJWT(HttpServletRequest request, HttpServletResponse response) {
 
         String token = request.getHeader("Authorization");
 
@@ -60,17 +58,16 @@ public class LogoutService {
         String category = jwtUtil.getCategory(refresh);
 
         if (!category.equals("refresh"))
-           return ApiResponse.Unauthorized("Refresh 토큰이 아닙니다.");
+            return ApiResponse.Unauthorized("Refresh 토큰이 아닙니다.");
 
 
         String username = jwtUtil.getUsername(refresh);
         String redisRT = redisUtil.getData("AT:" + username);
 
         if (redisRT == null)
-           return ApiResponse.Unauthorized("Redis에 해당 Refresh 토큰이 없습니다.");
-        
+            return ApiResponse.Unauthorized("Redis에 해당 Refresh 토큰이 없습니다.");
 
-        //로그아웃 진행
+        //로그아웃, 회원탈퇴, 비밀번호 변경 호출 시 진행
         redisUtil.deleteData("RT:" + username);
 
         Cookie cookie = new Cookie("refresh", null);
@@ -82,13 +79,13 @@ public class LogoutService {
         //Access Token 블랙리스트
         long remainingTime = jwtUtil.getRemainingTime(access); // ms 반환
         if (remainingTime == 0L) {
-            return ResponseEntity.ok(ApiResponse.success("로그아웃 성공"));
+            return ResponseEntity.ok(ApiResponse.success("Access B/L, Refresh 제거 성공"));
         }
 
         remainingTime /= 1000L; // s 처리
 
         redisUtil.setBlackList("AT:" + username, access, remainingTime);
 
-        return ResponseEntity.ok(ApiResponse.success("로그아웃 성공"));
+        return ResponseEntity.ok(ApiResponse.success("Access B/L, Refresh 제거 성공"));
     }
 }

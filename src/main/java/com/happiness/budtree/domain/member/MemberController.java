@@ -2,7 +2,7 @@ package com.happiness.budtree.domain.member;
 
 import com.happiness.budtree.domain.member.DTO.request.*;
 import com.happiness.budtree.domain.member.service.LoginService;
-import com.happiness.budtree.domain.member.service.LogoutService;
+import com.happiness.budtree.domain.member.service.JwtValidateService;
 import com.happiness.budtree.domain.member.service.MemberService;
 import com.happiness.budtree.domain.member.service.RefreshService;
 import com.happiness.budtree.jwt.Custom.CustomMemberDetails;
@@ -27,7 +27,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final LoginService loginService;
-    private final LogoutService logoutService;
+    private final JwtValidateService jwtValidateService;
     private final RefreshService refreshService;
 
     @PostMapping("/check")
@@ -63,8 +63,8 @@ public class MemberController {
 
     @GetMapping("/logout")
     @Operation(summary = "로그아웃")
-    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        return logoutService.logout(request, response);
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+        return jwtValidateService.deleteJWT(request, response);
     }
 
     @PatchMapping("/change-name")
@@ -78,7 +78,8 @@ public class MemberController {
 
     @PatchMapping("/change-password")
     @Operation(summary = "비밀번호 변경")
-    public ResponseEntity<?> changePW(@RequestBody @Valid MemberChangePWRQ memberChangePWRQ,
+    public ResponseEntity<?> changePW(HttpServletRequest request, HttpServletResponse response,
+                                      @RequestBody @Valid MemberChangePWRQ memberChangePWRQ,
                                       @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
 
         if (!memberChangePWRQ.checkPassword()) {
@@ -86,16 +87,17 @@ public class MemberController {
         }
         else {
             memberService.changePW(memberChangePWRQ.newPassword(), customMemberDetails);
-            return ResponseEntity.ok(ApiResponse.success("비밀번호 변경 완료"));
+            return jwtValidateService.deleteJWT(request, response);
         }
 
     }
 
     @DeleteMapping("/edit")
     @Operation(summary = "회원탈퇴")
-    public ResponseEntity<?> edit(@AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
+    public ResponseEntity<?> edit(HttpServletRequest request, HttpServletResponse response,
+                                  @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
         memberService.edit(customMemberDetails);
-        return ResponseEntity.ok(ApiResponse.success("회원탈퇴 완료"));
+        return jwtValidateService.deleteJWT(request, response);
     }
 
 }
