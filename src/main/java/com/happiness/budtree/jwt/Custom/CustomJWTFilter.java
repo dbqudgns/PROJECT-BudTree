@@ -31,7 +31,6 @@ public class CustomJWTFilter extends OncePerRequestFilter {
     private final RedisUtil redisUtil;
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
-
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
@@ -77,7 +76,7 @@ public class CustomJWTFilter extends OncePerRequestFilter {
             String blackListData = redisUtil.getBlackListData("AT:" + username);
             if (blackListData != null && blackListData.equals(accessToken)) {
                 log.info("블랙리스트에 등록된 토큰 사용 시도: {}", username);
-                request.setAttribute("exceptionMessage", "로그아웃을 진행한 Access Token입니다.");
+                request.setAttribute("exceptionMessage", "블랙리스트에 있는 Access Token입니다.");
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
             }
