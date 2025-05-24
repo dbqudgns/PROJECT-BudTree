@@ -146,7 +146,7 @@ public class ChatroomService {
         //3. 최근 2개 대화 가져오기
         List<Message> previousMessages = messageRepository.getMessageByRoomID(chatroom);
         int previousSize = previousMessages.size();
-        List<Message> recentMessages = previousMessages.subList(Math.max(previousSize - 2, 0), previousSize);
+        List<Message> recentMessages = previousMessages.subList(Math.max(previousSize - 4, 0), previousSize);
 
         //4. Prompt 메시지 구성
         List<org.springframework.ai.chat.messages.Message> promptMessages = new ArrayList<>();
