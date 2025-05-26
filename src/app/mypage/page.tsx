@@ -40,7 +40,6 @@ export default function MyPage() {
     try {
       const response = await apiRequest.delete("member/edit", {});
       const data = response.data as {};
-
       localStorage.clear();
       alert("그동안 이용해주셔서 감사합니다.");
       router.push("/");
