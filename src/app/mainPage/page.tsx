@@ -101,8 +101,8 @@ export default function MainPage() {
           className={styles.realImage}
           src="/selfcheck.png"
           alt="selfcheck"
-          width={270}
-          height={270}
+          width={195}
+          height={190}
         />
       </div>
     </div>

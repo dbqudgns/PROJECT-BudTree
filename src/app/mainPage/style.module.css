@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   position: relative; /* 반드시 확인 필요 */
-  overflow-y: auto;
+  overflow-y: hidden;
   box-sizing: border-box;
   padding-bottom: 150px; /* 캐릭터 공간 확보 */
 }
@@ -62,19 +62,20 @@
   flex-direction: column;
   gap: 20px;
   padding: 0 20px;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .firstSelfCheck {
   border: 1px solid #866023;
   border-radius: 20px;
-  padding: 20px;
+  padding: 22px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: white;
   flex-direction: row; /* 기본값이라 명시는 선택사항 */
   gap: 10px;
+  z-index: 1;
 }
 
 .secondSelfCheck {
@@ -101,8 +102,8 @@
   width: 100px;
   border: 1px solid #866023;
   border-radius: 20px;
-  width: 135px;
-  height: 143px;
+  width: 100px;
+  height: 100px;
   padding: 10px;
 }
 
@@ -134,7 +135,7 @@
   font-size: 14px;
   line-height: 2;
   flex: 1;
-  padding-left: 22px;
+  padding-left: 25px;
   border-radius: 15px;
   text-align: center;
   padding-left: 0;
@@ -171,83 +172,68 @@
 
 /* 캐릭터 이미지 하단 고정 위치 */
 .bottomImage {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
   position: absolute;
-  top: 350px;
-  left: 35%;
-  transform: translateX(-49%);
-  z-index: 1;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  pointer-events: none;
+  z-index: 0;
 }
 /* 이미지를 감싸는 컨테이너를 만들고 overflow 처리 */
 .imageWrapper {
-  width: 70%; /* 이미지 비율을 원하는 대로 설정 (원하는 크기 설정) */
   max-width: 270px;
   display: flex;
-  justify-content: center;
-  padding: 0px;
-  margin: 0px;
+  justify-content: flex-start;
+  padding: 0;
+  margin: 0;
 }
 
 .realImage {
-  width: 20rem;
-  height: 27rem;
-  padding: 0rem;
-  margin: 0rem;
+  width: 100%;
+  max-width: 270px;
+  height: auto;
+  padding: 0;
+  /* margin-left: 34px; */
+  margin-bottom: 55px;
 }
-
 /* 미디어 쿼리: 모바일 화면 (최대 360px) */
-@media (max-width: 360px) {
+/* Removed to prevent overriding overflow-y:hidden */
+/* @media (max-width: 360px) {
   .container {
     min-height: 120vh;
     overflow: hidden;
   }
 
   /* 카드 영역을 좀 더 컴팩트하게 조정 */
-  .selfCheckDiv {
-    height: auto; /* 내용에 따라 유동적으로 늘어나도록 */
-    padding-bottom: 50px; /* 하단 캐릭터와 겹치지 않도록 여유 확보 */
-    gap: 12px; /* 카드 간 갭을 줄임 */
-  }
+.selfCheckDiv {
+  height: auto; /* 내용에 따라 유동적으로 늘어나도록 */
+  padding-bottom: 50px; /* 하단 캐릭터와 겹치지 않도록 여유 확보 */
+  gap: 12px; /* 카드 간 갭을 줄임 */
+}
 
-  /* 각 카드의 패딩과 폰트 크기를 줄임 */
-  .firstSelfCheck,
-  .secondSelfCheck {
-    padding: 12px; /* 기존 20px → 15px로 축소 */
-    gap: 8px; /* 내부 갭도 줄여서 컴팩트하게 */
-  }
+/* 각 카드의 패딩과 폰트 크기를 줄임 */
+.firstSelfCheck,
+.secondSelfCheck {
+  padding: 12px; /* 기존 20px → 15px로 축소 */
+  gap: 8px; /* 내부 갭도 줄여서 컴팩트하게 */
+}
 
-  .btn {
-    width: 120px; /* 버튼 너비 줄임 */
-    height: 120px; /* 버튼 높이 줄임 */
-    padding: 8px; /* 내부 여백 축소 */
-    font-size: 13px; /* 폰트 크기 살짝 축소 */
-  }
+.btn {
+  width: 120px; /* 버튼 너비 줄임 */
+  height: 120px; /* 버튼 높이 줄임 */
+  padding: 8px; /* 내부 여백 축소 */
+  font-size: 13px; /* 폰트 크기 살짝 축소 */
+}
 
-  .SelfImage {
-    width: 70px;
-    height: 70px;
-    margin-bottom: 4px;
-  }
+.SelfImage {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 4px;
+}
 
-  .font {
-    font-size: 14px; /* 폰트 크기를 조금 줄여서 공간 확보 */
-  }
-
-  .bottomImage {
-    top: 320px; /* 화면이 작아질 때 캐릭터의 위치도 위로 이동 */
-    transform: translateX(-49%);
-    z-index: 1;
-    margin-left: 0;
-    position: absolute;
-  }
-
-  .realImage {
-    width: 15rem;
-    height: 16rem;
-    padding: 0;
-    margin: 0;
-  }
+.font {
+  font-size: 14px; /* 폰트 크기를 조금 줄여서 공간 확보 */
 }
