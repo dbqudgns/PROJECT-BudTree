@@ -134,7 +134,12 @@ public class ChatroomService {
             throw new AccessDeniedException("로그인 한 사용자는 해당 채팅방을 이용할 수 없습니다.");
         }
 
-        //2. 사용자 요청문 저장
+        //2. 최근 6개 대화 가져오기
+        List<Message> previousMessages = messageRepository.getMessageByRoomID(chatroom);
+        int previousSize = previousMessages.size();
+        List<Message> recentMessages = previousMessages.subList(Math.max(previousSize - 6, 0), previousSize);
+
+        //3. 사용자 요청문 저장
         Message userMessage = Message.builder()
                 .chatroom(chatroom)
                 .content(query)
@@ -142,11 +147,6 @@ public class ChatroomService {
                 .createdDate(LocalDateTime.now())
                 .build();
         messageRepository.save(userMessage);
-
-        //3. 최근 4개 대화 가져오기
-        List<Message> previousMessages = messageRepository.getMessageByRoomID(chatroom);
-        int previousSize = previousMessages.size();
-        List<Message> recentMessages = previousMessages.subList(Math.max(previousSize - 6, 0), previousSize);
 
         //4. Prompt 메시지 구성
         List<org.springframework.ai.chat.messages.Message> promptMessages = new ArrayList<>();
