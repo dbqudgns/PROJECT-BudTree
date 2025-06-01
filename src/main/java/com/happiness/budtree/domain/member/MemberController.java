@@ -2,7 +2,7 @@ package com.happiness.budtree.domain.member;
 
 import com.happiness.budtree.domain.member.DTO.request.*;
 import com.happiness.budtree.domain.member.service.LoginService;
-import com.happiness.budtree.domain.member.service.JwtValidateService;
+import com.happiness.budtree.jwt.JwtDeleteService;
 import com.happiness.budtree.domain.member.service.MemberService;
 import com.happiness.budtree.domain.member.service.RefreshService;
 import com.happiness.budtree.jwt.Custom.CustomMemberDetails;
@@ -27,7 +27,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final LoginService loginService;
-    private final JwtValidateService jwtValidateService;
+    private final JwtDeleteService jwtDeleteService;
     private final RefreshService refreshService;
 
     @PostMapping("/check")
@@ -64,7 +64,7 @@ public class MemberController {
     @GetMapping("/logout")
     @Operation(summary = "로그아웃")
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
-        return jwtValidateService.deleteJWT(request, response);
+        return jwtDeleteService.deleteJWT(request, response);
     }
 
     @PatchMapping("/change-name")
@@ -87,7 +87,7 @@ public class MemberController {
         }
         else {
             memberService.changePW(memberChangePWRQ.newPassword(), customMemberDetails);
-            return jwtValidateService.deleteJWT(request, response);
+            return jwtDeleteService.deleteJWT(request, response);
         }
 
     }
@@ -97,7 +97,7 @@ public class MemberController {
     public ResponseEntity<?> edit(HttpServletRequest request, HttpServletResponse response,
                                   @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
         memberService.edit(customMemberDetails);
-        return jwtValidateService.deleteJWT(request, response);
+        return jwtDeleteService.deleteJWT(request, response);
     }
 
 }

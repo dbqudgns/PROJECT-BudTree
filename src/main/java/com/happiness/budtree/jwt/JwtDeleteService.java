@@ -1,6 +1,5 @@
-package com.happiness.budtree.domain.member.service;
+package com.happiness.budtree.jwt;
 
-import com.happiness.budtree.jwt.JWTUtil;
 import com.happiness.budtree.util.ApiResponse;
 import com.happiness.budtree.util.RedisUtil;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class JwtValidateService {
+public class JwtDeleteService {
 
     private final JWTUtil jwtUtil;
     private final RedisUtil redisUtil;

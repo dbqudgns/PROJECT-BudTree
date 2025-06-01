@@ -7,8 +7,6 @@ import com.happiness.budtree.domain.member.MemberRepository;
 import com.happiness.budtree.domain.member.Role;
 import com.happiness.budtree.jwt.Custom.CustomMemberDetails;
 import com.happiness.budtree.util.ReturnMember;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,7 +19,6 @@ public class MemberService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MemberRepository memberRepository;
     private final ReturnMember returnMember;
-    private final JwtValidateService validateJwtService;
 
     @Transactional
     public MemberCheckRP checkID(String username) {
