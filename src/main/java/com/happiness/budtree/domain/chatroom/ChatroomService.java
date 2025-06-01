@@ -124,7 +124,7 @@ public class ChatroomService {
     @Transactional
     public ChatroomAnswerRP getChatByQuery(Long roomId, String query, CustomMemberDetails customMemberDetails) throws AccessDeniedException {
 
-       //1. 사용자와 채팅방 검증
+        //1. 사용자와 채팅방 검증
         Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
 
         Chatroom chatroom = chatroomRepository.findById(roomId)
@@ -143,7 +143,7 @@ public class ChatroomService {
                 .build();
         messageRepository.save(userMessage);
 
-        //3. 최근 2개 대화 가져오기
+        //3. 최근 4개 대화 가져오기
         List<Message> previousMessages = messageRepository.getMessageByRoomID(chatroom);
         int previousSize = previousMessages.size();
         List<Message> recentMessages = previousMessages.subList(Math.max(previousSize - 4, 0), previousSize);
