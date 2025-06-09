@@ -1,0 +1,28 @@
+.bottomTab {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  height: 70px;
+  background-color: #f6f2e6;
+  border-top: 1px solid #7f5f3c;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 100;
+}
+.bottomTab > a {
+  margin-top: 10px;
+}
+.iconActive {
+  font-family: "Material Icons";
+  font-size: 28px;
+  color: #5e4528;
+}
+.iconInactive {
+  font-family: "Material Icons";
+  font-size: 28px;
+  color: #b39b85;
+}

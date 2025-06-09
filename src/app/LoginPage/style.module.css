@@ -1,0 +1,113 @@
+.container {
+  box-sizing: border-box;
+  /* max-width: 400px; */
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-top: 10px;
+  justify-content: center; /* 수직 중앙 정렬 */
+  align-items: center; /* 수평 중앙 정렬 */
+  height: 100vh; /* 전체 화면 높이 */
+  /* gap: 20px; */
+}
+
+.LogoImage {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  /* margin-bottom: 50px; */
+}
+
+.inputId {
+  width: 90%;
+  height: 60px;
+  border-radius: 30px;
+  border: 1px solid #b9b6ad;
+  padding: 0 45px 0 20px; /* 오른쪽 padding으로 eye 공간 확보 */
+  padding: 0 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+  color: #575757;
+  margin-top: 50px;
+}
+
+.inputpwd {
+  width: 100%;
+  height: 60px;
+  padding: 0 20px;
+  border-radius: 30px;
+  border: 1px solid #b9b6ad;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+  color: #575757;
+  box-sizing: border-box;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 90%; /* input과 동일 */
+}
+
+.eyeIcon {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.InputArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.toggleView {
+  position: absolute;
+  top: 35%;
+  right: 20px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.ButtonWrapper {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  margin-top: 0px;
+}
+
+.error {
+  color: #ff7f7f;
+  font-size: 15px;
+  margin-top: 10px;
+  margin-left: 55px;
+  width: 100%;
+}
+
+.btn {
+  border-radius: 25px;
+  /* border: 1px solid #b9b6ad; */
+  height: 50px;
+  width: 90%;
+  background-color: #d9cebb;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background-color: #b4e2af;
+}
