@@ -12,8 +12,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT p FROM Post p WHERE p.member = :member ORDER BY p.createDate DESC, p.postId DESC")
     List<Post> findLatestPosts(@Param("member") Member member);
 
-
-
-
 }
 

@@ -37,6 +37,6 @@ spring:
 server:
   forward-headers-strategy: native
 
-##logging:
-##    level:
-##      root: trace
+###logging:
+###    level:
+###      root: trace

@@ -1,6 +1,5 @@
 package com.happiness.budtree.domain.post;
 
-
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonDeserialize(using = EmotionDeserializer.class)
