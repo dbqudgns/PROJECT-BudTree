@@ -1,0 +1,237 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
+  background-color: #f0f4ec;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  overflow: hidden;
+}
+
+.treeImageWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 3 / 4;
+  margin: 0 auto;
+}
+
+.treeImage {
+  width: 100%;
+  height: 100%;
+  padding-top: 54px;
+  object-fit: cover;
+  display: block;
+}
+
+.emotionIcon {
+  position: absolute;
+  cursor: pointer;
+  width: 65px;
+  height: 65px;
+}
+.emotion1 {
+  top: 23%;
+  left: 24%;
+}
+.emotion2 {
+  top: 18%;
+  left: 52%;
+}
+.emotion3 {
+  top: 35%;
+  left: 40%;
+}
+.emotion4 {
+  top: 29%;
+  left: 71%;
+}
+.emotion5 {
+  top: 38%;
+  left: 12%;
+}
+.emotion6 {
+  top: 42%;
+  left: 65%;
+}
+
+.buddyContainer {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  z-index: 10;
+  max-width: 90%;
+}
+.buddyImageWrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: white;
+  border: 1.5px solid #866023;
+  animation: float 2.5s ease-in-out infinite;
+}
+
+.buddyImage {
+  width: 90px;
+  margin: 0 auto;
+  border-radius: 50%;
+  transform: translateY(-10px) scale(1.19);
+  padding: 4px;
+}
+
+.buddySpeechBubble {
+  background-color: white;
+  border-radius: 20px;
+  padding: 13px 35px;
+  max-width: 220px;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.6;
+  position: relative;
+  text-align: center;
+}
+
+.buddySpeechBubble::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 16px;
+  width: 0;
+  height: 0;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-right: 32px solid white;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .emotionIcon {
+    position: absolute;
+    cursor: pointer;
+    width: 70px;
+    height: 70px;
+  }
+  .treeImage {
+    height: 100%;
+  }
+
+  .emotion1 {
+    top: 25%;
+    left: 18%;
+  }
+  .emotion2 {
+    top: 20%;
+    left: 51%;
+  }
+  .emotion3 {
+    top: 33%;
+    left: 43%;
+  }
+  .emotion4 {
+    top: 32%;
+    left: 73%;
+  }
+  .emotion5 {
+    top: 41%;
+    left: 14%;
+  }
+  .emotion6 {
+    top: 44%;
+    left: 59%;
+  }
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100dvh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background-color: #fcfbf7;
+  border-radius: 16px;
+  padding: 24px 20px;
+  width: 85%;
+  max-width: 348px;
+  max-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modalScrollArea {
+  overflow-y: auto;
+  max-height: 60vh;
+  width: 100%;
+  text-align: left;
+}
+
+.modalContent h2 {
+  margin-top: 0;
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.modalContent p {
+  font-size: 14px;
+  color: #444;
+  line-height: 30px;
+  margin-bottom: 12px;
+}
+.modalEmoji {
+  width: 75px;
+  height: 75px;
+  margin: 15px;
+}
+.closeButton {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  background: #ff7f7f;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.closeButton:hover {
+  background: rgb(255, 83, 83);
+}

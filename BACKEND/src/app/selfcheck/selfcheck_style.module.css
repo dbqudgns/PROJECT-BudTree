@@ -1,0 +1,148 @@
+.container {
+  background-color: #f9f5ec;
+  min-height: 100%;
+  font-family: sans-serif;
+  padding-top: 75px;
+}
+
+.progressSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  margin-top: 10px;
+}
+
+.progressText {
+  font-size: 14px;
+  color: #444;
+  padding: 0 20px;
+}
+
+.progressBarWrapper {
+  flex: 1;
+  height: 12px;
+  background-color: #e5dcc5;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  width: 11%;
+  height: 100%;
+  background-color: #7f5f3c;
+  border-radius: 4px;
+}
+
+.questionBox {
+  background-color: white;
+  margin: 25px 26px 0;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.questionText {
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 0;
+}
+.optionsBox {
+  margin-top: 20px;
+  padding: 0 37px;
+}
+.options {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.options li {
+  margin-bottom: 10px;
+  font-size: 14px;
+  padding: 8px 0;
+}
+
+.options input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #aaa;
+  border-radius: 50%;
+  margin-right: 8px;
+  position: relative;
+  background-color: #fff;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.options input[type="radio"]:checked {
+  border-color: #7f5f3c;
+  background-color: white;
+}
+
+.options input[type="radio"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background-color: #7f5f3c;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.options input[type="radio"]:checked::after {
+  opacity: 1;
+}
+
+.buttonSection {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 30px;
+}
+
+.prevButton {
+  background-color: white;
+  color: #444;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 70px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.nextButton {
+  background-color: #a38c6e;
+  color: white;
+  border: none;
+  width: 70px;
+  height: 40px;
+  font-size: 14px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.nextButton:hover {
+  background-color: #886e4d;
+  transition: background-color 0.3s ease;
+}
+
+.submitButton {
+  background-color: rgb(127, 95, 60);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 70px;
+  height: 40px;
+  font-size: 14px;
+}
+.submitButton:hover {
+  background-color: rgb(103, 77, 49);
+  transition: background-color 0.3s ease;
+}
