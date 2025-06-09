@@ -1,0 +1,81 @@
+.container {
+  box-sizing: border-box;
+  max-width: 400px;
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-top: 10px;
+}
+
+.content {
+  flex: 1; /* 남은 공간을 모두 차지하게 */
+  padding: 0 20px; /* content 양옆 여백 */
+}
+
+.inputNickName {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 5px;
+  flex: 1;
+  margin-top: 20px;
+}
+
+.inputnick {
+  color: #575757;
+  margin-left: 10px;
+}
+
+.nickSetting {
+  width: 100%;
+  height: 60px;
+  border-radius: 30px;
+  border: 1px solid #b9b6ad;
+  padding: 0 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+  color: #575757;
+  padding-right: 150px; /* 아이콘 공간 확보 */
+}
+
+.error {
+  color: #ff7f7f;
+  font-size: 14px;
+  margin-top: 4px;
+  margin-left: 10px;
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+.completeButton {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 100px;
+  background-color: #f3efe9;
+  border: 1px solid #b9b6ad;
+  color: black;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.completeButton:hover {
+  background-color: #ede7de;
+}
+
+.completeButton:disabled {
+  background-color: #f3efe9;
+  color: #d9cebb;
+  cursor: not-allowed;
+}
