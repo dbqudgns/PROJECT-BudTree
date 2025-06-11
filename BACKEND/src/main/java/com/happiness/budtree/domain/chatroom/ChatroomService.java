@@ -33,7 +33,7 @@ public class ChatroomService {
     private final ReturnMember returnMember;
     private final ChatroomRepository chatroomRepository;
     private final MessageRepository messageRepository;
-    private final ChatClient chatClient;
+    private final ChatClientFactory chatClientFactory;
 
     @Value("classpath:templates/gpt-by-survey.st")
     private Resource template;
@@ -103,7 +103,8 @@ public class ChatroomService {
                 .build();
         messageRepository.save(userMessage);
 
-        //5. GPT 에게 요청
+        //5. GPT 에게 사용자의 닉네임을 포함해서 요청
+        ChatClient chatClient = chatClientFactory.chatClient(member.getName());
         String response = chatClient.prompt().user(query).call().content();
 
         //6. GPT 응답 저장
@@ -163,7 +164,8 @@ public class ChatroomService {
         promptMessages.add(new UserMessage(query));
         Prompt prompt = new Prompt(promptMessages);
 
-        //6. GPT 에게 요청
+        //6. GPT 에게 닉네임 포함해서 요청
+        ChatClient chatClient = chatClientFactory.chatClient(member.getName());
         String response = chatClient.prompt(prompt).call().content();
 
         //7. GPT 응답 저장
@@ -213,10 +215,10 @@ public class ChatroomService {
         }
         else { // 특정 년, 월 조회 시
 
-           filterChatroom = allChatroom.stream()
-                   .filter(chatroom -> chatroom.getCreatedDate().getYear() == chatroomAllRQ.year() &&
-                           chatroom.getCreatedDate().getMonthValue() == chatroomAllRQ.month())
-                   .toList();
+            filterChatroom = allChatroom.stream()
+                    .filter(chatroom -> chatroom.getCreatedDate().getYear() == chatroomAllRQ.year() &&
+                            chatroom.getCreatedDate().getMonthValue() == chatroomAllRQ.month())
+                    .toList();
         }
 
         if (filterChatroom.isEmpty()) {
