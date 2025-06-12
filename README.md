@@ -113,8 +113,7 @@ PHQ-9 자가 진단 결과를 기반으로 AI 친구 **"버디"** 와 대화를 
         - Redis를 이용해 사용자가 서비스 종료 시 Acces Token Black List 처리
           
     - Spring AI를 활용하여 OpenAI Fine-tuning 모델 호출 및 응답 로직 구현
-        - 우울증 관련 대화 주제로 Multi-turn 데이터 셋 작성 및드 서버 리버스 프록시 구축 및 설정
-        - Certbot을 통해 SSL 인증서를 발급하고 안전한 HTTPS 통신 환경 제공
+        - 우울증 관련 대화 주제로 Multi-turn 데이터 셋 작성 및 Fine-tuning 모델 생성
 
     - 일관된 오류 응답을 위한 전역 예외 처리 핸들러 설계 및 구현
       
