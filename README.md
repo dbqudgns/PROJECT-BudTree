@@ -116,6 +116,11 @@ PHQ-9 자가 진단 결과를 기반으로 AI 친구 **"버디"** 와 대화를 
         - 우울증 관련 대화 주제로 Multi-turn 데이터 셋 작성 및드 서버 리버스 프록시 구축 및 설정
         - Certbot을 통해 SSL 인증서를 발급하고 안전한 HTTPS 통신 환경 제공
 
+    - 일관된 오류 응답을 위한 전역 예외 처리 핸들러 설계 및 구현
+      
+    - Github Actions을 통한 CI/CD 자동화 파이프라인 구축
+        - Git 브랜치 전략 중 Git Flow(master, develop, feat/**) 를 적용
+
     - AWS EC2 서비스 배포 및 운영
         - Docker-compose을 통해 Spring Boot, MySQL, Redis 컨테이너화 진행
         - Nginx를 통해 API 서버 리버스 프록시 구축 및 설정
