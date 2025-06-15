@@ -129,7 +129,7 @@ PHQ-9 자가 진단 결과를 기반으로 AI 친구 **"버디"** 와 대화를 
 
     - 자가 진단 응답 저장, 자가진단 기반 챗봇, 일반 챗봇, 로그인 API 통신 기능 구현
     
-    - Axios 인터셉터를 통한 인증(Access Token) 기반 통신 로직 일관화 (reissue.js)
+    - Axios 인터셉터를 통한 인증(Access Token) 기반 통신 로직 일관화 (/src/app/util/reissue.js)
         - Access Token 만료 시 토큰 재발급 API 호출 후 기존 API 호출 재시도 로직 구현
         
     - Github Actions을 통한 CI/CD 자동화 파이프라인 구축
