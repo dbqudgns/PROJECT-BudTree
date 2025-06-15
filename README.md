@@ -146,13 +146,63 @@ PHQ-9 자가 진단 결과를 기반으로 AI 친구 **"버디"** 와 대화를 
     
 </details>
 
-## <span id="9">9. 시스템 아키텍처</span>
+## <span id="9">9. 트러블 슈팅</span>
+
+<details> <summary><strong>프리티어 EC2 프리징 현상</strong></summary>
+     
+     - 문제점 : 
+     
+     Docker-compose를 이용하여 백엔드 API 서버를 컨테이너화하여 실행한 결과, EC2 인스턴스에서 멈추거나 심한 렉 현상이 
+     발생하였다. 
+     
+     - 원인 : 
+     
+     Docker-Compose를 통해 다수의 컨테이너를 동시에 실행할 때, EC2 인스턴스의 RAM 용량이 부족하여 시스템의 메모리 한계를 초과하였다. 
+     이로 인해 커널 오버헤드 현상이 발생하여 EC2가 멈추는 문제가 나타났다. 
+     
+     - 해결 방안 : 
+     
+     RAM 용량 부족 문제를 해결하기 위해 EC2 인스턴스에 Swap 메모리를 설정하였다. 
+     Swap 메모리를 활성화하면 물리적 메모리 부족 시 디스크 공간을 가상 메모리로 활용할 수 있어 Docker-Compose를 통해 여러 컨테이너를 실행해도 EC2 인스턴스가 안정적으로 운영될 수 있도록 개선하였다. 
+     
+     - 적용 코드 :
+     
+     Swap 메모리는 일반적으로 물리적 RAM 용량의 2배 이상 설정하는 것이 권장된다. 
+     본 프로젝트는 AWS EC2 프리티어 인스턴스를 사용하여  1GB RAM을 제공받으므로 그 2배인 2GB의 Swap 메모리로 설정하였다.
+   ![image](https://github.com/user-attachments/assets/a9541617-7e1c-420c-b188-d0382e1685db)
+
+</details>
+
+<details> <summary><strong>RedisReadOnlyException 예외 발생</strong></summary>
+     
+     - 문제점 : 
+     
+     로컬에서 개발 시 로그인을 시행하면 정상적으로 토큰 값이 Redis에 반영되었다. 
+     하지만 배포 환경에서는 Spring Boot에서 다음과 같은 오류가 발생하였다. 
+     org.springframework.data.redis.RedisSystemException: Error in execution; nested exception is io.lettuce.core.RedisReadOnlyException: READONLY You can't write against a read only replica.
+     
+     - 원인 : 
+     
+     위 오류는 Redis 클러스터의 읽기 전용 replica에 쓰기 작업을 시도할 때 발생한다. 
+     Redis는 읽기 전용 replica에서 쓰기 작업을 허용하지 않기 때문에 해당 오류가 나타난 것이다. 
+     
+     - 해결 방안 : 
+     
+     Redis 환경 설정에서 replica의 읽기 전용 모드를 영구적으로 해제하기 위해 서버에 Redis 설정 파일을 작성하여 읽기 전용을 비활성화 하도록 설정하고, Docker-compose 파일에서 Redis 컨테이너가 실행 시 이 설정 파일을 인식하여 적용할 수 있도록 구성하였다. 
+     
+     - 적용 파일 :
+    
+![image](https://github.com/user-attachments/assets/580bb0a1-ce5d-4ad0-b82a-401a6c9f6d14)
+
+</details>
+
+## <span id="10">10. 시스템 아키텍처</span>
 ![image](https://github.com/user-attachments/assets/7aa3f085-9aa6-46ef-9068-932cbdd07c9e)
 
-## <span id="10">10. ERD</span>
+## <span id="11">11. ERD</span>
 ![image](https://github.com/user-attachments/assets/b87fc086-356a-4da5-aedf-3f805c1d7aa0)
 
-## <span id="11">11. 기타</span>
+## <span id="12">12. 기타</span>
 - 프로토타입 : https://www.figma.com/design/dsYzPgIOph6PRTlBQXumFv/%EB%B2%84%EB%93%9C-%EB%82%98%EB%AC%B4---%EC%B5%9C%EC%A2%85-UI-UX?node-id=0-1&t=zi9fRsS4xblqTWSa-1
 
 - API 명세서 : https://lateral-iron-436.notion.site/API-1aeaa43430de80b4a5c7ff8887230c69
