@@ -49,6 +49,17 @@ public class ChatroomController {
         return ResponseEntity.ok(ApiResponse.success(chatroomService.chatroomAllRP(chatroomAllRQ, customMemberDetails)));
     }
 
+    @GetMapping("/all-pagination")
+    @Operation(summary = "대화 내역 전체 조회 - 커서 페이지네이션")
+    public ResponseEntity<?> getAllChatroomByCursor(@RequestParam(value = "cursor", required = false) Long cursor,
+                                            @RequestParam(value = "size") int size,
+                                            @RequestParam(value = "year", required = false) Integer year,
+                                            @RequestParam(value = "month", required = false) Integer month,
+                                            @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
+        return ResponseEntity.ok(ApiResponse.success(chatroomService.chatroomAllRPByCursor(cursor, size, year, month, customMemberDetails)));
+    }
+
+
     @GetMapping("/{roomId}")
     @Operation(summary = "특정 대화 내역 조회")
     public ResponseEntity<?> getChatroomMessages(@PathVariable("roomId") Long roomId,
