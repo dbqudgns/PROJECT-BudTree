@@ -36,14 +36,21 @@ public class InitDB {
         private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
         public void dbInit() {
-            Member member = createMember("테스트", "test", "test1q2w@");
+            Member member = createMember("테스트", "string", "string");
             em.persist(member);
 
-            LocalDateTime start = LocalDateTime.of(2020, 1, 1, 0, 0);
-            LocalDateTime end = LocalDateTime.of(2025, 1, 1, 0, 0);
+            LocalDateTime chatroom = LocalDateTime.of(2025, 1, 1, 0, 0);
 
-            for (int i = 1; i <= 100; i++)
-                makeChatroomAndMessage(member, getRandomDateTime(start, end));
+            for (int i = 1; i <= 10000; i++) {
+                LocalDateTime createdDate = chatroom.plusDays(i) // 하루씩 증가
+                        .plusHours(i % 24) // 시간 증가
+                        .plusMinutes(1)
+                        .plusSeconds(10)
+                        .plusNanos(800_000_000);
+
+                makeChatroomAndMessage(member, createdDate);
+
+            }
 
         }
 
@@ -58,16 +65,6 @@ public class InitDB {
             return member;
         }
 
-        private LocalDateTime getRandomDateTime(LocalDateTime start, LocalDateTime end) {
-            // 한국 시간대 (UTC+9) 기준으로 변환
-            long startEpoch = start.toEpochSecond(ZoneOffset.ofHours(9));
-            long endEpoch = end.toEpochSecond(ZoneOffset.ofHours(9));
-            long randomEpoch = ThreadLocalRandom.current().nextLong(startEpoch, endEpoch);
-
-            return LocalDateTime.ofEpochSecond(randomEpoch, 0, ZoneOffset.ofHours(9));
-
-        }
-
         private void makeChatroomAndMessage(Member member, LocalDateTime createdDate) {
             Chatroom chatroom = Chatroom.builder()
                     .member(member)
@@ -75,30 +72,21 @@ public class InitDB {
                     .build();
             em.persist(chatroom);
 
-            boolean nextCnt = true;
             for (int i = 1; i < 30; i++) {
 
-                Message message;
-                if (nextCnt) {
-                    message = Message.builder()
-                            .chatroom(chatroom)
-                            .content("안녕하세요. 테스트 진행을 위해 더미 데이터를 만들고 있습니다. 오늘의 하루는 어떠셨나요 ? 상담하시고 싶은 내용이 있으시다면 편하게 버디에게 말씀해주세요!")
-                            .senderType(SenderType.BUDDY)
-                            .createdDate(createdDate.plusMinutes(1).plusSeconds(10))
-                            .build();
+                SenderType sender = (i % 2 == 0) ? SenderType.MEMBER : SenderType.BUDDY;
+                String content = (sender == SenderType.MEMBER)
+                        ? "안녕하세요. 테스트 진행을 위해 더미 데이터를 만들고 있습니다. 저는 오늘 굉장히 우울한 하루를 보냈어요."
+                        : "안녕하세요. 테스트 진행을 위해 더미 데이터를 만들고 있습니다. 오늘의 하루는 어떠셨나요?";
 
-                    nextCnt = false;
-                }
-                else {
-                    message = Message.builder()
+                Message message = Message.builder()
                             .chatroom(chatroom)
-                            .content("안녕하세요. 테스트 진행을 위해 더미 데이터를 만들고 있습니다. 저는 오늘 굉장히 우울한 하루를 보냈어요. 요즘 되는일이 하나도 없고 인간관계도 어렵네요.")
-                            .senderType(SenderType.MEMBER)
-                            .createdDate(createdDate.plusMinutes(1).plusSeconds(10))
+                            .senderType(SenderType.BUDDY)
+                            .content(content)
+                            .createdDate(createdDate.plusSeconds(i))
                             .build();
-                    nextCnt = true;
-                }
                 em.persist(message);
+
             }
         }
     }
