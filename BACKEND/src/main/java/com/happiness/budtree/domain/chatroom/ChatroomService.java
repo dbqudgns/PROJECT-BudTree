@@ -251,7 +251,7 @@ public class ChatroomService {
         Slice<Chatroom> chatroomSlice = chatroomRepository.findChatroomByCursor(username, cursor, setYear, setMonth, pageable);
 
         if (!chatroomSlice.hasContent()) {
-            throw new IllegalArgumentException("해당 날짜에 조회되는 대화 내역이 존재하지 않습니다.");
+            throw new EntityNotFoundException("해당 날짜에 조회되는 대화 내역이 존재하지 않습니다.");
         }
 
         // 가져온 DB 데이터 DTO로 변환
