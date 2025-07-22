@@ -2,6 +2,7 @@ package com.happiness.budtree.domain.chatroom;
 
 import com.happiness.budtree.domain.member.Member;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -25,9 +26,9 @@ public class Chatroom {
     public Chatroom() {}
 
     @Builder
-    public Chatroom(Member member) {
+    public Chatroom(Member member, LocalDateTime createdDate) {
         this.member = member;
-        this.createdDate = LocalDateTime.now();
+        this.createdDate = createdDate;
     }
 
 }

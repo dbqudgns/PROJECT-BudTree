@@ -8,6 +8,7 @@ import com.happiness.budtree.domain.message.Message;
 import com.happiness.budtree.domain.message.MessageRepository;
 import com.happiness.budtree.domain.message.SenderType;
 import com.happiness.budtree.jwt.Custom.CustomMemberDetails;
+import com.happiness.budtree.util.CursorPaginationRP;
 import com.happiness.budtree.util.ReturnMember;
 import org.springframework.core.io.Resource;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,6 +21,10 @@ import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
@@ -64,6 +69,7 @@ public class ChatroomService {
 
         Chatroom newChatroom = Chatroom.builder()
                 .member(member)
+                .createdDate(LocalDateTime.now())
                 .build();
         chatroomRepository.save(newChatroom);
 
@@ -230,10 +236,50 @@ public class ChatroomService {
                 .toList();
     }
 
+    public CursorPaginationRP<?> chatroomAllRPByCursor(Long cursor, int size, Integer year, Integer month, CustomMemberDetails customMemberDetails) {
+
+        // 사용자 아이디 반환
+        String username = customMemberDetails.getUsername();
+
+        // 년/월 지정, 쿼리 파라미터에 없으면 0
+        int setYear = (year != null) ? year : 0;
+        int setMonth = (month != null) ? month : 0;
+
+        // Slice<T>를 반환하려면 Spring Data JPA가 페이지 크기와 정렬, 다음 페이지 여부 계산(hasNext)을 위해 Pageable이 필요하다.
+        Pageable pageable = PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "roomId"));
+
+        Slice<Chatroom> chatroomSlice = chatroomRepository.findChatroomByCursor(username, cursor, setYear, setMonth, pageable);
+
+        if (!chatroomSlice.hasContent()) {
+            throw new IllegalArgumentException("해당 날짜에 조회되는 대화 내역이 존재하지 않습니다.");
+        }
+
+        // 가져온 DB 데이터 DTO로 변환
+        List<ChatroomAllRP> lists = new ArrayList<>();
+        List<Chatroom> allChatroom = chatroomSlice.getContent();
+        for (Chatroom chatroom : allChatroom) {
+            ChatroomAllRP chatroomAllRP = convertToChatroomAllRP(chatroom);
+            lists.add(chatroomAllRP);
+        }
+
+        // nextCursor 설정
+        Long nextCursor = null;
+        if (chatroomSlice.hasNext()) {
+            Chatroom lastChatroom = allChatroom.get(chatroomSlice.getNumberOfElements() - 1); // getNumberOfElements : 현재 페이지에 나올 데이터 수
+            nextCursor = lastChatroom.getRoomId();
+        }
+
+        return CursorPaginationRP.builder()
+                .lists(lists)
+                .nextCursor(nextCursor)
+                .hasNext(chatroomSlice.hasNext())
+                .build();
+    }
+
     private ChatroomAllRP convertToChatroomAllRP(Chatroom chatroom) {
         return ChatroomAllRP.builder()
                 .roomId(chatroom.getRoomId())
-                .createdTime(chatroom.getCreatedDate())
+                .createdDate(chatroom.getCreatedDate())
                 .build();
     }
 

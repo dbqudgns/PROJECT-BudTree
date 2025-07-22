@@ -7,7 +7,5 @@ import java.time.LocalDateTime;
 @Builder
 public record ChatroomAllRP(
         Long roomId,
-        LocalDateTime createdTime
-
-) {
-}
+        LocalDateTime createdDate
+) {}
