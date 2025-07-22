@@ -67,4 +67,14 @@ public class ChatroomController {
         return ResponseEntity.ok(ApiResponse.success(chatroomService.chatroomMessages(roomId, customMemberDetails)));
     }
 
+    @GetMapping("/pagination/{roomId}")
+    @Operation(summary = "특정 대화 내역 조회 - 커서 페이지네이션")
+    public ResponseEntity<?> getChatroomMessagesByCursor(@PathVariable("roomId") Long roomId,
+                                                         @RequestParam(value = "cursor", required = false) Long cursor,
+                                                         @RequestParam(value = "size") int size,
+                                                         @AuthenticationPrincipal CustomMemberDetails customMemberDetails) throws AccessDeniedException {
+        return ResponseEntity.ok(ApiResponse.success(chatroomService.chatroomMessagesByCursor(roomId, cursor, size, customMemberDetails)));
+
+    }
+
 }
