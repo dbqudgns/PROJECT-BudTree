@@ -236,7 +236,7 @@ public class ChatroomService {
                 .toList();
     }
 
-    public CursorPaginationRP<?> chatroomAllRPByCursor(Long cursor, int size, Integer year, Integer month, CustomMemberDetails customMemberDetails) {
+    public CursorPaginationRP<Object> chatroomAllRPByCursor(Long cursor, int size, Integer year, Integer month, CustomMemberDetails customMemberDetails) {
 
         // 사용자 아이디 반환
         String username = customMemberDetails.getUsername();
@@ -251,13 +251,12 @@ public class ChatroomService {
         Slice<Chatroom> chatroomSlice = chatroomRepository.findChatroomByCursor(username, cursor, setYear, setMonth, pageable);
 
         if (!chatroomSlice.hasContent()) {
-            throw new IllegalArgumentException("해당 날짜에 조회되는 대화 내역이 존재하지 않습니다.");
+            throw new EntityNotFoundException("해당 날짜에 조회되는 대화 내역이 존재하지 않습니다.");
         }
 
         // 가져온 DB 데이터 DTO로 변환
         List<ChatroomAllRP> lists = new ArrayList<>();
-        List<Chatroom> allChatroom = chatroomSlice.getContent();
-        for (Chatroom chatroom : allChatroom) {
+        for (Chatroom chatroom : chatroomSlice) {
             ChatroomAllRP chatroomAllRP = convertToChatroomAllRP(chatroom);
             lists.add(chatroomAllRP);
         }
@@ -265,7 +264,7 @@ public class ChatroomService {
         // nextCursor 설정
         Long nextCursor = null;
         if (chatroomSlice.hasNext()) {
-            Chatroom lastChatroom = allChatroom.get(chatroomSlice.getNumberOfElements() - 1); // getNumberOfElements : 현재 페이지에 나올 데이터 수
+            Chatroom lastChatroom = chatroomSlice.getContent().get(chatroomSlice.getNumberOfElements() - 1); // getNumberOfElements : 현재 페이지에 나올 데이터 수
             nextCursor = lastChatroom.getRoomId();
         }
 
@@ -283,6 +282,7 @@ public class ChatroomService {
                 .build();
     }
 
+    // 쿼리 3개
     public List<ChatroomMessageRP> chatroomMessages(Long roomId, CustomMemberDetails customMemberDetails) throws AccessDeniedException {
 
         Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
@@ -298,18 +298,57 @@ public class ChatroomService {
 
         List<ChatroomMessageRP> chatroomMessageRPs = new ArrayList<>();
         for (Message message : messageList) {
-
-            ChatroomMessageRP chatroomMessageRP = ChatroomMessageRP.builder()
-                    .sender(message.getSenderType())
-                    .content(message.getContent())
-                    .createdDate(message.getCreatedDate())
-                    .build();
-
+            ChatroomMessageRP chatroomMessageRP = getChatroomMessageRP(message);
             chatroomMessageRPs.add(chatroomMessageRP);
-
         }
 
         return chatroomMessageRPs;
 
+    }
+
+    // 쿼리 2개
+    public CursorPaginationRP<Object> chatroomMessagesByCursor(Long roomId, Long cursor, int size, CustomMemberDetails customMemberDetails) throws AccessDeniedException {
+
+        String username = customMemberDetails.getUsername();
+
+        Pageable pageable = PageRequest.of(0, size, Sort.by(Sort.Direction.ASC, "messageId"));
+
+        Slice<Message> messageSlice = messageRepository.findMessageByCursor(roomId, cursor, username, pageable);
+
+        if (messageSlice.isEmpty()) {
+            boolean roomExist = chatroomRepository.existsById(roomId);
+
+            if (!roomExist) {
+                throw new EntityNotFoundException("존재하지 않는 채팅방입니다.");
+            } else {
+                throw new AccessDeniedException("로그인한 사용자는 해당 채팅방에 접근할 권한이 없습니다.");
+            }
+        }
+
+        List<ChatroomMessageRP> lists = new ArrayList<>();
+        for (Message message : messageSlice) {
+            ChatroomMessageRP chatroomMessageRP = getChatroomMessageRP(message);
+            lists.add(chatroomMessageRP);
+        }
+
+        Long nextCursor = null;
+        if (messageSlice.hasNext()) {
+            Message lastMessage = messageSlice.getContent().get(messageSlice.getNumberOfElements() - 1);
+            nextCursor = lastMessage.getMessageId();
+        }
+
+        return CursorPaginationRP.builder()
+                .lists(lists)
+                .nextCursor(nextCursor)
+                .hasNext(messageSlice.hasNext())
+                .build();
+    }
+
+    private ChatroomMessageRP getChatroomMessageRP(Message message) {
+        return ChatroomMessageRP.builder()
+                .sender(message.getSenderType())
+                .content(message.getContent())
+                .createdDate(message.getCreatedDate())
+                .build();
     }
 }
