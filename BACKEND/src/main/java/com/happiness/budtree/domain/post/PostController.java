@@ -65,11 +65,20 @@ public class PostController {
     }
 
     @PostMapping("/all")
-    @Operation(summary = "전체 조회")
+    @Operation(summary = "일기장 전체 조회")
     public ResponseEntity<?> getAllPosts(@RequestBody PostAllRQ postAllRQ,
                                     @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
         return ResponseEntity.ok(ApiResponse.success(postService.findAllPosts(postAllRQ,customMemberDetails)));
+    }
 
+    @GetMapping("/all-pagination")
+    @Operation(summary = "일기장 전체 조회 - 커서 페이지네이션")
+    public ResponseEntity<?> getAllPostsByCursor(@RequestParam(value = "cursor", required = false) Long cursor,
+                                                 @RequestParam(value = "size") int size,
+                                                 @RequestParam(value = "year", required = false) Integer year,
+                                                 @RequestParam(value = "month", required = false) Integer month,
+                                                 @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
+        return ResponseEntity.ok(ApiResponse.success(postService.findAllPostsByCursor(cursor, size, year, month, customMemberDetails)));
     }
     
 

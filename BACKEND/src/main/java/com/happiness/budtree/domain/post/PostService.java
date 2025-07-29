@@ -8,9 +8,15 @@ import com.happiness.budtree.domain.post.DTO.response.PostAllRP;
 import com.happiness.budtree.domain.post.DTO.response.PostEmotionRP;
 import com.happiness.budtree.domain.post.DTO.response.PostMessageRP;
 import com.happiness.budtree.jwt.Custom.CustomMemberDetails;
+import com.happiness.budtree.util.CursorPaginationRP;
 import com.happiness.budtree.util.ReturnMember;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -92,7 +98,6 @@ public class PostService {
         return res;
     }
 
-    @Transactional
     public List<PostAllRP> findAllPosts(PostAllRQ postAllRQ,  CustomMemberDetails customMemberDetails) {
         Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
         List<Post> posts = postRepository.findLatestPosts(member);
@@ -128,15 +133,56 @@ public class PostService {
         return filterPost.stream()
                     .map(this::convertToPostAllRP)
                     .toList();
+    }
+
+    public CursorPaginationRP<Object> findAllPostsByCursor(Long cursor, int size, Integer year, Integer month, CustomMemberDetails customMemberDetails) {
+
+        // 사용자 아이디 반환
+        String username = customMemberDetails.getUsername();
+
+        // 년/월 지정, 쿼리 파라미터에 없으면 0
+        int setYear = (year != null) ? year : 0;
+        int setMonth = (month != null) ? month : 0;
+
+        // Slice<T>를 반환하려면 Spring Data JPA가 페이지 크기와 정렬, 다음 페이지 여부 계산(hasNext)을 위해 Pageable이 필요하다.
+        Pageable pageable = PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "postId"));
+
+        Slice<Post> postSlice = postRepository.findPostByCursor(username, cursor, setYear, setMonth, pageable);
+
+        if (!postSlice.hasContent()) {
+            throw new EntityNotFoundException("해당 날짜에 조회되는 대화 내역이 존재하지 않습니다.");
         }
 
-        private PostAllRP convertToPostAllRP(Post post) {
-            return PostAllRP.builder()
-                    .postId(post.getPostId())
-                    .createdDate(post.getCreatedDate())
-                    .emotion(post.getEmotion())
-                    .build();
+        // 가져온 DB 데이터 DTO로 변환
+        List<PostAllRP> lists = new ArrayList<>();
+        for (Post post : postSlice) {
+            PostAllRP postAllRP = convertToPostAllRP(post);
+            lists.add(postAllRP);
         }
+
+        // nextCursor 설정
+        Long nextCursor = null;
+        if (postSlice.hasNext()) {
+            Post lastPost = postSlice.getContent().get(postSlice.getNumberOfElements() - 1);
+            nextCursor = lastPost.getPostId();
+        }
+
+        return CursorPaginationRP.builder()
+                .lists(lists)
+                .nextCursor(nextCursor)
+                .hasNext(postSlice.hasNext())
+                .build();
+    }
+
+
+    private PostAllRP convertToPostAllRP(Post post) {
+        return PostAllRP.builder()
+                .postId(post.getPostId())
+                .createdDate(post.getCreatedDate())
+                .emotion(post.getEmotion())
+                .build();
+    }
+
 
 
     @Transactional
