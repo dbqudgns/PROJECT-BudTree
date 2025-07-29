@@ -24,7 +24,7 @@ public class Post {
     private Member member;
 
     @Column(name = "created_date",nullable = false)
-    private LocalDateTime createDate;
+    private LocalDateTime createdDate;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -35,10 +35,10 @@ public class Post {
     private String content;
 
     @Builder
-    public Post(String content, Emotion emotion, Member member) {
+    public Post(String content, Emotion emotion, LocalDateTime createdDate, Member member) {
         this.emotion = emotion;
         this.content = content;
-        this.createDate = LocalDateTime.now();
+        this.createdDate = createdDate;
         this.member = member;
     }
 

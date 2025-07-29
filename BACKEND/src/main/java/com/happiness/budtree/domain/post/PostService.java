@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class PostService {
         Post post = Post.builder()
                 .content(postRegister.content())
                 .emotion(postRegister.emotion())
+                .createdDate(LocalDateTime.now())
                 .member(member)
                 .build();
         postRepository.save(post);
@@ -67,7 +69,7 @@ public class PostService {
                 .postId(postId)
                 .content(post.getContent())
                 .emotion(post.getEmotion())
-                .createdDate(post.getCreateDate())
+                .createdDate(post.getCreatedDate())
                 .build();
     }
 
@@ -102,19 +104,19 @@ public class PostService {
          //월별 조회
         }else if(postAllRQ.year() == 0){
             filterPost = posts.stream()
-                    .filter(post->post.getCreateDate().getMonthValue() == postAllRQ.month())
+                    .filter(post->post.getCreatedDate().getMonthValue() == postAllRQ.month())
                     .toList();
          //년별 조회
         }else if(postAllRQ.month() == 0){
             filterPost = posts.stream()
-                    .filter(post->post.getCreateDate().getYear() == postAllRQ.year())
+                    .filter(post->post.getCreatedDate().getYear() == postAllRQ.year())
                     .toList();
 
             // 년 월로 조회
         }else{
             filterPost = posts.stream()
-                    .filter(post -> post.getCreateDate().getYear() == postAllRQ.year() &&
-                            post.getCreateDate().getMonthValue() == postAllRQ.month())
+                    .filter(post -> post.getCreatedDate().getYear() == postAllRQ.year() &&
+                            post.getCreatedDate().getMonthValue() == postAllRQ.month())
                     .toList();
         }
 
@@ -131,7 +133,7 @@ public class PostService {
         private PostAllRP convertToPostAllRP(Post post) {
             return PostAllRP.builder()
                     .postId(post.getPostId())
-                    .createdDate(post.getCreateDate())
+                    .createdDate(post.getCreatedDate())
                     .emotion(post.getEmotion())
                     .build();
         }

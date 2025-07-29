@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query("SELECT p FROM Post p WHERE p.member = :member ORDER BY p.createDate DESC, p.postId DESC")
+    @Query("SELECT p FROM Post p WHERE p.member = :member ORDER BY p.createdDate DESC, p.postId DESC")
     List<Post> findLatestPosts(@Param("member") Member member);
 
 }
