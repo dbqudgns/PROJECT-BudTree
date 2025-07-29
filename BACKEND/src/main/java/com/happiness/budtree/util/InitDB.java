@@ -25,7 +25,7 @@ public class InitDB {
     @PostConstruct
     public void init() {
        // initService.dbInit_ChatroomAndMessage();
-        initService.dbInit_Post();
+       // initService.dbInit_Post();
     }
 
     @Component
@@ -64,7 +64,7 @@ public class InitDB {
 
             Emotion[] emotions = Emotion.values();
 
-            for (int i = 1; i <= 99990; i++) {
+            for (int i = 1; i <= 500000; i++) {
                 LocalDateTime createdDate = post.plusDays(i)
                         .plusHours(i % 24)
                         .plusMinutes(1)
@@ -74,6 +74,10 @@ public class InitDB {
                 Emotion emotion = emotions[(i - 1) % emotions.length]; // emotion 순서대로 할당
 
                 createPost(member, createdDate, emotion);
+
+                if (i % 500 == 0) {
+                    em.clear();
+                }
             }
 
         }
