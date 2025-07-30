@@ -16,10 +16,10 @@ PHQ-9 자가 진단 결과를 기반으로 AI 친구 **"버디"** 와 대화를 
 ## <span id="4">4. 팀 소개</span>
 <div align="center">
 
-|<img src="https://avatars.githubusercontent.com/dbqudgns" width="200px;" alt=""/>|<img src="https://avatars.githubusercontent.com/ChousnCom" width="200px;" alt=""/>|<img src="https://avatars.githubusercontent.com/cxfls" width="200px;" alt=""/>|<img src="https://avatars.githubusercontent.com/hjStack" width="200px;" alt=""/>|
-| :--------------------------------------------------------------: | :--------------------------------------------------------------: | :--------------------------------------------------------------------------: | :-----------------------------------------------------------: |
-|           [팀장 : 유병훈](https://github.com/dbqudgns)           |           [팀원 : 최지훈](https://github.com/ChousnCom)            |                 [팀원 : 이채린](https://github.com/cxfls)                 |         [팀원 : 권혜준](https://github.com/hjStack)          |
-|                PM, BACKEND, FRONTEND, DESIGN                    |                            BACKEND, FRONTEND, DESIGN              |                                  FRONTEND, DESIGN                                  |                          FRONTEND, DESIGN                       |
+|<img src="https://avatars.githubusercontent.com/dbqudgns" width="200px;" alt=""/>|<img src="https://avatars.githubusercontent.com/ChousnCom" width="200px;" alt=""/>|<img src="https://avatars.githubusercontent.com/cxfls" width="200px;" alt=""/>|<img src="https://avatars.githubusercontent.com/hjStack" width="200px;" alt=""/>|<img src="https://avatars.githubusercontent.com/0GYURI" width="200px;" alt=""/>|
+| :--------------------------------------------------------------: | :--------------------------------------------------------------: | :--------------------------------------------------------------------------: | :-----------------------------------------------------------: | :-----------------------------------------------------------: | 
+|           [팀장 : 유병훈](https://github.com/dbqudgns)           |           [팀원 : 최지훈](https://github.com/ChousnCom)            |                 [팀원 : 이채린](https://github.com/cxfls)                 |         [팀원 : 권혜준](https://github.com/hjStack)          |       [팀원 : 김규리](https://github.com/0GYURI)          |
+|                PM, BACKEND, FRONTEND                  |                            BACKEND, FRONTEND             |                                  FRONTEND                          |                          FRONTEND                      |                              DESIGN                         |  
 
 </div>
 
@@ -140,10 +140,6 @@ PHQ-9 자가 진단 결과를 기반으로 AI 친구 **"버디"** 와 대화를 
         - Nginx를 통해 프론트엔드 서버 리버스 프록시 구축 및 설정
         - Certbot을 통해 SSL 인증서를 발급하고 안전한 HTTPS 통신 환경 제공
        
-</details> <details> <summary><strong>DESIGN</strong></summary>
- 
-    - UI/UX 디자인 협업 및 총괄
-    
 </details>
 
 ## <span id="9">9. 트러블 슈팅</span>
