@@ -147,7 +147,9 @@ public class PostService {
         // Slice<T>를 반환하려면 Spring Data JPA가 페이지 크기와 정렬, 다음 페이지 여부 계산(hasNext)을 위해 Pageable이 필요하다.
         Pageable pageable = PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "postId"));
 
-        Slice<Post> postSlice = postRepository.findPostByCursor(username, cursor, setYear, setMonth, pageable);
+        // Slice<Post> postSlice = postRepository.findPostByCursor(username, cursor, setYear, setMonth, pageable);
+        // 동적 쿼리 QueryDSL 적용
+        Slice<Post> postSlice = postRepository.findByCursor(username, cursor, setYear, setMonth, pageable);
 
         if (!postSlice.hasContent()) {
             throw new EntityNotFoundException("해당 날짜에 조회되는 대화 내역이 존재하지 않습니다.");
