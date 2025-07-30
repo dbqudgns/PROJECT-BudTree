@@ -84,7 +84,7 @@ PHQ-9 자가 진단 결과를 기반으로 AI 친구 **"버디"** 와 대화를 
 
 ## <span id="8">8. 상세 담당 업무</span>
 
-### 👤 유병훈 – PM / BACKEND / FRONTEND / DESIGN
+### 👤 유병훈 – PM / BACKEND / FRONTEND
 
 <details> <summary><strong>PM</strong></summary>
  
