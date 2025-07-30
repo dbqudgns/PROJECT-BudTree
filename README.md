@@ -192,13 +192,15 @@ PHQ-9 자가 진단 결과를 기반으로 AI 친구 **"버디"** 와 대화를 
 
 </details>
 
-## <span id="10">10. 시스템 아키텍처</span>
+## <span id="10">10. 성능 개선 (현재 진행중 => 추후 작성 예정) </span>
+
+## <span id="11">11. 시스템 아키텍처</span>
 ![image](https://github.com/user-attachments/assets/7aa3f085-9aa6-46ef-9068-932cbdd07c9e)
 
-## <span id="11">11. ERD</span>
+## <span id="12">12. ERD</span>
 ![image](https://github.com/user-attachments/assets/b87fc086-356a-4da5-aedf-3f805c1d7aa0)
 
-## <span id="12">12. 기타</span>
+## <span id="13">13. 기타</span>
 - 프로토타입 : https://www.figma.com/design/dsYzPgIOph6PRTlBQXumFv/%EB%B2%84%EB%93%9C-%EB%82%98%EB%AC%B4---%EC%B5%9C%EC%A2%85-UI-UX?node-id=0-1&t=zi9fRsS4xblqTWSa-1
 
 - API 명세서 : https://lateral-iron-436.notion.site/API-1aeaa43430de80b4a5c7ff8887230c69
