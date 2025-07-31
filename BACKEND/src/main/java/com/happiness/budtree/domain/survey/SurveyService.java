@@ -6,11 +6,18 @@ import com.happiness.budtree.domain.survey.DTO.request.SurveyRegisterRQ;
 import com.happiness.budtree.domain.survey.DTO.response.SurveyAllRP;
 import com.happiness.budtree.domain.survey.DTO.response.SurveyRegisterRP;
 import com.happiness.budtree.jwt.Custom.CustomMemberDetails;
+import com.happiness.budtree.util.CursorPaginationRP;
 import com.happiness.budtree.util.ReturnMember;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -63,7 +70,6 @@ public class SurveyService {
     }
 
 
-    @Transactional
     public List<SurveyAllRP> findAllSurveys(SurveyAllRQ surveyAllRQ, CustomMemberDetails customMemberDetails) {
         Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
         List<Survey> surveys = surveyRepository.findLatestSurvey(member);
@@ -96,6 +102,40 @@ public class SurveyService {
         return filterSurvey.stream()
                 .map(this::convertToSurveyAllRP)
                 .toList();
+    }
+
+    public CursorPaginationRP<Object> findAllSurveyByCursor(Long cursor, int size, Integer year, Integer month, CustomMemberDetails customMemberDetails) {
+
+        String username = customMemberDetails.getUsername();
+
+        int setYear = (year != null) ? year : 0;
+        int setMonth = (year != null) ? month : 0;
+
+        Pageable pageable = PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "surveyId"));
+
+        Slice<Survey> surveySlice = surveyRepository.findSurveyByCursor(username, cursor, setYear, setMonth, pageable);
+
+        if (!surveySlice.hasContent()) {
+            throw new EntityNotFoundException("해당 날짜에 조회되는 자가진단이 존재하지 않습니다.");
+        }
+
+        List<SurveyAllRP> lists = new ArrayList<>();
+        for (Survey survey : surveySlice) {
+            SurveyAllRP surveyAllRP = convertToSurveyAllRP(survey);
+            lists.add(surveyAllRP);
+        }
+
+        Long nextCursor = null;
+        if (surveySlice.hasNext()) {
+            Survey lastSurvey = surveySlice.getContent().get(surveySlice.getNumberOfElements() - 1);
+            nextCursor = lastSurvey.getSurveyId();
+        }
+
+        return CursorPaginationRP.builder()
+                .lists(lists)
+                .nextCursor(nextCursor)
+                .hasNext(surveySlice.hasNext())
+                .build();
     }
 
     private SurveyAllRP convertToSurveyAllRP(Survey survey){
