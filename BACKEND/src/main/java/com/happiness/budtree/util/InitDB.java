@@ -28,7 +28,7 @@ public class InitDB {
     public void init() {
        // initService.dbInit_ChatroomAndMessage();
        // initService.dbInit_Post();
-        initService.dbInit_Survey();
+       // initService.dbInit_Survey();
     }
 
     @Component

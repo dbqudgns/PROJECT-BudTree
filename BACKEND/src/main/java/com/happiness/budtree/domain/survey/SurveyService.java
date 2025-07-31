@@ -113,7 +113,9 @@ public class SurveyService {
 
         Pageable pageable = PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "surveyId"));
 
-        Slice<Survey> surveySlice = surveyRepository.findSurveyByCursor(username, cursor, setYear, setMonth, pageable);
+        // Slice<Survey> surveySlice = surveyRepository.findSurveyByCursor(username, cursor, setYear, setMonth, pageable);
+        // 동적 쿼리 QueryDSL 적용
+        Slice<Survey> surveySlice = surveyRepository.findByCursor(username, cursor, setYear, setMonth, pageable);
 
         if (!surveySlice.hasContent()) {
             throw new EntityNotFoundException("해당 날짜에 조회되는 자가진단이 존재하지 않습니다.");
