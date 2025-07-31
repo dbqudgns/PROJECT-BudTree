@@ -31,9 +31,21 @@ public class SurveyController {
 
     @PostMapping("/all")
     @Operation (summary = "전체 자가진단 결과조회")
-    public ResponseEntity<?> findAll(@RequestBody SurveyAllRQ surveyAllRQ,
-                                     @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
+    public ResponseEntity<?> findAllSurvey(@RequestBody SurveyAllRQ surveyAllRQ,
+                                           @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
         return ResponseEntity.ok(ApiResponse.success(surveyService.findAllSurveys(surveyAllRQ, customMemberDetails)));
     }
+
+    @GetMapping("/all-pagination")
+    @Operation(summary = "자가진단 전체 조회 - 커서 페이지네이션")
+    public ResponseEntity<?> findAllSurveyByCursor(@RequestParam(value = "cursor", required = false) Long cursor,
+                                                   @RequestParam(value = "size") int size,
+                                                   @RequestParam(value = "year", required = false) Integer year,
+                                                   @RequestParam(value = "month", required = false) Integer month,
+                                                   @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
+        return ResponseEntity.ok(ApiResponse.success(surveyService.findAllSurveyByCursor(cursor, size, year, month, customMemberDetails)));
+    }
+
+
 
 }
