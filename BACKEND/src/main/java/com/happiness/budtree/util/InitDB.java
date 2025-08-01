@@ -93,7 +93,7 @@ public class InitDB {
 
             Level[] levels = Level.values();
 
-            for (int i = 1; i <= 100; i++) {
+            for (int i = 1; i <= 500000; i++) {
                 LocalDateTime createdDate = surveyDate.plusDays(i)
                         .plusHours(i % 24)
                         .plusMinutes(1)
