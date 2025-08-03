@@ -53,7 +53,7 @@ public class RefreshService {
 
 
         String username = jwtUtil.getUsername(refresh);
-        String redisRT = redisUtil.getData("RT:" + username);
+        String redisRT = redisUtil.getData("RT:" + username).toString();
 
         if (redisRT == null)
             return ApiResponse.Unauthorized("Redis에 해당 Refresh 토큰이 없습니다.");

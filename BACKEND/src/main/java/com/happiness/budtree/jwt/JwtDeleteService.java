@@ -61,7 +61,7 @@ public class JwtDeleteService {
 
 
         String username = jwtUtil.getUsername(refresh);
-        String redisRT = redisUtil.getData("AT:" + username);
+        String redisRT = redisUtil.getData("AT:" + username).toString();
 
         if (redisRT == null)
             return ApiResponse.Unauthorized("Redis에 해당 Refresh 토큰이 없습니다.");
