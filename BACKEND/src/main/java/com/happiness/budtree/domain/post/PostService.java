@@ -9,6 +9,7 @@ import com.happiness.budtree.domain.post.DTO.response.PostEmotionRP;
 import com.happiness.budtree.domain.post.DTO.response.PostMessageRP;
 import com.happiness.budtree.jwt.Custom.CustomMemberDetails;
 import com.happiness.budtree.util.CursorPaginationRP;
+import com.happiness.budtree.util.RedisUtil;
 import com.happiness.budtree.util.ReturnMember;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -28,6 +29,7 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final RedisUtil redisUtil;
     private final ReturnMember returnMember;
 
     @Transactional
@@ -79,8 +81,13 @@ public class PostService {
                 .build();
     }
 
+    // Redis 적용 :
     @Transactional
     public List<PostEmotionRP> findLatestSixEmotions(CustomMemberDetails customMemberDetails) {
+
+        String key = "recentSixPost";
+
+        redisUtil.getData(key);
         Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
         List<Post> posts = postRepository.findLatestPosts(member)
                 .stream()
