@@ -27,5 +27,8 @@ public interface PostRepository extends JpaRepository<Post, Long>, CursorPaginat
                                  @Param("month") int month,
                                  Pageable pageable);
 
+    @Query("SELECT p FROM Post p WHERE p.member.username = :username ORDER BY p.createdDate DESC, p.postId DESC LIMIT 6")
+    List<Post> findSixLatestPosts(@Param("username") String username);
+
 }
 
