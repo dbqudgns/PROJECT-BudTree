@@ -31,7 +31,7 @@ public class RedisUtil {
     /** 지정된 키(key)에 값을 저장하고,
      * 지정된 시간(expiredMs) 후에 데이터가 만료되도록 설정하는 메서드
       */
-    public void setDataExpire(String key, String value, Long expired) {
+    public void setDataExpire(String key, Object value, Long expired) {
         ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
         Duration expireDuration = Duration.ofSeconds(expired);
         valueOperations.set(key, value, expireDuration);

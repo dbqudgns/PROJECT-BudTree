@@ -59,8 +59,15 @@ public class PostController {
 
     @GetMapping("/find-emotion")
     @Operation(summary = "최근 6개의 감정 상태반환(열매)")
-    public ResponseEntity<?> findEmotionByPostId(@AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
+    public ResponseEntity<?> findEmotionByDB(@AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
         List<PostEmotionRP> postEmotionRPS = postService.findLatestSixEmotions(customMemberDetails);
+        return ResponseEntity.ok(ApiResponse.success(postEmotionRPS));
+    }
+
+    @GetMapping("/find-emotionByRedis")
+    @Operation(summary = "최근 6개의 감정 상태반환(열매) - Redis 조회")
+    public ResponseEntity<?> findEmotionByRedis(@AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
+        List<PostEmotionRP> postEmotionRPS = postService.findLatestSixEmotionsByRedis(customMemberDetails);
         return ResponseEntity.ok(ApiResponse.success(postEmotionRPS));
     }
 

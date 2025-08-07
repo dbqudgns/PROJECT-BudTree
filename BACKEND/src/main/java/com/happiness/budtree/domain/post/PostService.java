@@ -20,6 +20,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,13 +82,8 @@ public class PostService {
                 .build();
     }
 
-    // Redis 적용 :
-    @Transactional
     public List<PostEmotionRP> findLatestSixEmotions(CustomMemberDetails customMemberDetails) {
 
-        String key = "recentSixPost";
-
-        redisUtil.getData(key);
         Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
         List<Post> posts = postRepository.findLatestPosts(member)
                 .stream()
@@ -102,6 +98,39 @@ public class PostService {
                   .emotion(post.getEmotion())
                   .build());
         }
+        return res;
+    }
+
+    // Redis 적용
+    public List<PostEmotionRP> findLatestSixEmotionsByRedis(CustomMemberDetails customMemberDetails) {
+
+        String username = customMemberDetails.getUsername();
+        String key = "recentSixPost:" + username;
+
+        // 1. Redis에서 캐시 조회
+        Object cached = redisUtil.getData(key);
+
+        // 2. 캐시가 존재하고 타입이 올바르면 반환
+        if (cached instanceof List<?> cachedList &&
+                (cachedList.isEmpty() || cachedList.get(0) instanceof PostEmotionRP)) {
+            return (List<PostEmotionRP>) cachedList;
+        }
+
+        // 3. 캐시가 없거나 타입이 다르면 DB 조회
+        List<Post> posts = postRepository.findSixLatestPosts(username);
+
+        List<PostEmotionRP> res = new ArrayList<>();
+
+        for (Post post : posts) {
+            res.add(PostEmotionRP.builder()
+                    .postId(post.getPostId())
+                    .emotion(post.getEmotion())
+                    .build());
+        }
+
+        // 4. Redis에 캐시 저장 (TTL 10분)
+        redisUtil.setDataExpire(key, res, 60 * 10L);
+
         return res;
     }
 
