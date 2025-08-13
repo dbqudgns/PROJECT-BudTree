@@ -20,7 +20,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +32,13 @@ public class PostService {
     private final RedisUtil redisUtil;
     private final ReturnMember returnMember;
 
+    private final static String key = "recentSixPost:";
+
     @Transactional
     public void createPost(PostRegisterRQ postRegister, CustomMemberDetails customMemberDetails) {
+
+        String username = customMemberDetails.getUsername();
+        String usernameKey = key + username;
 
         Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
 
@@ -45,6 +49,28 @@ public class PostService {
                 .member(member)
                 .build();
         postRepository.save(post);
+
+        // Redis에서 캐시 조회
+        Object cached = redisUtil.getData(usernameKey);
+
+        if (cached instanceof List<?>) {
+            List<PostEmotionRP> postList = (List<PostEmotionRP>) cached;
+
+            List<Post> posts = postRepository.findSixLatestPosts(username);
+
+            List<PostEmotionRP> res = new ArrayList<>();
+
+            for (Post p : posts) {
+                res.add(PostEmotionRP.builder()
+                        .postId(p.getPostId())
+                        .emotion(p.getEmotion())
+                        .build());
+            }
+
+            // Redis에 캐시 저장 (TTL 10분)
+            redisUtil.setDataExpire(usernameKey, res, 60 * 10L);
+
+        }
 
     }
 
@@ -105,10 +131,11 @@ public class PostService {
     public List<PostEmotionRP> findLatestSixEmotionsByRedis(CustomMemberDetails customMemberDetails) {
 
         String username = customMemberDetails.getUsername();
-        String key = "recentSixPost:" + username;
+
+        String usernameKey = key + username;
 
         // 1. Redis에서 캐시 조회
-        Object cached = redisUtil.getData(key);
+        Object cached = redisUtil.getData(usernameKey);
 
         // 2. 캐시가 존재하고 타입이 올바르면 반환
         if (cached instanceof List<?> cachedList &&
@@ -129,7 +156,7 @@ public class PostService {
         }
 
         // 4. Redis에 캐시 저장 (TTL 10분)
-        redisUtil.setDataExpire(key, res, 60 * 10L);
+        redisUtil.setDataExpire(usernameKey, res, 60 * 10L);
 
         return res;
     }
@@ -225,6 +252,10 @@ public class PostService {
 
     @Transactional
     public void deletePost(Long postId,CustomMemberDetails customMemberDetails){
+
+        String username = customMemberDetails.getUsername();
+        String usernameKey = key + username;
+
         Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
         Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("일기장이 존재하지 않습니다."));
 
@@ -232,5 +263,34 @@ public class PostService {
             throw new IllegalArgumentException("일기장 삭제 권한이 없습니다.");
         }
         postRepository.delete(post);
+
+        // 1. Redis에서 캐시 조회
+        Object cached = redisUtil.getData(usernameKey);
+
+        if (cached instanceof List<?>) {
+            List<PostEmotionRP> postList = (List<PostEmotionRP>) cached;
+
+            // 2. 삭제할 postId와 일치하는 데이터 제거
+            boolean removed = postList.removeIf(per -> per.postId().equals(postId));
+
+            if (removed) {
+
+                // 3. 캐시가 없거나 타입이 다르면 DB 조회
+                List<Post> posts = postRepository.findSixLatestPosts(username);
+
+                List<PostEmotionRP> res = new ArrayList<>();
+
+                for (Post p : posts) {
+                    res.add(PostEmotionRP.builder()
+                            .postId(p.getPostId())
+                            .emotion(p.getEmotion())
+                            .build());
+                }
+
+                // 4. Redis에 캐시 저장 (TTL 10분)
+                redisUtil.setDataExpire(usernameKey, res, 60 * 10L);
+            }
+        }
+
     }
 }
