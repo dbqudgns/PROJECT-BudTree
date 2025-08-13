@@ -34,9 +34,11 @@ public class PostService {
 
     private final static String key = "recentSixPost:";
 
-
     @Transactional
     public void createPost(PostRegisterRQ postRegister, CustomMemberDetails customMemberDetails) {
+
+        String username = customMemberDetails.getUsername();
+        String usernameKey = key + username;
 
         Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
 
@@ -47,6 +49,28 @@ public class PostService {
                 .member(member)
                 .build();
         postRepository.save(post);
+
+        // Redis에서 캐시 조회
+        Object cached = redisUtil.getData(usernameKey);
+
+        if (cached instanceof List<?>) {
+            List<PostEmotionRP> postList = (List<PostEmotionRP>) cached;
+
+            List<Post> posts = postRepository.findSixLatestPosts(username);
+
+            List<PostEmotionRP> res = new ArrayList<>();
+
+            for (Post p : posts) {
+                res.add(PostEmotionRP.builder()
+                        .postId(p.getPostId())
+                        .emotion(p.getEmotion())
+                        .build());
+            }
+
+            // Redis에 캐시 저장 (TTL 10분)
+            redisUtil.setDataExpire(usernameKey, res, 60 * 10L);
+
+        }
 
     }
 
