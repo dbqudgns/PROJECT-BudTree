@@ -25,8 +25,6 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
 
-
-
     @PostMapping("/create")
     @Operation(summary = "일기장 저장")
     public ResponseEntity<?> create(@RequestBody PostRegisterRQ registerRQ ,
@@ -73,21 +71,30 @@ public class PostController {
 
     @PostMapping("/all")
     @Operation(summary = "일기장 전체 조회")
-    public ResponseEntity<?> getAllPosts(@RequestBody PostAllRQ postAllRQ,
+    public ResponseEntity<?> getAllPost(@RequestBody PostAllRQ postAllRQ,
                                     @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
         return ResponseEntity.ok(ApiResponse.success(postService.findAllPosts(postAllRQ,customMemberDetails)));
     }
 
     @GetMapping("/all-pagination")
     @Operation(summary = "일기장 전체 조회 - 커서 페이지네이션")
-    public ResponseEntity<?> getAllPostsByCursor(@RequestParam(value = "cursor", required = false) Long cursor,
+    public ResponseEntity<?> getAllPostByCursor(@RequestParam(value = "cursor", required = false) Long cursor,
                                                  @RequestParam(value = "size") int size,
                                                  @RequestParam(value = "year", required = false) Integer year,
                                                  @RequestParam(value = "month", required = false) Integer month,
                                                  @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
         return ResponseEntity.ok(ApiResponse.success(postService.findAllPostsByCursor(cursor, size, year, month, customMemberDetails)));
     }
-    
+
+    @GetMapping("/findByEmotion")
+    @Operation(summary = "감정에 의한 일기장 전체 조회 - 커서 페이지네이션")
+    public ResponseEntity<?> getAllPostByEmotionAndCursor(@RequestParam(value = "cursor", required = false) Long cursor,
+                                                            @RequestParam(value = "size") int size,
+                                                            @RequestParam(value = "emotion") String emotion,
+                                                            @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
+        return ResponseEntity.ok(ApiResponse.success(postService.findAllPostByEmotionAndCursor(cursor, size, emotion, customMemberDetails)));
+    }
+
 
     @DeleteMapping("/delete/{postId}")
     @Operation(summary = "일기장 삭제")
