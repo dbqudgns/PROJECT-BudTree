@@ -1,5 +1,6 @@
 package com.happiness.budtree.domain;
 
+import com.happiness.budtree.domain.post.Emotion;
 import com.querydsl.core.types.EntityPath;
 import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -39,6 +40,25 @@ public class CursorPaginationRepository {
         return new SliceImpl<>(result, pageable, hasNext);
     }
 
+    public <T> Slice<T> applyCursorPaging(EntityPath<T> entity, StringPath usernamePath, NumberPath<Long> idPath, EnumPath<Emotion> emotionPath,
+                                          String username, Long cursor, Emotion emotion, Pageable pageable) {
+        List<T> result = queryFactory.selectFrom(entity)
+                .where(
+                        usernameEq(usernamePath, username),
+                        cursorLt(idPath, cursor),
+                        emotionEq(emotionPath, emotion))
+                .limit(pageable.getPageSize() + 1)
+                .orderBy(idPath.desc())
+                .fetch();
+
+        boolean hasNext = result.size() > pageable.getPageSize();
+        if (hasNext) result.remove(pageable.getPageSize());
+
+        return new SliceImpl<>(result, pageable, hasNext);
+
+
+    }
+
     private BooleanExpression usernameEq(StringPath usernamePath, String username) {
         return hasText(username) ? usernamePath.eq(username) : null;
     }
@@ -53,6 +73,10 @@ public class CursorPaginationRepository {
 
     private BooleanExpression monthEq(DateTimePath<LocalDateTime> createdAtPath, int month) {
         return month == 0 ? null : createdAtPath.month().eq(month);
+    }
+
+    private BooleanExpression emotionEq(EnumPath<Emotion> emotionPath, Emotion emotion) {
+        return emotion == null ? null : emotionPath.eq(emotion);
     }
 
     /** Q타입의 필드에 접근하고 쿼리 조건을 만들기 위한 도구

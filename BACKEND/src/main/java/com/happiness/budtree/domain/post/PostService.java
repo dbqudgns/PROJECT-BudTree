@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -215,7 +216,7 @@ public class PostService {
         Slice<Post> postSlice = postRepository.findByCursor(username, cursor, setYear, setMonth, pageable);
 
         if (!postSlice.hasContent()) {
-            throw new EntityNotFoundException("해당 날짜에 조회되는 대화 내역이 존재하지 않습니다.");
+            throw new EntityNotFoundException("해당 날짜에 조회되는 일기장이 존재하지 않습니다.");
         }
 
         // 가져온 DB 데이터 DTO로 변환
@@ -239,6 +240,46 @@ public class PostService {
                 .build();
     }
 
+    public CursorPaginationRP<Object> findAllPostByEmotionAndCursor(Long cursor, int size, String emotion, CustomMemberDetails customMemberDetails) {
+
+        Emotion enumEmotion = null;
+        try {
+            emotion = emotion.toUpperCase();
+            enumEmotion = Emotion.valueOf(emotion);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("해당 감정은 조회되지 않습니다.");
+        }
+
+        String username = customMemberDetails.getUsername();
+
+        Pageable pageable = PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "postId"));
+
+        Slice<Post> postSlice = postRepository.findByEmotionAndCursor(username, cursor, enumEmotion, pageable);
+
+        if (!postSlice.hasContent()) {
+            throw new EntityNotFoundException("해당 감정에 조회되는 일기장이 존재하지 않습니다.");
+        }
+
+        // 가져온 DB 데이터 DTO로 변환
+        List<PostAllRP> lists = new ArrayList<>();
+        for (Post post : postSlice) {
+            PostAllRP postAllRP = convertToPostAllRP(post);
+            lists.add(postAllRP);
+        }
+
+        // nextCursor 설정
+        Long nextCursor = null;
+        if (postSlice.hasNext()) {
+            Post lastPost = postSlice.getContent().get(postSlice.getNumberOfElements() - 1);
+            nextCursor = lastPost.getPostId();
+        }
+
+        return CursorPaginationRP.builder()
+                .lists(lists)
+                .nextCursor(nextCursor)
+                .hasNext(postSlice.hasNext())
+                .build();
+    }
 
     private PostAllRP convertToPostAllRP(Post post) {
         return PostAllRP.builder()
@@ -247,8 +288,6 @@ public class PostService {
                 .emotion(post.getEmotion())
                 .build();
     }
-
-
 
     @Transactional
     public void deletePost(Long postId,CustomMemberDetails customMemberDetails){

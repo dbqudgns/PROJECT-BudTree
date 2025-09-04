@@ -2,6 +2,7 @@ package com.happiness.budtree.domain.survey;
 
 import com.happiness.budtree.domain.CursorPaginationRepository;
 import com.happiness.budtree.domain.CursorPaginationSupport;
+import com.happiness.budtree.domain.post.Emotion;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -17,5 +18,10 @@ public class SurveyRepositoryImpl implements CursorPaginationSupport<Survey> {
     public Slice<Survey> findByCursor(String username, Long cursor, int year, int month, Pageable pageable) {
         return cursorPaginationRepository.applyCursorPaging(survey, survey.member.username, survey.surveyId, survey.createdDate,
                                                             username, cursor, year, month, pageable);
+    }
+
+    @Override
+    public Slice<Survey> findByEmotionAndCursor(String username, Long cursor, Emotion emotion, Pageable pageable) {
+        return null;
     }
 }
