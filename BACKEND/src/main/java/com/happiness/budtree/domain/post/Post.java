@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "post")
+@Table(name = "post", indexes = {@Index(name = "index_member_emotion_id", columnList = "member_id, emotion, post_id")})
 public class Post {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
