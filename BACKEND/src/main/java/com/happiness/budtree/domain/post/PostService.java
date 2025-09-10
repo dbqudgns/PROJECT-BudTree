@@ -254,31 +254,49 @@ public class PostService {
 
         Pageable pageable = PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "postId"));
 
-        Slice<Post> postSlice = postRepository.findByEmotionAndCursor(username, cursor, enumEmotion, pageable);
+        // Entity로 조회, Covering Index 미조회
+        // Slice<Post> postSlice = postRepository.findByEmotionAndCursor(username, cursor, enumEmotion, pageable);
+
+        // DTO 및 Covering Index 조회
+        Slice<PostAllRP> postSlice = postRepository.findPostByCursorAndEmotion(username, cursor, enumEmotion, pageable);
 
         if (!postSlice.hasContent()) {
             throw new EntityNotFoundException("해당 감정에 조회되는 일기장이 존재하지 않습니다.");
         }
 
-        // 가져온 DB 데이터 DTO로 변환
-        List<PostAllRP> lists = new ArrayList<>();
-        for (Post post : postSlice) {
-            PostAllRP postAllRP = convertToPostAllRP(post);
-            lists.add(postAllRP);
-        }
-
         // nextCursor 설정
         Long nextCursor = null;
         if (postSlice.hasNext()) {
-            Post lastPost = postSlice.getContent().get(postSlice.getNumberOfElements() - 1);
-            nextCursor = lastPost.getPostId();
+            PostAllRP lastPost = postSlice.getContent().get(postSlice.getNumberOfElements() - 1);
+            nextCursor = lastPost.postId();
         }
 
         return CursorPaginationRP.builder()
-                .lists(lists)
+                .lists(postSlice.getContent())
                 .nextCursor(nextCursor)
                 .hasNext(postSlice.hasNext())
                 .build();
+
+
+//        // 가져온 DB 데이터 DTO로 변환
+//        List<PostAllRP> lists = new ArrayList<>();
+//        for (Post post : postSlice) {
+//            PostAllRP postAllRP = convertToPostAllRP(post);
+//            lists.add(postAllRP);
+//        }
+//
+//        // nextCursor 설정
+//        Long nextCursor = null;
+//        if (postSlice.hasNext()) {
+//            Post lastPost = postSlice.getContent().get(postSlice.getNumberOfElements() - 1);
+//            nextCursor = lastPost.getPostId();
+//        }
+//
+//        return CursorPaginationRP.builder()
+//                .lists(lists)
+//                .nextCursor(nextCursor)
+//                .hasNext(postSlice.hasNext())
+//                .build();
     }
 
     private PostAllRP convertToPostAllRP(Post post) {
