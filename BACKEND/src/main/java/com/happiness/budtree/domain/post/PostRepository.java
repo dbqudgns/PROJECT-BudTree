@@ -2,6 +2,7 @@ package com.happiness.budtree.domain.post;
 
 import com.happiness.budtree.domain.CursorPaginationSupport;
 import com.happiness.budtree.domain.member.Member;
+import com.happiness.budtree.domain.post.DTO.response.PostAllRP;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -29,6 +30,16 @@ public interface PostRepository extends JpaRepository<Post, Long>, CursorPaginat
 
     @Query("SELECT p FROM Post p WHERE p.member.username = :username ORDER BY p.createdDate DESC, p.postId DESC LIMIT 6")
     List<Post> findSixLatestPosts(@Param("username") String username);
+
+    @Query("SELECT NEW com.happiness.budtree.domain.post.DTO.response.PostAllRP(p.postId, p.emotion, p.createdDate) " +
+           "FROM Post p " +
+           "WHERE p.member.username = :username " +
+           "AND p.emotion = :emotion " +
+           "ORDER BY p.postId desc")
+    Slice<PostAllRP> findPostByCursorAndEmotion(@Param("username") String username,
+                                                @Param("cursor") Long cursor,
+                                                @Param("emotion") Emotion emotion,
+                                                Pageable pageable);
 
 }
 
