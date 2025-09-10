@@ -209,7 +209,29 @@ PHQ-9 자가 진단 결과를 기반으로 AI 친구 **"버디"** 와 대화를 
 </details>
 
 ## <span id="10">10. 성능 개선</span>
-<details> <summary><strong>데이터 전체 조회 시 응답 속도 저하 현상 </strong></summary>
+<details> <summary><strong>WHERE절 최적화를 위한 Multi-Column Index 및 Covering Index 적용으로 API 응답 속도 개선</strong></summary>
+      
+    - 문제점 : 
+    
+    일기장(post)을 감정(emotion)으로 필터링하는 조회 API에서 emotion 컬럼에 Index를 적용
+    하지만, EXPLAIN을 통해 DB Optimizer가 Index를 사용했음에도 불구하고 응답 속도가 Full Table Scan과 유사
+
+    - 해결 방안 : 
+
+    DB Optimizer는 SQL의 순서대로 작동하지 않고 WHERE 절의 조건과 Index 유무를 보고 효율적인 실행 순서를 결정하는 것을 파악
+    WHERE 절의 username(아이디) 조건을 처리하기 위해 member 테이블의 UNIQUE Index를 먼저 사용하여 member_id를 파악
+    다음으로, post 테이블에 (member_id, emotion, post_id) 순서인 Multi-Column Index를 탐색
+    post 테이블에 접근하지 않고 Index만으로 전체 쿼리를 처리하는 Covering Index를 통해 post 테이블을 조회하지 않고 응답
+
+    - 결과 : 
+
+    emotion 조건으로 Cursor 기반 페이지네이션으로 조회 시 기존 API는 평균 1700ms 소요
+    UNIQUE 인덱스 및 다중 컬럼 인덱스 적용 후 평균 15ms 소요
+    응답 속도 약 99.12% 개선
+
+</details>
+    
+<details> <summary><strong>데이터 전체 조회 시 발생하는 프리징 현상을 Cursor 기반 페이지네이션 적용으로 개선</strong></summary>
      
      - 문제점 : 
 
@@ -235,7 +257,7 @@ PHQ-9 자가 진단 결과를 기반으로 AI 친구 **"버디"** 와 대화를 
 
 </details>
 
-<details> <summary><strong>최신 6개의 일기장 조회 시, 전체 데이터를 DB에서 조회하는 비효율적인 구조 </strong></summary>
+<details> <summary><strong>페이지 접속할때 마다 전체 데이터를 읽던 최신 6개 일기장 조회를 Redis 캐싱으로 응답 속도 개선</strong></summary>
      
      - 문제점 : 
 
