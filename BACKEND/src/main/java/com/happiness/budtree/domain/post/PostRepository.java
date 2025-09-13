@@ -35,6 +35,7 @@ public interface PostRepository extends JpaRepository<Post, Long>, CursorPaginat
            "FROM Post p " +
            "WHERE p.member.username = :username " +
            "AND p.emotion = :emotion " +
+            "AND (:cursor IS NULL OR p.postId < :cursor) " +
            "ORDER BY p.postId desc")
     Slice<PostAllRP> findPostByCursorAndEmotion(@Param("username") String username,
                                                 @Param("cursor") Long cursor,
