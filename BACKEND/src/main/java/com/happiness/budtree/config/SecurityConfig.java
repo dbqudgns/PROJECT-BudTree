@@ -62,7 +62,7 @@ public class SecurityConfig {
         //경로별 인가 작업
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers( "/swagger-ui/**", "/v3/api-docs/**","/", "/member/login", "/member/check", "/member/register", "/member/reissue").permitAll()
+                        .requestMatchers( "/swagger-ui/**", "/v3/api-docs/**","/", "/member/login", "/member/check", "/member/register", "/member/reissue", "/actuator/**").permitAll()
                         .requestMatchers("/member/logout","/member/change-name", "/member/change-password", "/member/edit","/chatroom/**", "/chatroom/chat/**", "/message/**", "/post/**", "/survey/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
                         .anyRequest().authenticated());
 

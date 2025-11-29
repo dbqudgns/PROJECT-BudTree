@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "post", indexes = {@Index(name = "index_member_emotion_id_date", columnList = "member_id, emotion, post_id, created_date")})
-// @Table(name = "post", indexes = {@Index(name = "index_member_emotion_id", columnList = "member_id, emotion, post_id")})
+@Table(name = "post", indexes = {@Index(name = "index_member_emotion_id_date", columnList = "member_id, emotion, post_id DESC, created_date")})
 public class Post {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +23,7 @@ public class Post {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column(name = "created_date",nullable = false)
+    @Column(name = "created_date", nullable = false)
     private LocalDateTime createdDate;
 
     @Enumerated(EnumType.STRING)

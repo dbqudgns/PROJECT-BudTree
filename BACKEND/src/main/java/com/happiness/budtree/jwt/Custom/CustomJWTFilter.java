@@ -43,7 +43,8 @@ public class CustomJWTFilter extends OncePerRequestFilter {
                 pathMatcher.match("/member/register", path) ||
                 pathMatcher.match("/member/login", path) ||
                 pathMatcher.match("/member/check", path) ||
-                pathMatcher.match("/member/reissue", path);
+                pathMatcher.match("/member/reissue", path) ||
+                pathMatcher.match("/actuator/**", path);
     }
 
     @Override
