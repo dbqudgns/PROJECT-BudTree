@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.happiness.budtree.domain.phrase.PhraseMapper">
+
+    <insert id="savePhrase" parameterType="com.happiness.budtree.domain.phrase.DTO.request.PhraseRegisterRQ"
+            useGeneratedKeys="true">
+
+        INSERT INTO phrase (content)
+        VALUES (#{content})
+
+    </insert>
+
+    <select id="getPhrase" resultType="com.happiness.budtree.domain.phrase.DTO.response.TodayPhrase">
+        SELECT phrase_id, content FROM phrase WHERE DATE(created_date) = CURDATE()
+    </select>
+
+</mapper>

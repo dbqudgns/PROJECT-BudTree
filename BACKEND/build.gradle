@@ -65,7 +65,9 @@ dependencies {
 
 	// 마이크로미터 프로메테우스 구현체 라이브러리
 	implementation 'io.micrometer:micrometer-registry-prometheus'
-}
+
+	// Mybatis
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'}
 
 dependencyManagement {
 	imports {
