@@ -13,10 +13,10 @@
     </insert>
 
     <select id="getPhrase" resultType="com.happiness.budtree.domain.phrase.DTO.response.TodayPhrase">
-        -- COUNT(l.like_id) : l.like_id가 null이면 개수가 0으로 count
-        SELECT p.phrase_id, p.content, COUNT(l.like_id) AS likeCount FROM phrase p LEFT JOIN `like` l USING(phrase_id)
-        WHERE DATE(p.created_date) = CURDATE()
-        GROUP BY p.phrase_id, p.content
+
+        SELECT content, like_count FROM phrase
+        WHERE DATE(created_date) = CURDATE()
+
     </select>
 
 </mapper>
