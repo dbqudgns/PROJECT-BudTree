@@ -19,4 +19,10 @@
 
     </select>
 
+    <update id="updatePhrase" parameterType="int">
+
+        UPDATE phrase SET like_count = #{totalLike}
+        WHERE DATE(created_date) = CURDATE()
+
+    </update>
 </mapper>

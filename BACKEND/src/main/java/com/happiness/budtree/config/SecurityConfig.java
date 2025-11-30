@@ -63,7 +63,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers( "/swagger-ui/**", "/v3/api-docs/**","/", "/member/login", "/member/check", "/member/register", "/member/reissue", "/actuator/**", "/phrase/create").permitAll()
-                        .requestMatchers("/member/logout","/member/change-name", "/member/change-password", "/member/edit","/chatroom/**", "/chatroom/chat/**", "/message/**", "/post/**", "/survey/**", "/phrase/today").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+                        .requestMatchers("/member/logout","/member/change-name", "/member/change-password", "/member/edit","/chatroom/**", "/chatroom/chat/**", "/message/**", "/post/**", "/survey/**", "/phrase/today", "/like/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
                         .anyRequest().authenticated());
 
         //인증되지 않은 사용자에 대한 exception 처리

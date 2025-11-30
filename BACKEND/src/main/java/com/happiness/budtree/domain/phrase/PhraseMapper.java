@@ -3,6 +3,7 @@ package com.happiness.budtree.domain.phrase;
 import com.happiness.budtree.domain.phrase.DTO.request.PhraseRegisterRQ;
 import com.happiness.budtree.domain.phrase.DTO.response.TodayPhrase;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface PhraseMapper {
@@ -10,4 +11,6 @@ public interface PhraseMapper {
     void savePhrase(PhraseRegisterRQ registerRQ);
 
     TodayPhrase getPhrase();
+
+    void updatePhrase(@Param("totalLike") int totalLike);
 }
