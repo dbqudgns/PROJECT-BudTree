@@ -4,24 +4,32 @@
 
 <mapper namespace="com.happiness.budtree.domain.like.LikeMapper">
 
-    <insert id="saveLike" parameterType="Long" useGeneratedKeys="true">
+    <!-- 문제상황 때 쓰임 -->
+   <!-- 해결(2) 2. 좋아요 레코드 삽입 -->
+   <insert id="saveLike" parameterType="Long" useGeneratedKeys="true">
+       INSERT INTO `like` (member_id, phrase_id)
+       VALUES (
+               #{member_id},
+               (SELECT phrase_id FROM phrase WHERE DATE(created_date) = CURDATE())
+       )
+   </insert>
+
+   <select id="totalLike" resultType="int">
+       SELECT COUNT(*) FROM `like`
+       WHERE phrase_id = (SELECT phrase_id FROM phrase WHERE DATE(created_date) = CURDATE())
+   </select>
+
+   <delete id="cancelLike" parameterType="Long">
+       DELETE FROM `like`
+       WHERE (member_id = #{member_id} AND
+              phrase_id = (SELECT phrase_id FROM phrase WHERE DATE(created_date) = CURDATE())
+       )
+   </delete>
+
+   <!-- 해결(1) 2. 좋아요 추가 -->
+    <insert id="saveLikeWithPhraseId" useGeneratedKeys="true">
         INSERT INTO `like` (member_id, phrase_id)
-        VALUES (
-                #{member_id},
-                (SELECT phrase_id FROM phrase WHERE DATE(created_date) = CURDATE())
-        )
+        VALUES (#{member_id}, #{phrase_id})
     </insert>
-
-    <select id="totalLike" resultType="int">
-        SELECT COUNT(*) FROM `like`
-        WHERE phrase_id = (SELECT phrase_id FROM phrase WHERE DATE(created_date) = CURDATE())
-    </select>
-
-    <delete id="cancelLike" parameterType="Long">
-        DELETE FROM `like`
-        WHERE (member_id = #{member_id} AND
-               phrase_id = (SELECT phrase_id FROM phrase WHERE DATE(created_date) = CURDATE())
-        )
-    </delete>
 
 </mapper>

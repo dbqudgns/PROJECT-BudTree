@@ -20,9 +20,21 @@ public class LikeService {
     public void createLike(CustomMemberDetails customMemberDetails) {
         Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
 
+        /** 문제 상황 : S-Lock 경합 문제로 인한 데드락 발생
         likeMapper.saveLike(member.getMemberId()); // 특정 글귀의 좋아요 추가
         int totalLike = likeMapper.totalLike(); // 특정 글귀의 좋아요 총 개수 반환
         phraseMapper.updatePhrase(totalLike); // 특정 글귀의 좋아요 총 개수 업데이트
+        */
+
+        /** 해결책(1) : 비관적 락
+        Long phraseId = phraseMapper.getPhraseId();
+        likeMapper.saveLikeWithPhraseId(member.getMemberId(), phraseId);
+        phraseMapper.plusLikeCount(phraseId);
+         */
+
+        /** 해결책(2) : 글귀의 좋아요 총 개수 1 증가 후 좋아요 레코드 삽입 */
+        phraseMapper.updateLikeCount();
+        likeMapper.saveLike(member.getMemberId());
     }
 
     @Transactional
