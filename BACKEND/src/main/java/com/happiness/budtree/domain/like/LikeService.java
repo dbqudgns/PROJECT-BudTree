@@ -5,6 +5,7 @@ import com.happiness.budtree.domain.phrase.PhraseMapper;
 import com.happiness.budtree.jwt.Custom.CustomMemberDetails;
 import com.happiness.budtree.util.ReturnMember;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ public class LikeService {
     private final LikeMapper likeMapper;
     private final ReturnMember returnMember;
 
+    @Async
     @Transactional
     public void createLike(CustomMemberDetails customMemberDetails) {
         Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
