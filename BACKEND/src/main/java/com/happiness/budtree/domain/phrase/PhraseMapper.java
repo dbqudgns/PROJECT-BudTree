@@ -23,4 +23,6 @@ public interface PhraseMapper {
     // 해결(2) 1. 오늘의 글귀 총아요 총 개수(like_count) 1 증가
     void updateLikeCount();
 
+    void updateLikeMinus();
+
 }

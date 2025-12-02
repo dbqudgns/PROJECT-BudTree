@@ -39,13 +39,13 @@ public class LikeService {
         likeMapper.saveLike(member.getMemberId());
     }
 
+    @Async
     @Transactional
     public void cancelLike(CustomMemberDetails customMemberDetails) {
         Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
 
-        likeMapper.cancelLike(member.getMemberId()); // 특정 글귀의 좋아요 삭제
-        int totalLike = likeMapper.totalLike(); // 특정 글귀의 좋아요 총 개수 반환
-        phraseMapper.updatePhrase(totalLike); // 특정 글귀의 좋아요 총 개수 업데이트
+        phraseMapper.updateLikeMinus();
+        likeMapper.cancelLike(member.getMemberId());
     }
 
 }

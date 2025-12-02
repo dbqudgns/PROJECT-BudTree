@@ -50,4 +50,12 @@
         WHERE DATE(created_date) = CURDATE();
 
     </update>
+
+    <update id="updateLikeMinus">
+
+        UPDATE phrase
+        SET like_count = like_count - 1
+        WHERE DATE(created_date) = CURDATE();
+
+    </update>
 </mapper>
