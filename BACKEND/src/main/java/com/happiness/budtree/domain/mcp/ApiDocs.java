@@ -20,11 +20,9 @@ public class ApiDocs {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    // [NEW] DTO 구조 (예: {"email":"string", "password":"string"})
     @Column(columnDefinition = "TEXT")
     private String requestBodySchema;
 
-    // [NEW] 쿼리 파라미터 / 패스 변수 (예: type=query, name=page)
     @Column(columnDefinition = "TEXT")
     private String parameterSpec;
 }

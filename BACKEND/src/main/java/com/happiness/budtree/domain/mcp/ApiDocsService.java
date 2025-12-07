@@ -130,7 +130,6 @@ public class ApiDocsService {
             if (doc.getRequestBodySchema() != null) {
                 sb.append("[요청 데이터(DTO) 구조]:\n").append(doc.getRequestBodySchema());
             }
-            sb.append("----------------------------------\n");
         }
         return sb.toString();
     }
