@@ -35,4 +35,12 @@ public class Phrase {
         this.likeCount = 0;
         this.createdDate = LocalDate.now();
     }
+
+    public void updateLikeCount(int totalLike) {
+        this.likeCount = totalLike;
+    }
+
+    public void plusLikeCount() {
+        this.likeCount = this.likeCount + 1;
+    }
 }

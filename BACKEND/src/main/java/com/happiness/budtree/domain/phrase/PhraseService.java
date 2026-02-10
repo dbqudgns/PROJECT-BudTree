@@ -33,6 +33,6 @@ public class PhraseService {
         Phrase phrase = phraseRepository.findByCreatedDate(LocalDate.now())
                 .orElseThrow(() -> new IllegalArgumentException("오늘의 글귀가 존재하지 없습니다."));
 
-        return new TodayPhrase(phrase.getContent(), phrase.getLikeCount());
+        return new TodayPhrase(phrase.getId(), phrase.getContent(), phrase.getLikeCount());
     }
 }
