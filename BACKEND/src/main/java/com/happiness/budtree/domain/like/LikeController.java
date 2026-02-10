@@ -7,10 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/like")
@@ -22,9 +19,11 @@ public class LikeController {
 
     @PostMapping("/create")
     @Operation(summary = "좋아요 생성")
-    public ResponseEntity<?> create(@AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
+    public ResponseEntity<?> create(@AuthenticationPrincipal CustomMemberDetails customMemberDetails,
+                                    @RequestParam(value = "phraseId") Long phrase_id
+                                    ) {
 
-        likeService.createLike(customMemberDetails);
+        likeService.createLike(customMemberDetails, phrase_id);
 
         return ResponseEntity.ok(ApiResponse.success("좋아요 생성 완료"));
 
@@ -32,9 +31,11 @@ public class LikeController {
 
     @DeleteMapping("/cancel")
     @Operation(summary = "좋아요 취소")
-    public ResponseEntity<?> cancel(@AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
+    public ResponseEntity<?> cancel(@AuthenticationPrincipal CustomMemberDetails customMemberDetails,
+                                    @RequestParam(value = "phraseId") Long phrase_id
+    ) {
 
-        likeService.cancelLike(customMemberDetails);
+        likeService.cancelLike(customMemberDetails, phrase_id);
 
         return ResponseEntity.ok(ApiResponse.success("좋아요 취소 완료"));
 

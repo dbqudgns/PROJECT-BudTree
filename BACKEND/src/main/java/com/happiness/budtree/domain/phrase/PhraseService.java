@@ -9,23 +9,30 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
 public class PhraseService {
 
-    private final PhraseMapper phraseMapper;
+    private final PhraseRepository phraseRepository;
     private final ReturnMember returnMember;
 
     @Transactional
     public void createPhrase(PhraseRegisterRQ registerRQ) {
-        phraseMapper.savePhrase(registerRQ);
+        Phrase newPhrase = Phrase.builder()
+                .content(registerRQ.content())
+                .build();
+
+        phraseRepository.save(newPhrase);
     }
 
     public TodayPhrase getPhrase(CustomMemberDetails customMemberDetails) {
-
         Member member = returnMember.findMemberByUsernameOrTrow(customMemberDetails.getUsername());
 
-        return phraseMapper.getPhrase();
-    }
+        Phrase phrase = phraseRepository.findByCreatedDate(LocalDate.now())
+                .orElseThrow(() -> new IllegalArgumentException("오늘의 글귀가 존재하지 없습니다."));
 
+        return new TodayPhrase(phrase.getId(), phrase.getContent(), phrase.getLikeCount());
+    }
 }
